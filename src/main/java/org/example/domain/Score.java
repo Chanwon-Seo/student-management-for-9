@@ -1,4 +1,4 @@
-package domain;
+package org.example.domain;
 
 import java.util.Map;
 
