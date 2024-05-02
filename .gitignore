@@ -1,5 +1,5 @@
 .gradle
-.idea
+.idea/
 build/
 .gradle/
 !gradle/wrapper/gradle-wrapper.jar
@@ -8,10 +8,6 @@ build/
 gradle/
 
 ### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
 *.iws
 *.iml
 *.ipr
