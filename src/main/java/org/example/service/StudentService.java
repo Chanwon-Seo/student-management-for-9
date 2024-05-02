@@ -15,6 +15,7 @@ public class StudentService {
         }
     }
 
+    //detail
     public void getStudentDetail(Student student) {
         System.out.println("id : " + student.getStudentIdInteger());
         System.out.println("이름 : " + student.getStudentName());
