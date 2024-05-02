@@ -8,8 +8,11 @@ import org.example.domain.Subject;
 
 import java.util.List;
 
+// TODO: Setter custom
+@Getter @Setter
 public class DBStorage {
     private static List<Student> studentList;
+
 
     @Getter @Setter
     private static List<Score> scoreList;

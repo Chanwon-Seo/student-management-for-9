@@ -13,7 +13,6 @@ public class StudentScoreRead {
     public DBStorage storage = new DBStorage();
 
     public void TempSaveArea() {
-
         Map<Long, Long> scoreId = new HashMap<>();
         scoreId.put(1L, 90L);
         scoreId.put(2L, 90L);
@@ -36,15 +35,19 @@ public class StudentScoreRead {
     }
 
 
-    public void LoadScore(Integer subjectId, Integer studentId, Long testCount) {
+    public void LoadScore(Integer studentId, Integer subjectId) {
 
+        System.out.println("학생고유번호: " + studentId +"  과목번호: "+ subjectId);
+        
         List<Score> score = storage.getScoreList();
         for (Score s : score) {
             if(s.getStudentId().equals(studentId) && s.getSubjectId().equals(subjectId))
             {
                  var temp = s.getScoreId();
-                 var tempint = temp.get(testCount);
-                System.out.println(tempint);
+                 for( int i=0;i<temp.size();i++){
+                     System.out.print("회차: "+temp.keySet().toArray()[i]);
+                     System.out.println(" , 점수: "+temp.values().toArray()[i]);
+                 }
             }
         }
     }
@@ -52,9 +55,9 @@ public class StudentScoreRead {
     public static void main(String[] args) {
         StudentScoreRead studentScoreRead = new StudentScoreRead();
         studentScoreRead.TempSaveArea();
-        studentScoreRead.LoadScore(1, 1, 1234L);
-        //System.out.println("hello");
 
+        studentScoreRead.LoadScore(1, 1);
+        //System.out.println("hello");
     }
 
 
