@@ -1,4 +1,4 @@
-package domain;
+package org.example.domain;
 
 public class Subject {
     private Integer subjectId; //과목 고유 번호

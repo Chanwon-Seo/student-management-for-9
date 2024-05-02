@@ -1,1 +1,0 @@
-# student-management-for-9

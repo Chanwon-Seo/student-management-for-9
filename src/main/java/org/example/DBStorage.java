@@ -1,8 +1,8 @@
+package org.example;
 
-
-import domain.Score;
-import domain.Student;
-import domain.Subject;
+import org.example.domain.Score;
+import org.example.domain.Student;
+import org.example.domain.Subject;
 
 import java.util.List;
 
