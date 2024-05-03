@@ -30,6 +30,11 @@ public class StudentService {
         for (Student student : studentList) {
             System.out.println(student.getStudentIdInteger() + " : " + student.getStudentName());
         }
+        System.out.println("확인할 학생 아이디 입력 (종류 -1)>");
+        int id = Integer.parseInt(sc.nextLine());
+        if(id == -1) return;
+        Student student = studentFindById(id);
+        getStudentDetail(student);
     }
 
     //학생 상세
@@ -45,7 +50,7 @@ public class StudentService {
     }
 
     //학생 아이디로 검색
-    public Student StudentFindById(Integer studentId) {
+    public Student studentFindById(Integer studentId) {
         for (Student student : studentList) {
             if (student.getStudentIdInteger() == studentId) {
                 return student;
@@ -65,7 +70,7 @@ public class StudentService {
             sc.nextLine();
             switch (choice) {
                 case 1 -> createStudent();
-                //case 2 ->
+                case 2 -> getStudentList();
                 case 3 -> {return;}
                 default -> System.out.println("잘못 입력하셨습니다.");
             }
