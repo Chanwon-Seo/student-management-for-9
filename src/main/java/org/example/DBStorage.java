@@ -12,14 +12,6 @@ import java.util.List;
 // TODO: Setter custom
 @Getter @Setter
 public class DBStorage {
-<<<<<<< HEAD
-    private static List<Student> studentList;
-
-
-    @Getter @Setter
-    private static List<Score> scoreList;
-    private static List<Subject> subjectList;
-=======
     private static @Getter @Setter List<Student> studentList = new ArrayList<>();
     private static @Getter @Setter List<Score> scoreList;
     private static @Getter @Setter List<Subject> subjectList = List.of(
@@ -73,5 +65,4 @@ public class DBStorage {
     public static void addStudentList(Student st){
         studentList.add(st);
     }
->>>>>>> main
 }
