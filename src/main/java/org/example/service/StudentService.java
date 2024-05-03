@@ -53,8 +53,7 @@ public class StudentService {
         }
         return null;
     }
-
-
+    
     //수강생 등록, 조회 화면
     public void displayStudentView () {
         while(true) {
