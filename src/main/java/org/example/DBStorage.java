@@ -9,6 +9,8 @@ import org.example.domain.Subject;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: Setter custom
+@Getter @Setter
 public class DBStorage {
     private static @Getter @Setter List<Student> studentList = new ArrayList<>();
     private static @Getter @Setter List<Score> scoreList;
