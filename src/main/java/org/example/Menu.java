@@ -1,8 +1,10 @@
 package org.example;
 
-import lombok.Getter;
-import lombok.Setter;
+import org.example.domain.Student;
+import org.example.service.StudentService;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -10,6 +12,14 @@ public class Menu {
         Scanner scanner = new Scanner(System.in);
         Student[] students = new Student[100]; // 100명정도 배열생성
         int studentCount = 0;
+        StudentService studentService = new StudentService();
+        DBStorage dbStorage = new DBStorage();
+        List<org.example.domain.Student> studentList = dbStorage.getStudentList();
+        int num = 0;
+
+        studentList.add(new Student(num++, "kimchi", "19990909", new HashSet<>()));
+        studentList.add(new Student(num++, "dubu", "19990909", new HashSet<>()));
+        studentList.add(new Student(num++, "egg", "19990909", new HashSet<>()));
 
         while (true) {
             System.out.println("1. 수강생 관리");
@@ -21,10 +31,11 @@ public class Menu {
 
             switch (choice) {
                 case 1: // 수강생 관리 이동
-                    manageStudents(students, studentCount, scanner);
+                    studentService.displayStudentView();
+//                    manageStudents(students, studentCount, scanner);
                     break;
                 case 2: // 수강생 점수관리 이동
-                    manageScores(students, studentCount, scanner);
+//                    manageScores(students, studentCount, scanner);
                     break;
                 case 3: // 끝
                     System.out.println("프로그램 종료...");
@@ -34,14 +45,15 @@ public class Menu {
             }
         }
     }
+}
 
 
 
 
+/*
 
 
-
-    static class Student {
+    static class Student2 {
         @Setter
         @Getter
         private String studentName; // 학생이름
@@ -53,7 +65,7 @@ public class Menu {
 
 
 
-        public Student(String studentName, String studentNumber, int java1, int java2, int java3) {
+        public Student2(String studentName, String studentNumber, int java1, int java2, int java3) {
             this.studentName = studentName;
             this.studentNumber = studentNumber;
             this.java1 = java1;
@@ -80,3 +92,4 @@ public class Menu {
 
     }
 }
+*/
