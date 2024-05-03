@@ -1,7 +1,5 @@
 package org.example.service;
 
-
-import lombok.Getter;
 import org.example.DBStorage;
 import org.example.Main;
 import org.example.domain.Student;
@@ -55,21 +53,19 @@ public class StudentService {
         if(rSub>=MIN_REQUIRED_SUBJECTS && eSub>=MIN_ELECTIVE_SUBJECTS) {
             System.out.println("수강자가 생성되었습니다.");
             Student st = new Student(++Main.uNumber, name, birth, subjectId);
-            DBStorage.addStudentList(st);
+            DBStorage.getStudentList().add(st);
             rSub=0;
             eSub=0;
         }
         else if(rSub<MIN_REQUIRED_SUBJECTS && eSub<MIN_ELECTIVE_SUBJECTS){
-            System.out.println("필수과목이 " + (MIN_REQUIRED_SUBJECTS-rSub) + "과목, 선택과목이 " + (MIN_ELECTIVE_SUBJECTS-eSub) + "선택과목이 부족해 수강생이 등록되지 않습니다.");
+            System.out.println("필수과목이 " + (MIN_REQUIRED_SUBJECTS-rSub) + "과목, 선택과목이 " + (MIN_ELECTIVE_SUBJECTS-eSub) + "과목이 부족해 수강생이 등록되지 않습니다.");
         }
         else if(rSub<MIN_REQUIRED_SUBJECTS){
             System.out.println("필수과목이 " + (MIN_REQUIRED_SUBJECTS-rSub) + "과목 부족해 수강생이 등록되지 않습니다.");
         }
         else {
             System.out.println("선택과목이 " + (MIN_ELECTIVE_SUBJECTS-eSub) + "과목 부족해 수강생이 등록되지 않습니다.");
-
         }
-
 
     }
 

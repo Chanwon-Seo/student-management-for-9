@@ -60,7 +60,4 @@ public class DBStorage {
             )
     );
 
-    public static void addStudentList(Student st){
-        studentList.add(st);
-    }
 }
