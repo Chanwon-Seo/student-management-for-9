@@ -10,6 +10,7 @@ public class Main {
     static StudentParser studentParser = new StudentParser();
     static SubjectParser subjectParser = new SubjectParser();
     static ScoreParser scoreParser = new ScoreParser();
+    public static int uNumber = 2024000;
 
     public static void main(String[] args) {
 
@@ -21,7 +22,7 @@ public class Main {
     private static void scoreCreate(Integer subjectIdInput, Integer studentIdInput, Integer roundInput, Integer scoreInput) {
         //입력값 검증
         try {
-            subjectParser.subjectEmptyCheckValid(dbStorage, subjectIdInput);
+            subjectParser.subjectEmptyCheckValid(subjectIdInput);
             studentParser.studentEmptyCheckValid(dbStorage, studentIdInput);
             scoreParser.scoreRoundInputOneToTenCheckValid(roundInput);
             scoreParser.scoreInputZeroToOneHundredCheckValid(scoreInput);

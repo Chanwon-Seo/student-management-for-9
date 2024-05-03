@@ -10,8 +10,8 @@ public class SubjectParser {
      * 과목 정보 조회
      * throw 조회된 수강생 정보가 없을 경우
      */
-    public void subjectEmptyCheckValid(DBStorage dbStorage, Integer subjectIdInput) {
-        List<Subject> subjectList = dbStorage.getSubjectList();
+    public void subjectEmptyCheckValid(Integer subjectIdInput) {
+        List<Subject> subjectList = DBStorage.getSubject();
         for (Subject subject : subjectList) {
             if (subjectIdInput.equals(subject.getSubjectId())) {
                 return;

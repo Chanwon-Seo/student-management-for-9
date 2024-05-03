@@ -19,5 +19,5 @@ public enum LevelType {
         this.levelTypeValue = levelTypeValue;
     }
 
-    //TODO 과목타입 분류
+    // TODO 과목타입 분류
 }
