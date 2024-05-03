@@ -12,7 +12,7 @@ public class DBStorage {
     private static List<Score> scoreList;
     private static List<Subject> subjectList;
 
-    public List<Student> getStudentList() {
+    public static List<Student> getStudentList() {
         return studentList;
     }
 }
