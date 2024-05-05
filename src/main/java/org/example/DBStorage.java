@@ -6,63 +6,77 @@ import org.example.domain.Score;
 import org.example.domain.Student;
 import org.example.domain.Subject;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+
 // TODO: Setter custom
-@Getter @Setter
 public class DBStorage {
-    private static @Getter @Setter List<Student> studentList = new ArrayList<>();
-    private static @Getter @Setter List<Score> scoreList;
-    private static @Getter @Setter List<Subject> subjectList = List.of(
+    @Getter
+    @Setter
+    private static Integer studentIdNum = 2024000;
+    private static Integer subjectIdNum = 0;
+    @Getter
+    private static final List<Student> studentList = new LinkedList<>();
+    @Getter
+    private static final List<Score> scoreList = new LinkedList<>();
+
+    //TODO subjectType = 열거형?
+    @Getter
+    private static final List<Subject> subjectList = List.of(
             new Subject(
-                    1,
+                    ++subjectIdNum,
                     "Java",
                     "SUBJECT_TYPE_MANDATORY"
             ),
             new Subject(
-                    2,
+                    ++subjectIdNum,
                     "객체지향",
                     "SUBJECT_TYPE_MANDATORY"
             ),
             new Subject(
-                    3,
+                    ++subjectIdNum,
                     "Spring",
                     "SUBJECT_TYPE_MANDATORY"
             ),
             new Subject(
-                    4,
+                    ++subjectIdNum,
                     "JPA",
                     "SUBJECT_TYPE_MANDATORY"
             ),
             new Subject(
-                    5,
+                    ++subjectIdNum,
                     "MySQL",
                     "SUBJECT_TYPE_MANDATORY"
             ),
             new Subject(
-                    6,
+                    ++subjectIdNum,
                     "디자인 패턴",
                     "SUBJECT_TYPE_CHOICE"
             ),
             new Subject(
-                    7,
+                    ++subjectIdNum,
                     "Spring Security",
                     "SUBJECT_TYPE_CHOICE"
             ),
             new Subject(
-                    8,
+                    ++subjectIdNum,
                     "Redis",
                     "SUBJECT_TYPE_CHOICE"
             ),
             new Subject(
-                    9,
+                    ++subjectIdNum,
                     "MongoDB",
                     "SUBJECT_TYPE_CHOICE"
             )
     );
 
-    public static void addStudentList(Student st){
+    public void saveScoreList(Score score) {
+        // null 예외처리
+        scoreList.add(score);
+    }
+
+    public static void addStudentList(Student st) {
         studentList.add(st);
     }
 }
