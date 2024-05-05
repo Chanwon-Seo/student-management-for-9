@@ -6,15 +6,19 @@ import org.example.domain.Score;
 import org.example.domain.Student;
 import org.example.domain.Subject;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+
 // TODO: Setter custom
-@Getter @Setter
 public class DBStorage {
-    private static @Getter @Setter List<Student> studentList = new ArrayList<>();
-    private static @Getter @Setter List<Score> scoreList;
-    private static @Getter @Setter List<Subject> subjectList = List.of(
+//    @Getter
+    private static final List<Student> studentList = new LinkedList<>();
+    @Getter
+    private static final List<Score> scoreList = new LinkedList<>();
+
+    //TODO subjectType = 열거형?
+    private static final List<Subject> subjectList = List.of(
             new Subject(
                     1,
                     "Java",
@@ -62,7 +66,12 @@ public class DBStorage {
             )
     );
 
-    public static void addStudentList(Student st){
+    public void saveScoreList(Score score) {
+        // null 예외처리
+        scoreList.add(score);
+    }
+
+    public static void addStudentList(Student st) {
         studentList.add(st);
     }
 }
