@@ -7,12 +7,12 @@ import java.util.List;
 
 public class SubjectParser {
     /**
+     * @찬원
      * 과목 정보 조회
      * throw 조회된 수강생 정보가 없을 경우
      */
     public void subjectEmptyCheckValid(Integer subjectIdInput) {
-        List<Subject> subjectList = DBStorage.getSubject();
-        for (Subject subject : subjectList) {
+        for (Subject subject : DBStorage.getSubjectList()) {
             if (subjectIdInput.equals(subject.getSubjectId())) {
                 return;
             }

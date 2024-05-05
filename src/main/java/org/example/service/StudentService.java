@@ -13,7 +13,7 @@ import java.util.List;
 public class StudentService {
     static final int MIN_REQUIRED_SUBJECTS = 3;
     static final int MIN_ELECTIVE_SUBJECTS = 2;
-//    List<Subject> sub = DBStorage.addStudentList();
+    List<Subject> sub = DBStorage.getSubjectList();
     Set<Integer> subjectId = new HashSet<>();
     Scanner sc = new Scanner(System.in);
     int rSub = 0;
@@ -26,7 +26,7 @@ public class StudentService {
     public void getStudentList() {
         System.out.println("id / name");
         for (Student student : studentList) {
-            System.out.println(student.getStudentIdInteger() + " : " + student.getStudentName());
+            System.out.println(student.getStudentId() + " : " + student.getStudentName());
         }
         System.out.println("확인할 학생 아이디 입력 (종류 -1)>");
         int id = Integer.parseInt(sc.nextLine());
@@ -38,7 +38,7 @@ public class StudentService {
     //학생 상세
     public void getStudentDetail(Student student) {
         System.out.println("----학생 상세-----");
-        System.out.println("id : " + student.getStudentIdInteger());
+        System.out.println("id : " + student.getStudentId());
         System.out.println("이름 : " + student.getStudentName());
         System.out.println("생년월일 : " + student.getBirthDay());
         System.out.println("상태 : " + student.getStudentState());
@@ -50,7 +50,7 @@ public class StudentService {
     //학생 아이디로 검색
     public Student studentFindById(Integer studentId) {
         for (Student student : studentList) {
-            if (student.getStudentIdInteger() == studentId) {
+            if (student.getStudentId() == studentId) {
                 return student;
             }
         }
@@ -59,24 +59,7 @@ public class StudentService {
 
 
     //수강생 등록, 조회 화면
-    public void displayStudentView() {
-        while (true) {
-            System.out.println("==================================");
-            System.out.println("1. 수강생 등록");
-            System.out.println("2. 수강생 목록 조회");
-            System.out.println("3. 메인 화면 이동");
-            int choice = sc.nextInt();
-            sc.nextLine();
-            switch (choice) {
-                case 1 -> createStudent();
-                case 2 -> getStudentList();
-                case 3 -> {
-                    return;
-                }
-                default -> System.out.println("잘못 입력하셨습니다.");
-            }
-        }
-    }
+
 
     //수강자 생성
     public void createStudent() {
@@ -96,8 +79,9 @@ public class StudentService {
 
         if (rSub >= MIN_REQUIRED_SUBJECTS && eSub >= MIN_ELECTIVE_SUBJECTS) {
             System.out.println("수강자가 생성되었습니다.");
-            Student st = new Student(++Main.uNumber, name, birth, subjectId);
-            DBStorage.addStudentList(st);
+            //TODO
+//            Student st = new Student(, name, birth, subjectId);
+//            DBStorage.addStudentList(st);
             rSub = 0;
             eSub = 0;
         } else if (rSub < MIN_REQUIRED_SUBJECTS && eSub < MIN_ELECTIVE_SUBJECTS) {

@@ -10,6 +10,7 @@ import java.util.Map;
 
 public class StudentScoreRead {
 
+    //TODO
     public DBStorage storage = new DBStorage();
 
     public void TempSaveArea() {
@@ -31,12 +32,10 @@ public class StudentScoreRead {
         scoreListTemp.add(new Score(2, 1, scoreId));
         scoreListTemp.add(new Score(0, 0, scoreId));
 
-        // TODO DBStorage에 저장 커스텀 메서드 구현 및 호출
+
 //        storage.setScoreList(scoreListTemp);
     }
 
-
-    // TODO 메서드에 대한 타입 정의? 및 출력 결과 재정의
     public void LoadScore(Integer studentId, Integer subjectId) {
 
         System.out.println("학생고유번호: " + studentId + "  과목번호: " + subjectId);

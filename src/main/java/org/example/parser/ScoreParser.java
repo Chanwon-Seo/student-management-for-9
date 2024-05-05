@@ -8,6 +8,7 @@ import java.util.List;
 
 public class ScoreParser {
     /**
+     * @찬원
      * 회차 범위 입력 검증
      * 1 ~ 10
      */
@@ -19,6 +20,7 @@ public class ScoreParser {
     }
 
     /**
+     * @찬원
      * 점수 범위 입력 검증
      * 0 ~ 100
      */
@@ -30,11 +32,11 @@ public class ScoreParser {
     }
 
     /**
+     * @찬원
      * 회차 등록 여부 검증
      */
-    public void scoreDuplicatedCheckValid(DBStorage dbStorage, Integer roundInput) {
-        List<Score> scoreList = dbStorage.getScoreList();
-        if (scoreList.size() >= roundInput) {
+    public void scoreDuplicatedCheckValid(Integer roundInput) {
+        if (DBStorage.getScoreList().size() >= roundInput) {
             throw new RuntimeException("이미 등록된 회차입니다.");
         }
     }
