@@ -1,9 +1,11 @@
 package org.example;
 
+import org.example.db.DBManager;
+
 import java.util.Scanner;
 
 public class Menu {
-    static DBStorage dbStorage = new DBStorage();
+    static DBManager dbManager = new DBManager();
     static Scanner sc = new Scanner(System.in);
 
     public void startPage() {
@@ -46,7 +48,7 @@ public class Menu {
                         case 2:
                             System.out.println("***** 수강생 점수관리 *****");
                             System.out.println("메인메뉴>수강생 점수관리>...");
-                            new ScoreMenu().displayScoreView();
+                            new ScoreMenu().displayScoreView(dbManager);
                             break;
 
 

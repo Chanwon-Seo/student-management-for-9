@@ -1,6 +1,7 @@
 package org.example.parser;
 
 import org.example.db.DBManager;
+import org.example.domain.Score;
 import org.example.domain.Subject;
 
 //@RequiredArgsConstructor
@@ -35,19 +36,5 @@ public class Parser {
         return findSubjectData;
     }
 
-    /**
-     * @return
-     * @세미 과목당 [회차:점수] 조회
-     */
-    public Subject scoreRead(Integer subjectIdInput, Integer studentIdInput,Integer roundInput) {
-        Subject findSubjectData = null;
-        try {
-            findSubjectData = subjectParser.subjectEmptyCheckValid(subjectIdInput);
-            studentParser.studentEmptyCheckValid(dbManager,studentIdInput);
-            //scoreParser.scoreNullCheckValid(roundInput);
-        } catch (RuntimeException e) {
-            System.out.println(e.getMessage());
-        }
-        return findSubjectData;
-    }
+
 }

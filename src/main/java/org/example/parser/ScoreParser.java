@@ -37,20 +37,12 @@ public class ScoreParser {
     /**
      * @찬원 회차 등록 여부 검증
      */
-    public void scoreDuplicatedCheckValid(DBManager dbManager,Integer roundInput) {
+    public void scoreDuplicatedCheckValid(Integer roundInput) {
         if (dbManager.getScoreList().size() >= roundInput) {
             throw new RuntimeException("이미 등록된 회차입니다.");
         }
     }
 
-    /**
-     * @세미 해당 과목 점수 데이터 없음
-     */
-    public void scoreNullCheckValid(DBManager dbManager, Integer roundInput) {
-        if (dbManager.findByScores().size() <= roundInput) {
-            throw new RuntimeException("해당 과목의 점수 데이터가 없습니다.");
-        }
-    }
 
 }
 
