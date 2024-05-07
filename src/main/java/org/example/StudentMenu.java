@@ -4,6 +4,7 @@
 package org.example;
 
 import org.example.db.DBManager;
+import org.example.parser.Parser;
 import org.example.domain.Student;
 import org.example.service.StudentService;
 
@@ -49,6 +50,7 @@ public class StudentMenu {
                             System.out.println("***** 수강생 조회*****");
                             System.out.println("메인메뉴> 수강생 관리>...");
 
+                            new Parser(dbManager);
                             // new StudentService().getStudentDetail();
                             studentService.getStudentList();
                             System.out.println("조회할 수강생 아이디 입력");

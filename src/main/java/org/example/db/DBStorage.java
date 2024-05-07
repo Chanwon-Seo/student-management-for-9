@@ -1,7 +1,6 @@
 package org.example.db;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.example.domain.Score;
 import org.example.domain.Student;
 import org.example.domain.Subject;
@@ -13,7 +12,6 @@ import java.util.List;
 // TODO: Setter custom
 @Getter
 public class DBStorage {
-    //TODO CUSTOM Setter
     private Integer studentIdNum = 2024000;
     private Integer subjectIdNum = 0;
 
@@ -21,7 +19,6 @@ public class DBStorage {
     private final List<Score> scoreList = new LinkedList<>();
 
     //TODO subjectType = 열거형?
-
     private final List<Subject> subjectList = List.of(
             new Subject(
                     ++subjectIdNum,
