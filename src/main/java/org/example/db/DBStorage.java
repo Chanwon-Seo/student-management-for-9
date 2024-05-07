@@ -13,16 +13,13 @@ import java.util.List;
 // TODO: Setter custom
 @Getter
 public class DBStorage {
-    @Getter
-    //TODO CUSTOM Setter
-    private static Integer studentIdNum = 2024000;
-    private static Integer subjectIdNum = 0;
+    private Integer studentIdNum = 2024000;
+    private Integer subjectIdNum = 0;
 
     private final List<Student> studentList = new LinkedList<>();
     private final List<Score> scoreList = new LinkedList<>();
 
     //TODO subjectType = 열거형?
-
     private final List<Subject> subjectList = List.of(
             new Subject(
                     ++subjectIdNum,
