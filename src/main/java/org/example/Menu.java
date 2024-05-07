@@ -7,14 +7,7 @@ public class Menu {
     static Scanner sc = new Scanner(System.in);
 
     public void startPage() {
-//        int studentCount = 0;
-//        StudentService studentService = new StudentService();
-//        List<Student> studentList = DBStorage.getStudentList();
-//        int num = 0;
 
-//        studentList.add(new Student(num++, "kimchi", "19990909", new HashSet<>()));
-//        studentList.add(new Student(num++, "dubu", "19990909", new HashSet<>()));
-//        studentList.add(new Student(num++, "egg", "19990909", new HashSet<>()));
 
         while (true) {
             System.out.printf("%n");

@@ -8,6 +8,8 @@ import org.example.domain.Subject;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 
 // TODO: Setter custom
@@ -78,5 +80,17 @@ public class DBStorage {
 
     public static void addStudentList(Student st) {
         studentList.add(st);
+    }
+    /*
+     * @차도범
+     * 수강생 아이디로 수강생을 찾음
+     * */
+    public Optional<Student> studentFindById(Integer studentId) {
+        for (Student student : studentList) {
+            if (Objects.equals(student.getStudentId(), studentId)) {
+                return Optional.of(student);
+            }
+        }
+        return Optional.empty();
     }
 }

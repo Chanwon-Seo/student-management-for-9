@@ -1,17 +1,16 @@
 package org.example.service;
 
 
-import lombok.Getter;
 import org.example.DBStorage;
-import org.example.Main;
 import org.example.domain.Student;
 import org.example.domain.Subject;
 
 import java.util.*;
 
-import java.util.List;
-
 public class StudentService {
+
+    private final DBStorage dbStorage;
+
     static final int MIN_REQUIRED_SUBJECTS = 3;
     static final int MIN_ELECTIVE_SUBJECTS = 2;
     List<Subject> sub = DBStorage.getSubjectList();
@@ -23,40 +22,45 @@ public class StudentService {
     DBStorage db = new DBStorage();
     List<Student> studentList = DBStorage.getStudentList();
 
-    //학생 리스트
+    public StudentService(DBStorage dbStorage) {
+        this.dbStorage = dbStorage;
+    }
+
+    /*@차도범
+     * 수강생 목록을 출력
+     * */
     public void getStudentList() {
         System.out.println("id / name");
-        for (Student student : studentList) {
-            System.out.println(student.getStudentIdInteger() + " : " + student.getStudentName());
-        }
-        System.out.println("확인할 학생 아이디 입력 (종류 -1)>");
-        int id = Integer.parseInt(sc.nextLine());
-        if (id == -1) return;
-        Student student;
-        if(studentFindById(id)) getStudentDetail(studentList.get(id));
-    }
-
-    //학생 상세
-    public void getStudentDetail(Student student) {
-        System.out.println("----학생 상세-----");
-        System.out.println("id : " + student.getStudentIdInteger());
-        System.out.println("이름 : " + student.getStudentName());
-        System.out.println("생년월일 : " + student.getBirthDay());
-        System.out.println("상태 : " + student.getStudentState());
-        for (Integer subjectId : student.getSubjectId()) {
-            System.out.println("과목 : " + subjectId);
+        for (Student student : DBStorage.getStudentList()) {
+            System.out.println(student.getStudentId() + " : " + student.getStudentName());
         }
     }
 
-    //학생 아이디로 검색
-    public boolean studentFindById(Integer studentId) {
-        for (Student student : studentList) {
-            if (student.getStudentIdInteger() == studentId) {
-                return true;
+    /*
+     * @차도범
+     * 수강생 상세 값 출력
+     * */
+    public void getStudentDetail(int studentId) {
+        Optional<Student> optStudent = db.studentFindById(studentId);
+        Student student = optStudent.orElse(null);
+        if (student == null) return;
+        else {
+            System.out.println("----학생 상세-----");
+            System.out.println("id : " + student.getStudentId());
+            System.out.println("이름 : " + student.getStudentName());
+            System.out.println("생년월일 : " + student.getBirthDay());
+            System.out.println("상태 : " + student.getStudentState());
+
+            //찾은 과목리스트와 과목리스트를
+            for (Subject subject : DBStorage.getSubjectList()) {
+                for (Integer id : student.getSubjectId()) {
+                    if (Objects.equals(subject.getSubjectId(), id)) {
+                        System.out.println(subject.getSubjectId() + " : " +
+                                subject.getSubjectName() + " - " + subject.getSubjectType());
+                    }
+                }
             }
         }
-//        throw new Exception("null");
-        return false;
     }
 
 
@@ -98,7 +102,7 @@ public class StudentService {
 
         if (rSub >= MIN_REQUIRED_SUBJECTS && eSub >= MIN_ELECTIVE_SUBJECTS) {
             System.out.println("수강자가 생성되었습니다.");
-            Student st = new Student(++Main.uNumber, name, birth, subjectId);
+            Student st = new Student(1, name, birth, subjectId);
             DBStorage.addStudentList(st);
             rSub = 0;
             eSub = 0;
@@ -115,26 +119,25 @@ public class StudentService {
     }
 
     //String 값 입력
-    public String inputString(String m){
+    public String inputString(String m) {
         System.out.print(m);
         return sc.nextLine();
     }
 
     //수강 과목 추가
-    public Integer addSubject(){
-        while(true){
+    public Integer addSubject() {
+        while (true) {
             String s = sc.nextLine();
-            if("exit".equals(s)){
+            if ("exit".equals(s)) {
                 return 0;
             }
-            for(Subject si:sub){
-                if(si.getSubjectName().equals(s)){
+            for (Subject si : sub) {
+                if (si.getSubjectName().equals(s)) {
                     System.out.println("과목 추가 완료");
 
-                    if(si.getSubjectType().equals("SUBJECT_TYPE_MANDATORY")){
+                    if (si.getSubjectType().equals("SUBJECT_TYPE_MANDATORY")) {
                         rSub++;
-                    }
-                    else{
+                    } else {
                         eSub++;
                     }
 
