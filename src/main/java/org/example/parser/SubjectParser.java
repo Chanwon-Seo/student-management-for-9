@@ -1,8 +1,17 @@
 package org.example.parser;
 
 import org.example.domain.Subject;
+import org.example.db.DBManager;
+import org.example.db.DBStorage;
 
 public class SubjectParser {
+
+    DBManager dbManager;
+
+    public SubjectParser(DBManager dbManager){
+        this.dbManager = dbManager;
+    }
+
     /**
      * @return
      * @찬원 과목 정보 조회
@@ -29,7 +38,7 @@ public class SubjectParser {
      * throw 조회된 과목이 없을 경우
 //     */
     public boolean subjectIsEmptyCheck(Integer subjectId) throws Exception {
-        for (Subject subject : DBStorage.getSubjectList()) {
+        for (Subject subject : dbManager.findBySubjects()) {
             if (subjectId == subject.getSubjectId()) {
                 return true;
             }

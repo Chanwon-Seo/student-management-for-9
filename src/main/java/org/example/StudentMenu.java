@@ -35,7 +35,7 @@ public class StudentMenu {
                             System.out.println("***** 수강생 등록*****");
                             System.out.println("메인메뉴> 수강생 관리>...");
 
-                            new StudentService().createStudent();
+                            new StudentService(dbManager).createStudent();
 
                             break;
                         case 2: //연결되었습니다.
@@ -43,7 +43,7 @@ public class StudentMenu {
                             System.out.println("메인메뉴> 수강생 관리>...");
 
                             // new StudentService().getStudentDetail();
-                            new StudentService().getStudentList();
+                            new StudentService(dbManager).getStudentList();
 
                             break;
 

@@ -1,7 +1,7 @@
 package org.example.service;
 
-import org.example.DBStorage;
 import org.example.domain.Score;
+import org.example.db.DBManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;

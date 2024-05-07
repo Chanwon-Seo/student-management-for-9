@@ -1,8 +1,8 @@
 package org.example.parser;
 
-
-import org.example.DBStorage;
 import org.example.domain.Score;
+import org.example.db.DBManager;
+import org.example.db.DBStorage;
 
 import java.util.List;
 

@@ -1,9 +1,9 @@
 package org.example.service;
 
-
 import org.example.domain.Student;
 import org.example.domain.Subject;
 import org.example.parser.Parser;
+import org.example.db.DBManager;
 
 import java.util.*;
 
@@ -13,17 +13,20 @@ public class StudentService {
     static final int MIN_REQUIRED_SUBJECTS = 3;
     static final int MIN_ELECTIVE_SUBJECTS = 2;
     //TODO
-//    List<Subject> sub = DBStorage.getSubjectList();
+    List<Subject> sub;
     Set<Integer> subjectId = new HashSet<>();
     Scanner sc = new Scanner(System.in);
-    Integer stNum = DBStorage.getStudentIdNum();
-    Parser parser = new Parser();
+    DBManager dbManager;
+    Integer stNum;
+    Parser parser = new Parser(dbManager);
     int rSub = 0;
     int eSub = 0;
 
-//    DBStorage db = new DBStorage();
-    //TODO
-//    List<Student> studentList = DBStorage.getStudentList();
+    public StudentService(DBManager dbManager){
+        this.dbManager = dbManager;
+        stNum = dbManager.findByStudentIdNum();
+        sub = dbManager.findBySubjects();
+    }
 
     //학생 리스트
     public void getStudentList() {
@@ -84,8 +87,8 @@ public class StudentService {
             System.out.println("수강자가 생성되었습니다.");
             //TODO
             Student st = new Student(stNum, name, birth, subjectId);
-            DBStorage.setStudentIdNum(++stNum);
-            DBStorage.getStudentList().add(st);
+            dbManager.updateStudentIdNum(stNum);
+            dbManager.addStudentList(st);
             rSub=0;
             eSub=0;
         }
