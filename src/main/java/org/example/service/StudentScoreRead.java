@@ -11,7 +11,7 @@ import java.util.Map;
 public class StudentScoreRead {
 
     //TODO
-    public DBStorage storage = new DBStorage();
+//    public DBStorage storage = new DBStorage();
 
     public void TempSaveArea() {
         Map<Integer, Integer> scoreId = new HashMap<>();
