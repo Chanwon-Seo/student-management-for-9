@@ -60,7 +60,13 @@ public class ScoreMenu {
                         case 3: /* @세미 */
                             System.out.println("*****수강생 과목별 회차점수 수정*****");
                             System.out.println("메인메뉴> 수강생 점수관리>...");
-
+                            System.out.print("수강생 고유번호 입력 : ");
+                            studentInput = Integer.parseInt(sc.nextLine());
+                            System.out.print("과목 고유번호 입력 : ");
+                            subjectInput = Integer.parseInt(sc.nextLine());
+                            System.out.print("회차 번호 조회 : ");
+                            int round = Integer.parseInt(sc.nextLine());
+                            new StudentScoreRead(dbManager).UpdateScore(studentInput, subjectInput, round);
 
                             break;
 

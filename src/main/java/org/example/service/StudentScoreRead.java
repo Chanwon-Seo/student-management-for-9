@@ -57,6 +57,12 @@ public class StudentScoreRead {
         System.out.println("해당과목의 평균은 "+avg+"입니다.");
     }
 
+    // 회차 점수 수정
+    public void UpdateScore(Integer studentId, Integer subjectId,Integer round){
+
+        System.out.println("수정 : 공사중인 함수입니다ㅋㅋ");
+    }
+
     //특정상태 수강생들의 필수 과목 평균 등급 (추가 - 점수관리)
     public void LoadStudentStateOfRequiredSubject(String StudentState){
 
