@@ -15,21 +15,17 @@ public class Parser {
     }
 
     /**
-     * @return
      * @찬원 수강생 점수 등록 검증
      */
     public Subject scoreCreate(Integer subjectIdInput, Integer studentIdInput, Integer roundInput, Integer scoreInput) {
-        Subject findSubjectData = null;
-        try {
-            findSubjectData = subjectParser.subjectEmptyCheckValid(subjectIdInput);
-            studentParser.studentEmptyCheckValid(studentIdInput);
-            scoreParser.scoreRoundInputOneToTenCheckValid(roundInput);
-            scoreParser.scoreInputZeroToOneHundredCheckValid(scoreInput);
+        Subject findSubjectData;
+        findSubjectData = subjectParser.subjectEmptyCheckValid(subjectIdInput);
+        studentParser.studentEmptyCheckValid(studentIdInput);
+        scoreParser.scoreRoundInputOneToTenCheckValid(roundInput);
+        scoreParser.scoreInputZeroToOneHundredCheckValid(scoreInput);
 
-            scoreParser.scoreDuplicatedCheckValid(roundInput);
-        } catch (RuntimeException e) {
-            System.out.println(e.getMessage());
-        }
+        scoreParser.scoreDuplicatedCheckValidv2(subjectIdInput, studentIdInput, roundInput);
+
         return findSubjectData;
     }
 }

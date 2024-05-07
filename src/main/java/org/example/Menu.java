@@ -3,7 +3,6 @@ package org.example;
 import java.util.Scanner;
 
 public class Menu {
-    static DBStorage dbStorage = new DBStorage();
     static Scanner sc = new Scanner(System.in);
 
     public void startPage() {

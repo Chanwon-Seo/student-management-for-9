@@ -71,8 +71,7 @@ public class DBStorage {
             )
     );
 
-    public void saveScoreList(Score score) {
-        // null 예외처리
+    public static void saveScoreList(Score score) {
         scoreList.add(score);
     }
 

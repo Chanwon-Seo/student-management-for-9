@@ -3,10 +3,8 @@
 
 package org.example;
 
-import org.example.domain.Student;
 import org.example.service.StudentService;
 
-import static org.example.Menu.dbStorage;
 import static org.example.Menu.sc;
 
 public class StudentMenu {
