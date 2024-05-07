@@ -1,9 +1,9 @@
 package org.example.service;
 
-import org.example.DBStorage;
+import org.example.db.DBManager;
 import org.example.domain.Score;
 
-
+import java.util.List;
 
 
 public class StudentScoreRead {
@@ -17,7 +17,7 @@ public class StudentScoreRead {
 
         System.out.println("학생고유번호: " + studentId + "  과목번호: " + subjectId);
 
-        List<Score> score = DBStorage.getScoreList();
+        List<Score> score = dbManager.getScoreList();
         for (Score s : score) {
             if (s.getStudentId().equals(studentId) && s.getSubjectId().equals(subjectId)) {
                 var temp = s.getScoreId();

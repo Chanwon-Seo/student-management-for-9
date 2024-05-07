@@ -1,14 +1,17 @@
 package org.example.parser;
 
+import org.example.db.DBManager;
 import org.example.domain.Subject;
 
 //@RequiredArgsConstructor
 public class Parser {
+    private final DBManager dbManager;
     private final StudentParser studentParser;
     private final ScoreParser scoreParser;
     private final SubjectParser subjectParser;
 
-    public Parser() {
+    public Parser(DBManager dbManager) {
+        this.dbManager = dbManager;
         this.studentParser = new StudentParser();
         this.scoreParser = new ScoreParser();
         this.subjectParser = new SubjectParser();
@@ -40,8 +43,8 @@ public class Parser {
         Subject findSubjectData = null;
         try {
             findSubjectData = subjectParser.subjectEmptyCheckValid(subjectIdInput);
-            studentParser.studentEmptyCheckValid(studentIdInput);
-            scoreParser.scoreNullCheckValid(roundInput);
+            studentParser.studentEmptyCheckValid(dbManager,studentIdInput);
+            //scoreParser.scoreNullCheckValid(roundInput);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }

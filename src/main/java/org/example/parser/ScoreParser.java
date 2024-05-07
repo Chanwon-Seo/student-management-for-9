@@ -1,7 +1,7 @@
 package org.example.parser;
 
 
-import org.example.DBStorage;
+import org.example.db.DBManager;
 import org.example.domain.Score;
 
 import java.util.List;
@@ -37,8 +37,8 @@ public class ScoreParser {
     /**
      * @찬원 회차 등록 여부 검증
      */
-    public void scoreDuplicatedCheckValid(Integer roundInput) {
-        if (DBStorage.getScoreList().size() >= roundInput) {
+    public void scoreDuplicatedCheckValid(DBManager dbManager,Integer roundInput) {
+        if (dbManager.getScoreList().size() >= roundInput) {
             throw new RuntimeException("이미 등록된 회차입니다.");
         }
     }
@@ -46,8 +46,8 @@ public class ScoreParser {
     /**
      * @세미 해당 과목 점수 데이터 없음
      */
-    public void scoreNullCheckValid(Integer roundInput) {
-        if (DBStorage.getScoreList().size() <= roundInput) {
+    public void scoreNullCheckValid(DBManager dbManager, Integer roundInput) {
+        if (dbManager.getScoreList().size() <= roundInput) {
             throw new RuntimeException("해당 과목의 점수 데이터가 없습니다.");
         }
     }
