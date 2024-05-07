@@ -1,14 +1,18 @@
 package org.example;
 
 import org.example.db.DBManager;
+import org.example.db.DBStorage;
 
 import java.util.Scanner;
 
 public class Menu {
-    static DBManager dbManager = new DBManager();
+
+
     static Scanner sc = new Scanner(System.in);
 
     public void startPage() {
+        DBStorage dbStorage = new DBStorage();
+        DBManager dbManager = new DBManager(dbStorage);
 //        int studentCount = 0;
 //        StudentService studentService = new StudentService();
 //        List<Student> studentList = DBStorage.getStudentList();
@@ -39,7 +43,7 @@ public class Menu {
                         case 1:
                             System.out.println("***** 수강생 관리 *****");
                             System.out.println("초기메뉴>수강생 관리>...");
-                            new StudentMenu().displayStudentView();
+                            new StudentMenu(dbManager).displayStudentView();
 //                    studentService.displayStudentView();
 //                    manageStudents(students, studentCount, scanner);
                             break;
@@ -70,6 +74,6 @@ public class Menu {
 //else {
 //System.out.println("입력이 없습니다, 다시 입력바랍니다.");
 //fixme: 입력없다면 작동해야지....넌왜 작동안하니..
-            }
         }
     }
+}

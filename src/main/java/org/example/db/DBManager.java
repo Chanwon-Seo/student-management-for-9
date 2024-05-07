@@ -21,12 +21,22 @@ public class DBManager {
      * CUSTOM method
      */
 
-    public List<Subject> findBySubjects() {
-        return dbStorage.getSubjectList();
+
+    public Student studentFindById(int id) {
+        for (Student student : findByStudents()) {
+            if (student.getStudentId() == id) {
+                return student;
+            }
+        }
+        return null;
     }
 
-    public List<Student> findByStudents() {
-        return dbStorage.getStudentList();
+    public Integer findByStudentIdNum() {
+        return dbStorage.getStudentIdNum();
+    }
+
+    public List<Subject> findBySubjects() {
+        return dbStorage.getSubjectList();
     }
 
     /**
@@ -34,6 +44,10 @@ public class DBManager {
      */
     public List<Score> findByScores() {
         return dbStorage.getScoreList();
+    }
+
+    public List<Student> findByStudents() {
+        return dbStorage.getStudentList();
     }
 
     public void addStudentList(Student st) {
@@ -45,10 +59,7 @@ public class DBManager {
     }
 
 
-
-    /**
-     * 단건 조회
-     */
-
-
+    public void updateStudentIdNum(Integer studentIdNum) {
+        dbStorage.setStudentIdNum(++studentIdNum);
+    }
 }

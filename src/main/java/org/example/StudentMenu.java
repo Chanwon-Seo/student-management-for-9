@@ -3,16 +3,28 @@
 
 package org.example;
 
+import org.example.db.DBManager;
 import org.example.domain.Student;
 import org.example.service.StudentService;
 
-import static org.example.Menu.dbStorage;
+import java.util.List;
+
 import static org.example.Menu.sc;
 
 public class StudentMenu {
 
+    private final DBManager dbManager;
+
+
+    public StudentMenu(DBManager dbManager) {
+        this.dbManager = dbManager;
+    }
+
 
     public void displayStudentView() {
+
+        StudentService studentService = new StudentService(dbManager);
+        List<Student> studentList = dbManager.findByStudents();
 
         while (true) {
             System.out.println("1. 수강생 등록");
@@ -29,23 +41,26 @@ public class StudentMenu {
                         case 1:  //연결되었습니다.
                             System.out.println("***** 수강생 등록*****");
                             System.out.println("메인메뉴> 수강생 관리>...");
-                            
-                            new StudentService().createStudent();
+
+                            studentService.createStudent();
 
                             break;
                         case 2: //연결되었습니다.
                             System.out.println("***** 수강생 조회*****");
                             System.out.println("메인메뉴> 수강생 관리>...");
-                            
-                           // new StudentService().getStudentDetail();
-                            new StudentService().getStudentList();
+
+                            // new StudentService().getStudentDetail();
+                            studentService.getStudentList();
+                            System.out.println("조회할 수강생 아이디 입력");
+                            int studentId = Integer.parseInt(sc.nextLine());
+                            studentService.getStudentDetail(studentId);
 
                             break;
 
                         case 3:
                             System.out.println("이전 화면으로 돌아갑니다.");
                             System.out.println("메인메뉴> 이전메뉴로 이동>...");
-                            
+
                             return;
 
 

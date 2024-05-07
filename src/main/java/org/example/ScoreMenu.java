@@ -22,7 +22,6 @@ public class ScoreMenu {
             System.out.println("4. 이전메뉴로 이동");
             System.out.printf("%n");
 
-
             if (sc.hasNextLine()) {
                 try {
                     int i = Integer.parseInt(sc.nextLine());
@@ -40,8 +39,8 @@ public class ScoreMenu {
                             int roundInput = Integer.parseInt(sc.nextLine());
                             System.out.print("학생 점수 입력 : ");
                             int scoreInput = Integer.parseInt(sc.nextLine());
-                            Subject findSubjectData = new Parser().scoreCreate(subjectIdInput, studentIdInput, roundInput, scoreInput);
-                            dbStorage.saveScoreList(new ScoreService().scoreCreateV1(findSubjectData, studentIdInput, roundInput, scoreInput));
+                            Subject findSubjectData = new Parser(dbManager).scoreCreate(subjectIdInput, studentIdInput, roundInput, scoreInput);
+                            dbManager.saveScoreList(new ScoreService().scoreCreateV1(findSubjectData, studentIdInput, roundInput, scoreInput));
                             break;
 
 

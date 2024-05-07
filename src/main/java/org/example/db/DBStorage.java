@@ -13,12 +13,11 @@ import java.util.List;
 // TODO: Setter custom
 @Getter
 public class DBStorage {
+    //TODO CUSTOM Setter
     private Integer studentIdNum = 2024000;
     private Integer subjectIdNum = 0;
 
     private final List<Student> studentList = new LinkedList<>();
-
-    @Getter
     private final List<Score> scoreList = new LinkedList<>();
 
     //TODO subjectType = 열거형?
@@ -70,4 +69,9 @@ public class DBStorage {
                     "SUBJECT_TYPE_CHOICE"
             )
     );
+
+    public void setStudentIdNum(Integer studentIdNum){
+        this.studentIdNum = studentIdNum;
+    }
+
 }
