@@ -17,7 +17,7 @@ public class StudentScoreRead {
 
         System.out.println("학생고유번호: " + studentId + "  과목번호: " + subjectId);
 
-        List<Score> score = dbManager.getScoreList();
+        List<Score> score = dbManager.findByScores();
         for (Score s : score) {
             if (s.getStudentId().equals(studentId) && s.getSubjectId().equals(subjectId)) {
                 var temp = s.getScoreId();

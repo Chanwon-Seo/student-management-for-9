@@ -47,7 +47,7 @@ public class ScoreParser {
      * @세미 해당 과목 점수 데이터 없음
      */
     public void scoreNullCheckValid(DBManager dbManager, Integer roundInput) {
-        if (dbManager.getScoreList().size() <= roundInput) {
+        if (dbManager.findByScores().size() <= roundInput) {
             throw new RuntimeException("해당 과목의 점수 데이터가 없습니다.");
         }
     }

@@ -44,9 +44,7 @@ public class DBManager {
         dbStorage.getScoreList().add(score);
     }
 
-    public List<Score> getScoreList() {
-        return dbStorage.getScoreList();
-    }
+
 
     /**
      * 단건 조회
