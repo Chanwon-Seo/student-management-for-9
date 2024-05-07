@@ -4,15 +4,21 @@
 package org.example;
 
 import lombok.RequiredArgsConstructor;
+import org.example.db.DBManager;
 import org.example.domain.Subject;
 import org.example.parser.Parser;
 import org.example.service.ScoreService;
 
-import static org.example.Menu.dbStorage;
 import static org.example.Menu.sc;
 
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class ScoreMenu {
+    private final DBManager dbManager;
+
+    public ScoreMenu(DBManager dbManager) {
+        this.dbManager = dbManager;
+    }
+
     public void displayScoreView() {
         while (true) {
             System.out.println("1. 수강생 점수 등록");
@@ -39,8 +45,8 @@ public class ScoreMenu {
                             int roundInput = Integer.parseInt(sc.nextLine());
                             System.out.print("학생 점수 입력 : ");
                             int scoreInput = Integer.parseInt(sc.nextLine());
-                            Subject findSubjectData = new Parser().scoreCreate(subjectIdInput, studentIdInput, roundInput, scoreInput);
-                            dbStorage.saveScoreList(new ScoreService().scoreCreateV1(findSubjectData, studentIdInput, roundInput, scoreInput));
+                            Subject findSubjectData = new Parser(dbManager).scoreCreate(subjectIdInput, studentIdInput, roundInput, scoreInput);
+                            dbManager.saveScoreList(new ScoreService().scoreCreateV1(findSubjectData, studentIdInput, roundInput, scoreInput));
                             break;
 
 
@@ -48,7 +54,7 @@ public class ScoreMenu {
                             System.out.println("*****수강생 점수 조회*****");
                             System.out.println("메인메뉴> 수강생 점수관리>...");
 
-                           // new StudentScoreRead().LoadScore();
+                            // new StudentScoreRead().LoadScore();
                             break;
 
 
