@@ -49,8 +49,10 @@ public class ScoreMenu {
                             System.out.println("메인메뉴> 수강생 점수관리>...");
                             System.out.print("수강생 고유번호 입력 : ");
                             int studentInput = Integer.parseInt(sc.nextLine());
+                            //존재하는 수강생인가?
                             System.out.print("과목 고유번호 입력 : ");
                             int subjectInput = Integer.parseInt(sc.nextLine());
+                            // 수강생이 가지고있는 과목인가?
                             new StudentScoreRead(dbManager).LoadScore(studentInput, subjectInput);
 
                             break;
@@ -61,10 +63,13 @@ public class ScoreMenu {
                             System.out.println("메인메뉴> 수강생 점수관리>...");
                             System.out.print("수강생 고유번호 입력 : ");
                             studentInput = Integer.parseInt(sc.nextLine());
+                            // 존재하는 수강생인가?
                             System.out.print("과목 고유번호 입력 : ");
                             subjectInput = Integer.parseInt(sc.nextLine());
+                            // 수강생이 가지고있는 과목인가?
                             System.out.print("회차 번호 조회 : ");
                             int round = Integer.parseInt(sc.nextLine());
+                            // 해당 수강생의 과목에 존재하는 회차인가?
                             new StudentScoreRead(dbManager).UpdateScore(studentInput, subjectInput, round);
 
                             break;
