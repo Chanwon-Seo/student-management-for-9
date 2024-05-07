@@ -4,7 +4,11 @@
 package org.example;
 
 import org.example.db.DBManager;
+import org.example.domain.Student;
 import org.example.service.StudentService;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.example.Menu.sc;
 
@@ -82,7 +86,8 @@ public class StudentMenu {
         }
     }
 
-    public void init() {
-
+    public void testDAta() {
+        Set set = Set.of();
+        dbManager.saveStudent(new Student(1, "서찬원", "990204", set));
     }
 }
