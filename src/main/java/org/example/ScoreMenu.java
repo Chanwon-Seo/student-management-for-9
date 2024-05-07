@@ -27,7 +27,6 @@ public class ScoreMenu {
             System.out.println("4. 이전메뉴로 이동");
             System.out.printf("%n");
 
-
             if (sc.hasNextLine()) {
                 try {
                     int i = Integer.parseInt(sc.nextLine());

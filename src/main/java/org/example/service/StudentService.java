@@ -1,22 +1,27 @@
 package org.example.service;
 
-
-import org.example.db.DBManager;
 import org.example.domain.Student;
 import org.example.domain.Subject;
+import org.example.parser.Parser;
+import org.example.db.DBManager;
 import org.example.parser.StudentParser;
 
 import java.util.*;
 
+import java.util.List;
+
 public class StudentService {
 
-    private final DBManager dbManager;
+    //private final DBManager dbManager;
 
     static final int MIN_REQUIRED_SUBJECTS = 3;
     static final int MIN_ELECTIVE_SUBJECTS = 2;
+    //TODO
     List<Subject> sub;
     Set<Integer> subjectId = new HashSet<>();
     Scanner sc = new Scanner(System.in);
+    DBManager dbManager;
+    Parser parser;
     int rSub = 0;
     int eSub = 0;
 
@@ -24,6 +29,7 @@ public class StudentService {
 
     public StudentService(DBManager dbManager) {
         this.dbManager = dbManager;
+        parser = new Parser(dbManager);
         sub = dbManager.findBySubjects();
         studentList = dbManager.findByStudents();
     }
@@ -106,17 +112,26 @@ public class StudentService {
 
         if (rSub >= MIN_REQUIRED_SUBJECTS && eSub >= MIN_ELECTIVE_SUBJECTS) {
             System.out.println("수강자가 생성되었습니다.");
-            Student st = new Student(1, name, birth, subjectId);
+            //TODO
+            dbManager.updateStudentIdNum(dbManager.findByStudentIdNum());
+            Student st = new Student(dbManager.findByStudentIdNum(), name, birth, subjectId);
             dbManager.addStudentList(st);
+            rSub=0;
+            eSub=0;
+        }
+        else if(rSub<MIN_REQUIRED_SUBJECTS && eSub<MIN_ELECTIVE_SUBJECTS){
+            System.out.println("필수과목이 " + (MIN_REQUIRED_SUBJECTS-rSub) + "과목, 선택과목이 " + (MIN_ELECTIVE_SUBJECTS-eSub) + "과목이 부족해 수강생이 등록되지 않습니다.");
+        }
+        else if(rSub<MIN_REQUIRED_SUBJECTS){
+            System.out.println("필수과목이 " + (MIN_REQUIRED_SUBJECTS-rSub) + "과목 부족해 수강생이 등록되지 않습니다.");
+        }
+        else {
+            System.out.println("선택과목이 " + (MIN_ELECTIVE_SUBJECTS - eSub) + "과목 부족해 수강생이 등록되지 않습니다.");
+
             rSub = 0;
             eSub = 0;
-        } else if (rSub < MIN_REQUIRED_SUBJECTS && eSub < MIN_ELECTIVE_SUBJECTS) {
-            System.out.println("필수과목이 " + (MIN_REQUIRED_SUBJECTS - rSub) + "과목, 선택과목이 " + (MIN_ELECTIVE_SUBJECTS - eSub) + "선택과목이 부족해 수강생이 등록되지 않습니다.");
-        } else if (rSub < MIN_REQUIRED_SUBJECTS) {
-            System.out.println("필수과목이 " + (MIN_REQUIRED_SUBJECTS - rSub) + "과목 부족해 수강생이 등록되지 않습니다.");
-        } else {
-            System.out.println("선택과목이 " + (MIN_ELECTIVE_SUBJECTS - eSub) + "과목 부족해 수강생이 등록되지 않습니다.");
         }
+        System.out.println();
     }
 
     //String 값 입력
@@ -125,27 +140,34 @@ public class StudentService {
         return sc.nextLine();
     }
 
-    //수강 과목 추가
-    public Integer addSubject() {
-        while (true) {
+    public Integer addSubject(){
+        while(true){
             String s = sc.nextLine();
-            if ("exit".equals(s)) {
+
+            if("exit".equals(s)) {
                 return 0;
             }
-            for (Subject si : sub) {
-                if (si.getSubjectName().equals(s)) {
-                    System.out.println("과목 추가 완료");
 
-                    if (si.getSubjectType().equals("SUBJECT_TYPE_MANDATORY")) {
+            try {
+                Integer id = Integer.parseInt(s);
+
+                if (parser.subjectIdCheck(id)) {
+                    System.out.println("과목 추가 완료");
+                    Subject subject = parser.subjectReturn(id);
+
+                    if (subject != null && subject.getSubjectType().equals("SUBJECT_TYPE_MANDATORY")) {
                         rSub++;
                     } else {
                         eSub++;
                     }
-
-                    return si.getSubjectId();
+                    return id;
                 }
+
+            } catch (NumberFormatException e){
+                System.out.println("잘못된 입력입니다. 숫자 또는 \"exit\"만 입력해주세요.");
             }
-            System.out.println("일치하는 과목이 없습니다. 다시 입력해주세요.");
+
         }
     }
+
 }

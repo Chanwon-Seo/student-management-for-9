@@ -4,8 +4,6 @@ package org.example.db;
 import org.example.domain.Score;
 import org.example.domain.Student;
 import org.example.domain.Subject;
-
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -25,10 +23,6 @@ public class DBManager {
         return dbStorage.getStudentList();
     }
 
-    public List<Subject> findBySubjects() {
-        return dbStorage.getSubjectList();
-    }
-
     public Student studentFindById(int id) {
         for (Student student : findByStudents()) {
             if (student.getStudentId() == id) {
@@ -36,6 +30,20 @@ public class DBManager {
             }
         }
         return null;
+    }
+
+    public Integer findByStudentIdNum(){
+        return dbStorage.getStudentIdNum();
+    }
+
+    public List<Subject> findBySubjects() {
+        return dbStorage.getSubjectList();
+    }
+    /**
+     * 다건 조회
+     */
+    public List<Score> findByScores() {
+        return dbStorage.getScoreList();
     }
 
     public void addStudentList(Student st) {
@@ -46,8 +54,14 @@ public class DBManager {
         dbStorage.getScoreList().add(score);
     }
 
-    public List<Score> findByScores() {
-        return dbStorage.getScoreList();
+
+
+    public void updateStudentIdNum(Integer studentIdNum){
+        dbStorage.setStudentIdNum(++studentIdNum);
     }
+
+    /**
+     * 단건 조회
+     */
 
 }
