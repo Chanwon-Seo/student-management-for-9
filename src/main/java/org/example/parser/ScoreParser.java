@@ -23,7 +23,7 @@ public class ScoreParser {
         if (SCORE_ROUND_MIN_VALUE <= roundInput && roundInput <= SCORE_ROUND_MAX_VALUE) {
             return;
         }
-        throw new RuntimeException("회차 범위는 " + SCORE_ROUND_MIN_VALUE + " ~ " + SCORE_ROUND_MAX_VALUE + " 까지 입니다.");
+        throw new RuntimeException("회차 범위는 " + SCORE_ROUND_MIN_VALUE + " ~ " + SCORE_ROUND_MAX_VALUE + " 까지 입니다.\n");
     }
 
     /**
@@ -34,7 +34,7 @@ public class ScoreParser {
         if (SCORE_MIN_VALUE <= roundInput && roundInput <= SCORE_MAX_VALUE) {
             return;
         }
-        throw new RuntimeException("점수 범위는 " + SCORE_MIN_VALUE + " ~ " + SCORE_MAX_VALUE + " 까지 입니다.");
+        throw new RuntimeException("점수 범위는 " + SCORE_MIN_VALUE + " ~ " + SCORE_MAX_VALUE + " 까지 입니다.\n");
     }
 
     /**
@@ -54,7 +54,7 @@ public class ScoreParser {
 
         //등록된 회차가 없는 경우
         if (findScoreData == null && roundInput != 1) {
-            throw new RuntimeException("1회차가 입력되지 않았습니다.");
+            throw new RuntimeException("1회차가 입력되지 않았습니다.\n");
         }
 
         //등록된 회차가 있는 경우
@@ -63,11 +63,11 @@ public class ScoreParser {
 
             //동일한 회차 또는 이미 등록된 회차 등록인 경우
             if (scoreSize >= roundInput) {
-                throw new RuntimeException("이미 등록된 회차입니다.");
+                throw new RuntimeException("이미 등록된 회차입니다.\n");
             }
             //이전 회차 미등록인 경우
             if (scoreSize == roundInput - 1) {
-                throw new RuntimeException("이전 회차에서 미등록한 회차가 있습니다.");
+                throw new RuntimeException("이전 회차에서 미등록한 회차가 있습니다.\n");
             }
         }
     }

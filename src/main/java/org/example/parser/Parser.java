@@ -20,14 +20,19 @@ public class Parser {
      * @찬원 수강생 점수 등록 검증
      */
     public Subject scoreCreate(Integer subjectIdInput, Integer studentIdInput, Integer roundInput, Integer scoreInput) {
-        Subject findSubjectData;
-        findSubjectData = subjectParser.subjectEmptyCheckValid(subjectIdInput);
-        studentParser.studentEmptyCheckValid(studentIdInput);
-        scoreParser.scoreRoundInputOneToTenCheckValid(roundInput);
-        scoreParser.scoreInputZeroToOneHundredCheckValid(scoreInput);
 
-        scoreParser.scoreDuplicatedCheckValidv2(subjectIdInput, studentIdInput, roundInput);
+        Subject findSubjectData = null;
+        //TODO 예외 처리
+        try {
+            findSubjectData = subjectParser.subjectEmptyCheckValid(subjectIdInput);
+            studentParser.studentEmptyCheckValid(findSubjectData, studentIdInput);
+            scoreParser.scoreRoundInputOneToTenCheckValid(roundInput);
+            scoreParser.scoreInputZeroToOneHundredCheckValid(scoreInput);
 
+            scoreParser.scoreDuplicatedCheckValidv2(subjectIdInput, studentIdInput, roundInput);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e.getMessage());
+        }
         return findSubjectData;
     }
 }

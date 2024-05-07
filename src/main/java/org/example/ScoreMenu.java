@@ -3,7 +3,6 @@
 
 package org.example;
 
-import lombok.RequiredArgsConstructor;
 import org.example.db.DBManager;
 import org.example.domain.Subject;
 import org.example.parser.Parser;
@@ -31,7 +30,6 @@ public class ScoreMenu {
             if (sc.hasNextLine()) {
                 try {
                     int i = Integer.parseInt(sc.nextLine());
-
                     switch (i) {
                         case 1:
                             int subjectIdInput, studentIdInput, roundInput, scoreInput;
@@ -49,12 +47,17 @@ public class ScoreMenu {
                                 roundInput = Integer.parseInt(sc.nextLine());
                                 System.out.print("학생 점수 입력 : ");
                                 scoreInput = Integer.parseInt(sc.nextLine());
+
                                 findSubjectData = new Parser(dbManager).scoreCreate(subjectIdInput, studentIdInput, roundInput, scoreInput);
+                                dbManager.saveScore(new ScoreService().scoreCreateV1(findSubjectData, studentIdInput, roundInput, scoreInput));
+                                System.out.println("수강생의 점수를 등록하였습니다.\n");
+
+                            } catch (NumberFormatException e) {
+                                throw new NumberFormatException();
                             } catch (RuntimeException e) {
                                 System.out.println(e.getMessage());
                                 break;
                             }
-                            dbManager.saveScoreList(new ScoreService().scoreCreateV1(findSubjectData, studentIdInput, roundInput, scoreInput));
                             break;
 
 

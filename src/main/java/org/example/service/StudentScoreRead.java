@@ -35,22 +35,22 @@ public class StudentScoreRead {
 //        storage.setScoreList(scoreListTemp);
     }
 
-    public void LoadScore(Integer studentId, Integer subjectId) {
-
-        System.out.println("학생고유번호: " + studentId + "  과목번호: " + subjectId);
-
-        List<Score> score = storage.getScoreList();
-        for (Score s : score) {
-            if (s.getStudentId().equals(studentId) && s.getSubjectId().equals(subjectId)) {
-                s.getScoreId();
-                var temp = s.getScoreId();
-                for (int i = 0; i < temp.size(); i++) {
-                    System.out.print("회차: " + temp.keySet().toArray()[i]);
-                    System.out.println(" , 점수: " + temp.values().toArray()[i]);
-                }
-            }
-        }
-    }
+//    public void LoadScore(Integer studentId, Integer subjectId) {
+//
+//        System.out.println("학생고유번호: " + studentId + "  과목번호: " + subjectId);
+//
+//        List<Score> score = storage.getScoreList();
+//        for (Score s : score) {
+//            if (s.getStudentId().equals(studentId) && s.getSubjectId().equals(subjectId)) {
+//                s.getScoreId();
+//                var temp = s.getScoreId();
+//                for (int i = 0; i < temp.size(); i++) {
+//                    System.out.print("회차: " + temp.keySet().toArray()[i]);
+//                    System.out.println(" , 점수: " + temp.values().toArray()[i]);
+//                }
+//            }
+//        }
+//    }
 
 //    public static void main(String[] args) {
 //        StudentScoreRead studentScoreRead = new StudentScoreRead();

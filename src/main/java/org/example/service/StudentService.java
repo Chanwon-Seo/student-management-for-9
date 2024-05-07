@@ -24,15 +24,15 @@ public class StudentService {
 
     //학생 리스트
     public void getStudentList() {
-        System.out.println("id / name");
-        for (Student student : studentList) {
-            System.out.println(student.getStudentId() + " : " + student.getStudentName());
-        }
-        System.out.println("확인할 학생 아이디 입력 (종류 -1)>");
-        int id = Integer.parseInt(sc.nextLine());
-        if (id == -1) return;
-        Student student = studentFindById(id);
-        getStudentDetail(student);
+//        System.out.println("id / name");
+//        for (Student student : studentList) {
+//            System.out.println(student.getStudentId() + " : " + student.getStudentName());
+//        }
+//        System.out.println("확인할 학생 아이디 입력 (종류 -1)>");
+//        int id = Integer.parseInt(sc.nextLine());
+//        if (id == -1) return;
+//        Student student = studentFindById(id);
+//        getStudentDetail(student);
     }
 
     //학생 상세
@@ -49,11 +49,11 @@ public class StudentService {
 
     //학생 아이디로 검색
     public Student studentFindById(Integer studentId) {
-        for (Student student : studentList) {
-            if (student.getStudentId() == studentId) {
-                return student;
-            }
-        }
+//        for (Student student : studentList) {
+//            if (student.getStudentId() == studentId) {
+//                return student;
+//            }
+//        }
         return null;
     }
 
@@ -66,9 +66,9 @@ public class StudentService {
         String name = inputString("수강생 이름 입력: ");
         String birth = inputString("수강생 생년월일 입력: ");
 
-        sub.forEach(subject -> {
-            System.out.println("고유ID: " + subject.getSubjectId() + ", 제목: " + subject.getSubjectName() + ", 과목: " + subject.getSubjectType());
-        });
+//        sub.forEach(subject -> {
+//            System.out.println("고유ID: " + subject.getSubjectId() + ", 제목: " + subject.getSubjectName() + ", 과목: " + subject.getSubjectType());
+//        });
 
         System.out.println("\n수강할 과목의 제목을 입력해주세요. (종료 exit)");
 
@@ -107,19 +107,19 @@ public class StudentService {
             if ("exit".equals(s)) {
                 return 0;
             }
-            for (Subject si : sub) {
-                if (si.getSubjectName().equals(s)) {
-                    System.out.println("과목 추가 완료");
-
-                    if (si.getSubjectType().equals("SUBJECT_TYPE_MANDATORY")) {
-                        rSub++;
-                    } else {
-                        eSub++;
-                    }
-
-                    return si.getSubjectId();
-                }
-            }
+//            for (Subject si : sub) {
+//                if (si.getSubjectName().equals(s)) {
+//                    System.out.println("과목 추가 완료");
+//
+//                    if (si.getSubjectType().equals("SUBJECT_TYPE_MANDATORY")) {
+//                        rSub++;
+//                    } else {
+//                        eSub++;
+//                    }
+//
+//                    return si.getSubjectId();
+//                }
+//            }
             System.out.println("일치하는 과목이 없습니다. 다시 입력해주세요.");
         }
     }
