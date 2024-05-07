@@ -9,6 +9,7 @@ import org.example.parser.Parser;
 import org.example.service.ScoreService;
 
 import static org.example.Menu.dbStorage;
+//import static org.example.Menu.dbStorage;
 import static org.example.Menu.sc;
 
 @RequiredArgsConstructor
@@ -41,6 +42,7 @@ public class ScoreMenu {
                             int scoreInput = Integer.parseInt(sc.nextLine());
                             Subject findSubjectData = new Parser().scoreCreate(subjectIdInput, studentIdInput, roundInput, scoreInput);
                             dbStorage.saveScoreList(new ScoreService().scoreCreateV1(findSubjectData, studentIdInput, roundInput, scoreInput));
+                            //dbStorage.saveScoreList(new ScoreService().scoreCreateV1(findSubjectData, studentIdInput, roundInput, scoreInput));
                             break;
 
 
