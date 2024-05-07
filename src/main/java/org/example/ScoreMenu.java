@@ -8,25 +8,19 @@ import org.example.db.DBManager;
 import org.example.domain.Subject;
 import org.example.parser.Parser;
 import org.example.service.ScoreService;
+import org.example.service.StudentScoreRead;
 
 import static org.example.Menu.sc;
 
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class ScoreMenu {
-    private final DBManager dbManager;
-
-    public ScoreMenu(DBManager dbManager) {
-        this.dbManager = dbManager;
-    }
-
-    public void displayScoreView() {
+    public void displayScoreView(DBManager dbManager) {
         while (true) {
             System.out.println("1. 수강생 점수 등록");
             System.out.println("2. 수강생 점수 조회");
             System.out.println("3. 수강생 과목별 회차 점수 수정");
             System.out.println("4. 이전메뉴로 이동");
             System.out.printf("%n");
-
 
             if (sc.hasNextLine()) {
                 try {
@@ -50,18 +44,28 @@ public class ScoreMenu {
                             break;
 
 
-                        case 2:
+                        case 2: /* @세미 */
                             System.out.println("*****수강생 점수 조회*****");
                             System.out.println("메인메뉴> 수강생 점수관리>...");
+                            System.out.print("수강생 고유번호 입력 : ");
+                            int studentInput = Integer.parseInt(sc.nextLine());
+                            System.out.print("과목 고유번호 입력 : ");
+                            int subjectInput = Integer.parseInt(sc.nextLine());
+                            new StudentScoreRead(dbManager).LoadScore(studentInput, subjectInput);
 
-                            // new StudentScoreRead().LoadScore();
                             break;
 
 
-                        case 3:
+                        case 3: /* @세미 */
                             System.out.println("*****수강생 과목별 회차점수 수정*****");
                             System.out.println("메인메뉴> 수강생 점수관리>...");
-
+                            System.out.print("수강생 고유번호 입력 : ");
+                            studentInput = Integer.parseInt(sc.nextLine());
+                            System.out.print("과목 고유번호 입력 : ");
+                            subjectInput = Integer.parseInt(sc.nextLine());
+                            System.out.print("회차 번호 조회 : ");
+                            int round = Integer.parseInt(sc.nextLine());
+                            new StudentScoreRead(dbManager).UpdateScore(studentInput, subjectInput, round);
 
                             break;
 

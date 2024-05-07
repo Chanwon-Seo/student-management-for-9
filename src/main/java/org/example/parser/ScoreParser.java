@@ -1,13 +1,12 @@
 package org.example.parser;
 
-
 import org.example.db.DBManager;
 
 public class ScoreParser {
     private final DBManager dbManager;
 
     static final int SCORE_ROUND_MIN_VALUE = 1;
-    static final int SCORE_ROUND_MAX_VALUE = 1;
+    static final int SCORE_ROUND_MAX_VALUE = 10;
     static final int SCORE_MIN_VALUE = 0;
     static final int SCORE_MAX_VALUE = 100;
 

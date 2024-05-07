@@ -7,7 +7,6 @@ import org.example.db.DBManager;
 import org.example.domain.Student;
 import org.example.service.StudentService;
 
-import java.util.HashSet;
 import java.util.List;
 
 import static org.example.Menu.sc;
@@ -16,21 +15,16 @@ public class StudentMenu {
 
     private final DBManager dbManager;
 
+
     public StudentMenu(DBManager dbManager) {
         this.dbManager = dbManager;
     }
 
 
     public void displayStudentView() {
+
         StudentService studentService = new StudentService(dbManager);
         List<Student> studentList = dbManager.findByStudents();
-
-        /*
-        * test 초기값 설정*/
-        int num = 0;
-        studentList.add(new Student(num++, "kimchi", "19990909", new HashSet<>()));
-        studentList.add(new Student(num++, "dubu", "19990909", new HashSet<>()));
-        studentList.add(new Student(num++, "egg", "19990909", new HashSet<>()));
 
         while (true) {
             System.out.println("1. 수강생 등록");
@@ -66,7 +60,7 @@ public class StudentMenu {
                         case 3:
                             System.out.println("이전 화면으로 돌아갑니다.");
                             System.out.println("메인메뉴> 이전메뉴로 이동>...");
-                            
+
                             return;
 
 

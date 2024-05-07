@@ -6,14 +6,21 @@ import org.example.db.DBStorage;
 import java.util.Scanner;
 
 public class Menu {
+
+
     static Scanner sc = new Scanner(System.in);
 
     public void startPage() {
-        /**
-         * DBStorage 생성 및 DBManager 생성
-         */
         DBStorage dbStorage = new DBStorage();
         DBManager dbManager = new DBManager(dbStorage);
+//        int studentCount = 0;
+//        StudentService studentService = new StudentService();
+//        List<Student> studentList = DBStorage.getStudentList();
+//        int num = 0;
+
+//        studentList.add(new Student(num++, "kimchi", "19990909", new HashSet<>()));
+//        studentList.add(new Student(num++, "dubu", "19990909", new HashSet<>()));
+//        studentList.add(new Student(num++, "egg", "19990909", new HashSet<>()));
 
         while (true) {
             System.out.printf("%n");
@@ -45,7 +52,7 @@ public class Menu {
                         case 2:
                             System.out.println("***** 수강생 점수관리 *****");
                             System.out.println("메인메뉴>수강생 점수관리>...");
-                            new ScoreMenu(dbManager).displayScoreView();
+                            new ScoreMenu().displayScoreView(dbManager);
                             break;
 
 
@@ -67,6 +74,6 @@ public class Menu {
 //else {
 //System.out.println("입력이 없습니다, 다시 입력바랍니다.");
 //fixme: 입력없다면 작동해야지....넌왜 작동안하니..
-            }
         }
     }
+}
