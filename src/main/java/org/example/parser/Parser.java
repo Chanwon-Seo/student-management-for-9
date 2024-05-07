@@ -5,16 +5,14 @@ import org.example.domain.Subject;
 
 //@RequiredArgsConstructor
 public class Parser {
-    private final DBManager dbManager;
     private final StudentParser studentParser;
     private final ScoreParser scoreParser;
     private final SubjectParser subjectParser;
 
     public Parser(DBManager dbManager) {
-        this.dbManager = dbManager;
-        this.studentParser = new StudentParser();
-        this.scoreParser = new ScoreParser();
-        this.subjectParser = new SubjectParser();
+        this.studentParser = new StudentParser(dbManager);
+        this.scoreParser = new ScoreParser(dbManager);
+        this.subjectParser = new SubjectParser(dbManager);
     }
 
     /**
