@@ -4,10 +4,12 @@ import lombok.Getter;
 import org.example.domain.Score;
 import org.example.domain.Student;
 import org.example.domain.Subject;
+import org.example.domain.enums.StudentStateType;
 import org.example.domain.enums.SubjectType;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 
 // TODO: Setter custom
@@ -73,4 +75,13 @@ public class DBStorage {
         this.studentIdNum = studentIdNum;
     }
 
+    //초기값
+    public void testData() {
+        Set<Integer> set = Set.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+        studentList.add(new Student(1, "서찬원", "990204", set, StudentStateType.GREEN));
+        studentList.add(new Student(2, "박세미", "990204", set, StudentStateType.RED));
+        studentList.add(new Student(3, "박상균", "990204", set, StudentStateType.RED));
+        studentList.add(new Student(4, "차도범", "990204", set, StudentStateType.YELLOW));
+        studentList.add(new Student(5, "이근수", "990204", set, StudentStateType.GREEN));
+    }
 }
