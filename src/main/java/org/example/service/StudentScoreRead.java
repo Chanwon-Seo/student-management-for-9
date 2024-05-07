@@ -9,7 +9,8 @@ import java.util.List;
 public class StudentScoreRead {
 
     DBManager dbManager;
-    public StudentScoreRead(DBManager dbManager){
+
+    public StudentScoreRead(DBManager dbManager) {
         this.dbManager = dbManager;
     }
 
@@ -21,7 +22,7 @@ public class StudentScoreRead {
         for (Score s : score) {
             if (s.getStudentId().equals(studentId) && s.getSubjectId().equals(subjectId)) {
                 var temp = s.getScoreId();
-                if(temp.size()<=0) { //TEMP EXCEPTION
+                if (temp.size() <= 0) { //TEMP EXCEPTION
                     System.out.println("해당 과목의 점수가 없습니다");
                     break;
                 }
@@ -34,7 +35,7 @@ public class StudentScoreRead {
     }
 
     //과목별 평균등급 조회 (추가 - 점수관리)
-    public void LoadAvgScore(Integer studentId, Integer subjectId){
+    public void LoadAvgScore(Integer studentId, Integer subjectId) {
 
         System.out.println("학생고유번호: " + studentId + "  과목번호: " + subjectId);
         double avg = 0;
@@ -42,7 +43,7 @@ public class StudentScoreRead {
         for (Score s : score) {
             if (s.getStudentId().equals(studentId) && s.getSubjectId().equals(subjectId)) {
                 var temp = s.getScoreId();
-                if(temp.size()<=0) { //TEMP EXCEPTION
+                if (temp.size() <= 0) { //TEMP EXCEPTION
                     System.out.println("해당 과목의 점수가 없습니다");
                     break;
                 }
@@ -54,17 +55,17 @@ public class StudentScoreRead {
                 avg = sum / temp.size();
             }
         }
-        System.out.println("해당과목의 평균은 "+avg+"입니다.");
+        System.out.println("해당과목의 평균은 " + avg + "입니다.");
     }
 
     // 회차 점수 수정
-    public void UpdateScore(Integer studentId, Integer subjectId,Integer round){
+    public void UpdateScore(Integer studentId, Integer subjectId, Integer round) {
 
         System.out.println("수정 : 공사중인 함수입니다ㅋㅋ");
     }
 
     //특정상태 수강생들의 필수 과목 평균 등급 (추가 - 점수관리)
-    public void LoadStudentStateOfRequiredSubject(String StudentState){
+    public void LoadStudentStateOfRequiredSubject(String StudentState) {
 
     }
 

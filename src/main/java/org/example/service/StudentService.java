@@ -36,8 +36,7 @@ public class StudentService {
 
 
     /**
-     * @차도범
-     * 수강생 목록을 출력
+     * @차도범 수강생 목록을 출력
      */
     public void getStudentList() {
         System.out.println("id / name");
@@ -47,8 +46,7 @@ public class StudentService {
     }
 
     /**
-     * @차도범
-     * 수강생 상세 값 출력
+     * @차도범 수강생 상세 값 출력
      */
     public void getStudentDetail(int studentId) {
         StudentParser studentParser = new StudentParser(dbManager);
@@ -99,9 +97,9 @@ public class StudentService {
         String name = inputString("수강생 이름 입력: ");
         String birth = inputString("수강생 생년월일 입력: ");
 
-        sub.forEach(subject -> {
-            System.out.println("고유ID: " + subject.getSubjectId() + ", 제목: " + subject.getSubjectName() + ", 과목: " + subject.getSubjectType());
-        });
+//        sub.forEach(subject -> {
+//            System.out.println("고유ID: " + subject.getSubjectId() + ", 제목: " + subject.getSubjectName() + ", 과목: " + subject.getSubjectType());
+//        });
 
         System.out.println("\n수강할 과목의 제목을 입력해주세요. (종료 exit)");
 
@@ -115,17 +113,14 @@ public class StudentService {
             //TODO
             dbManager.updateStudentIdNum(dbManager.findByStudentIdNum());
             Student st = new Student(dbManager.findByStudentIdNum(), name, birth, subjectId);
-            dbManager.addStudentList(st);
-            rSub=0;
-            eSub=0;
-        }
-        else if(rSub<MIN_REQUIRED_SUBJECTS && eSub<MIN_ELECTIVE_SUBJECTS){
-            System.out.println("필수과목이 " + (MIN_REQUIRED_SUBJECTS-rSub) + "과목, 선택과목이 " + (MIN_ELECTIVE_SUBJECTS-eSub) + "과목이 부족해 수강생이 등록되지 않습니다.");
-        }
-        else if(rSub<MIN_REQUIRED_SUBJECTS){
-            System.out.println("필수과목이 " + (MIN_REQUIRED_SUBJECTS-rSub) + "과목 부족해 수강생이 등록되지 않습니다.");
-        }
-        else {
+            dbManager.saveStudent(st);
+            rSub = 0;
+            eSub = 0;
+        } else if (rSub < MIN_REQUIRED_SUBJECTS && eSub < MIN_ELECTIVE_SUBJECTS) {
+            System.out.println("필수과목이 " + (MIN_REQUIRED_SUBJECTS - rSub) + "과목, 선택과목이 " + (MIN_ELECTIVE_SUBJECTS - eSub) + "과목이 부족해 수강생이 등록되지 않습니다.");
+        } else if (rSub < MIN_REQUIRED_SUBJECTS) {
+            System.out.println("필수과목이 " + (MIN_REQUIRED_SUBJECTS - rSub) + "과목 부족해 수강생이 등록되지 않습니다.");
+        } else {
             System.out.println("선택과목이 " + (MIN_ELECTIVE_SUBJECTS - eSub) + "과목 부족해 수강생이 등록되지 않습니다.");
 
             rSub = 0;
@@ -140,11 +135,11 @@ public class StudentService {
         return sc.nextLine();
     }
 
-    public Integer addSubject(){
-        while(true){
+    public Integer addSubject() {
+        while (true) {
             String s = sc.nextLine();
 
-            if("exit".equals(s)) {
+            if ("exit".equals(s)) {
                 return 0;
             }
 
@@ -163,10 +158,9 @@ public class StudentService {
                     return id;
                 }
 
-            } catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.out.println("잘못된 입력입니다. 숫자 또는 \"exit\"만 입력해주세요.");
             }
-
         }
     }
 

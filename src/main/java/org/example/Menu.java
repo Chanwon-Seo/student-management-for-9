@@ -6,21 +6,11 @@ import org.example.db.DBStorage;
 import java.util.Scanner;
 
 public class Menu {
-
-
     static Scanner sc = new Scanner(System.in);
 
     public void startPage() {
         DBStorage dbStorage = new DBStorage();
         DBManager dbManager = new DBManager(dbStorage);
-//        int studentCount = 0;
-//        StudentService studentService = new StudentService();
-//        List<Student> studentList = DBStorage.getStudentList();
-//        int num = 0;
-
-//        studentList.add(new Student(num++, "kimchi", "19990909", new HashSet<>()));
-//        studentList.add(new Student(num++, "dubu", "19990909", new HashSet<>()));
-//        studentList.add(new Student(num++, "egg", "19990909", new HashSet<>()));
 
         while (true) {
             System.out.printf("%n");
@@ -30,9 +20,6 @@ public class Menu {
             System.out.println("2. 수강생 점수관리");
             System.out.println("3. 시스템 종료");
             System.out.printf("%n");
-
-
-            //int choice = Integer.parseInt(sc.nextLine());
 
             if (sc.hasNextLine()) {
                 try {
@@ -44,15 +31,13 @@ public class Menu {
                             System.out.println("***** 수강생 관리 *****");
                             System.out.println("초기메뉴>수강생 관리>...");
                             new StudentMenu(dbManager).displayStudentView();
-//                    studentService.displayStudentView();
-//                    manageStudents(students, studentCount, scanner);
                             break;
 
 
                         case 2:
                             System.out.println("***** 수강생 점수관리 *****");
                             System.out.println("메인메뉴>수강생 점수관리>...");
-                            new ScoreMenu().displayScoreView(dbManager);
+                            new ScoreMenu(dbManager).displayScoreView();
                             break;
 
 
