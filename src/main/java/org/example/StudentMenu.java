@@ -3,16 +3,19 @@
 
 package org.example;
 
-import org.example.domain.Student;
+import org.example.db.DBManager;
 import org.example.service.StudentService;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
+import static org.example.Menu.dbStorage;
 import static org.example.Menu.sc;
 
 public class StudentMenu {
+
+    private final DBManager dbManager;
+
+    public StudentMenu(DBManager dbManager) {
+        this.dbManager = dbManager;
+    }
 
 
     public void displayStudentView() {
@@ -60,7 +63,7 @@ public class StudentMenu {
                         case 3:
                             System.out.println("이전 화면으로 돌아갑니다.");
                             System.out.println("메인메뉴> 이전메뉴로 이동>...");
-
+                            
                             return;
 
 
