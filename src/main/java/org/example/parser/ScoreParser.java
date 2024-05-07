@@ -1,7 +1,7 @@
 package org.example.parser;
 
 
-import org.example.DBStorage;
+import org.example.db.DBManager;
 import org.example.domain.Score;
 
 public class ScoreParser {
@@ -9,6 +9,11 @@ public class ScoreParser {
     static final int SCORE_ROUND_MAX_VALUE = 10;
     static final int SCORE_MIN_VALUE = 0;
     static final int SCORE_MAX_VALUE = 100;
+    private final DBManager dbManager;
+
+    public ScoreParser(DBManager dbManager) {
+        this.dbManager = dbManager;
+    }
 
     /**
      * @찬원 회차 범위 입력 검증
@@ -37,7 +42,7 @@ public class ScoreParser {
      */
     public void scoreDuplicatedCheckValidv2(Integer subjectIdInput, Integer studentIdInput, Integer roundInput) {
         Score findScoreData = null;
-        for (Score score : DBStorage.getScoreList()) {
+        for (Score score : dbManager.findByScores()) {
             if (subjectIdInput.equals(score.getSubjectId()) && studentIdInput.equals(score.getStudentId())) {
                 findScoreData = score;
                 break;

@@ -1,4 +1,4 @@
-package org.example;
+package org.example.db;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,19 +11,16 @@ import java.util.List;
 
 
 // TODO: Setter custom
+@Getter
 public class DBStorage {
-    @Getter
-    @Setter
-    private static Integer studentIdNum = 2024000;
-    private static Integer subjectIdNum = 0;
-    @Getter
-    private static final List<Student> studentList = new LinkedList<>();
-    @Getter
-    private static final List<Score> scoreList = new LinkedList<>();
+    private Integer studentIdNum = 2024000;
+    private Integer subjectIdNum = 0;
+
+    private final List<Student> studentList = new LinkedList<>();
+    private final List<Score> scoreList = new LinkedList<>();
 
     //TODO subjectType = 열거형?
-    @Getter
-    private static final List<Subject> subjectList = List.of(
+    private final List<Subject> subjectList = List.of(
             new Subject(
                     ++subjectIdNum,
                     "Java",
@@ -70,12 +67,4 @@ public class DBStorage {
                     "SUBJECT_TYPE_CHOICE"
             )
     );
-
-    public static void saveScoreList(Score score) {
-        scoreList.add(score);
-    }
-
-    public static void addStudentList(Student st) {
-        studentList.add(st);
-    }
 }

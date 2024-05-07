@@ -1,17 +1,19 @@
 package org.example.parser;
 
+import org.example.db.DBManager;
 import org.example.domain.Subject;
 
 //@RequiredArgsConstructor
 public class Parser {
+    //TODO 의존성 주입
     private final StudentParser studentParser;
     private final ScoreParser scoreParser;
     private final SubjectParser subjectParser;
 
-    public Parser() {
-        this.studentParser = new StudentParser();
-        this.scoreParser = new ScoreParser();
-        this.subjectParser = new SubjectParser();
+    public Parser(DBManager dbManager) {
+        this.studentParser = new StudentParser(dbManager);
+        this.scoreParser = new ScoreParser(dbManager);
+        this.subjectParser = new SubjectParser(dbManager);
     }
 
     /**

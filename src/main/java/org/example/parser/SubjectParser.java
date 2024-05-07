@@ -1,9 +1,15 @@
 package org.example.parser;
 
-import org.example.DBStorage;
+import org.example.db.DBManager;
 import org.example.domain.Subject;
 
 public class SubjectParser {
+    private final DBManager dbManager;
+
+    public SubjectParser(DBManager dbManager) {
+        this.dbManager = dbManager;
+    }
+
     /**
      * @return
      * @찬원 과목 정보 조회
@@ -11,7 +17,7 @@ public class SubjectParser {
      */
     public Subject subjectEmptyCheckValid(Integer subjectIdInput) {
         Subject findSubjectData = null;
-        for (Subject subject : DBStorage.getSubjectList()) {
+        for (Subject subject : dbManager.findBySubjects()) {
             if (subjectIdInput.equals(subject.getSubjectId())) {
                 findSubjectData = subject;
             }

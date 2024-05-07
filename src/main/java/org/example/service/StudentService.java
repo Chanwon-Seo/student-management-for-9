@@ -1,8 +1,6 @@
 package org.example.service;
 
 
-import org.example.DBStorage;
-import org.example.Main;
 import org.example.domain.Student;
 import org.example.domain.Subject;
 
@@ -13,14 +11,16 @@ import java.util.List;
 public class StudentService {
     static final int MIN_REQUIRED_SUBJECTS = 3;
     static final int MIN_ELECTIVE_SUBJECTS = 2;
-    List<Subject> sub = DBStorage.getSubjectList();
+    //TODO
+//    List<Subject> sub = DBStorage.getSubjectList();
     Set<Integer> subjectId = new HashSet<>();
     Scanner sc = new Scanner(System.in);
     int rSub = 0;
     int eSub = 0;
 
-    DBStorage db = new DBStorage();
-    List<Student> studentList = DBStorage.getStudentList();
+//    DBStorage db = new DBStorage();
+    //TODO
+//    List<Student> studentList = DBStorage.getStudentList();
 
     //학생 리스트
     public void getStudentList() {

@@ -3,11 +3,19 @@
 
 package org.example;
 
+import org.example.db.DBManager;
+import org.example.parser.Parser;
 import org.example.service.StudentService;
 
 import static org.example.Menu.sc;
 
 public class StudentMenu {
+
+    private final DBManager dbManager;
+
+    public StudentMenu(DBManager dbManager) {
+        this.dbManager = dbManager;
+    }
 
 
     public void displayStudentView() {
@@ -27,15 +35,16 @@ public class StudentMenu {
                         case 1:  //연결되었습니다.
                             System.out.println("***** 수강생 등록*****");
                             System.out.println("메인메뉴> 수강생 관리>...");
-                            
+
                             new StudentService().createStudent();
 
                             break;
                         case 2: //연결되었습니다.
                             System.out.println("***** 수강생 조회*****");
                             System.out.println("메인메뉴> 수강생 관리>...");
-                            
-                           // new StudentService().getStudentDetail();
+
+                            new Parser(dbManager);
+                            // new StudentService().getStudentDetail();
                             new StudentService().getStudentList();
 
                             break;
@@ -43,7 +52,7 @@ public class StudentMenu {
                         case 3:
                             System.out.println("이전 화면으로 돌아갑니다.");
                             System.out.println("메인메뉴> 이전메뉴로 이동>...");
-                            
+
                             return;
 
 

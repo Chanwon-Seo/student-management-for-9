@@ -3,7 +3,8 @@
 
 package org.example;
 
-//import lombok.RequiredArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.example.db.DBManager;
 import org.example.domain.Subject;
 import org.example.parser.Parser;
 import org.example.service.ScoreService;
@@ -12,6 +13,12 @@ import static org.example.Menu.sc;
 
 //@RequiredArgsConstructor
 public class ScoreMenu {
+    private final DBManager dbManager;
+
+    public ScoreMenu(DBManager dbManager) {
+        this.dbManager = dbManager;
+    }
+
     public void displayScoreView() {
         while (true) {
             System.out.println("1. 수강생 점수 등록");
@@ -33,6 +40,7 @@ public class ScoreMenu {
                                 System.out.println("***** 수강생 점수 등록*****");
                                 System.out.println("메인메뉴> 수강생 점수관리>...");
 
+
                                 System.out.print("과목 고유번호 입력 : ");
                                 subjectIdInput = Integer.parseInt(sc.nextLine());
                                 System.out.print("학생 고유번호 입력 : ");
@@ -41,13 +49,12 @@ public class ScoreMenu {
                                 roundInput = Integer.parseInt(sc.nextLine());
                                 System.out.print("학생 점수 입력 : ");
                                 scoreInput = Integer.parseInt(sc.nextLine());
-                                findSubjectData = new Parser().scoreCreate(subjectIdInput, studentIdInput, roundInput, scoreInput);
+                                findSubjectData = new Parser(dbManager).scoreCreate(subjectIdInput, studentIdInput, roundInput, scoreInput);
                             } catch (RuntimeException e) {
-                                System.out.println("예외!! : " + e.getMessage());
+                                System.out.println(e.getMessage());
                                 break;
                             }
-
-                            DBStorage.saveScoreList(new ScoreService().scoreCreateV1(findSubjectData, studentIdInput, roundInput, scoreInput));
+                            dbManager.saveScoreList(new ScoreService().scoreCreateV1(findSubjectData, studentIdInput, roundInput, scoreInput));
                             break;
 
 

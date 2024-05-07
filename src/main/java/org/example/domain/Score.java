@@ -13,6 +13,7 @@ public class Score {
 
     private Map<Integer, Integer> scoreId; //회차 점수리스트
 
+    //TODO
     private Character level; //점수 레벨
 
     public Score(Integer subjectId, Integer studentId, Map<Integer, Integer> scoreId, Character level) {
