@@ -4,7 +4,11 @@
 package org.example;
 
 import org.example.db.DBManager;
+import org.example.domain.Student;
 import org.example.service.StudentService;
+
+import java.util.HashSet;
+import java.util.List;
 
 import static org.example.Menu.sc;
 
@@ -12,12 +16,16 @@ public class StudentMenu {
 
     private final DBManager dbManager;
 
+
     public StudentMenu(DBManager dbManager) {
         this.dbManager = dbManager;
     }
 
 
     public void displayStudentView() {
+
+        StudentService studentService = new StudentService(dbManager);
+        List<Student> studentList = dbManager.findByStudents();
 
         while (true) {
             System.out.println("1. 수강생 등록");
@@ -35,7 +43,7 @@ public class StudentMenu {
                             System.out.println("***** 수강생 등록*****");
                             System.out.println("메인메뉴> 수강생 관리>...");
 
-                            new StudentService(dbManager).createStudent();
+                            studentService.createStudent();
 
                             break;
                         case 2: //연결되었습니다.
@@ -43,7 +51,10 @@ public class StudentMenu {
                             System.out.println("메인메뉴> 수강생 관리>...");
 
                             // new StudentService().getStudentDetail();
-                            new StudentService(dbManager).getStudentList();
+                            studentService.getStudentList();
+                            System.out.println("조회할 수강생 아이디 입력");
+                            int studentId = Integer.parseInt(sc.nextLine());
+                            studentService.getStudentDetail(studentId);
 
                             break;
 

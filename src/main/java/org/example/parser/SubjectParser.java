@@ -5,10 +5,9 @@ import org.example.db.DBManager;
 import org.example.db.DBStorage;
 
 public class SubjectParser {
+    private final DBManager dbManager;
 
-    DBManager dbManager;
-
-    public SubjectParser(DBManager dbManager){
+    public SubjectParser(DBManager dbManager) {
         this.dbManager = dbManager;
     }
 
@@ -19,7 +18,7 @@ public class SubjectParser {
      */
     public Subject subjectEmptyCheckValid(Integer subjectIdInput) {
         Subject findSubjectData = null;
-        for (Subject subject : DBStorage.getSubjectList()) {
+        for (Subject subject : dbManager.findBySubjects()) {
             if (subjectIdInput.equals(subject.getSubjectId())) {
                 findSubjectData = subject;
             }
