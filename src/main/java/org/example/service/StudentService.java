@@ -90,21 +90,13 @@ public class StudentService {
             System.out.println("필수과목이 " + (MIN_REQUIRED_SUBJECTS-rSub) + "과목 부족해 수강생이 등록되지 않습니다.");
         }
         else {
-            System.out.println("선택과목이 " + (MIN_ELECTIVE_SUBJECTS-eSub) + "과목 부족해 수강생이 등록되지 않습니다.");
+            System.out.println("선택과목이 " + (MIN_ELECTIVE_SUBJECTS - eSub) + "과목 부족해 수강생이 등록되지 않습니다.");
             //TODO
 //            Student st = new Student(, name, birth, subjectId);
 //            DBStorage.addStudentList(st);
             rSub = 0;
             eSub = 0;
-        } else if (rSub < MIN_REQUIRED_SUBJECTS && eSub < MIN_ELECTIVE_SUBJECTS) {
-            System.out.println("필수과목이 " + (MIN_REQUIRED_SUBJECTS - rSub) + "과목, 선택과목이 " + (MIN_ELECTIVE_SUBJECTS - eSub) + "선택과목이 부족해 수강생이 등록되지 않습니다.");
-        } else if (rSub < MIN_REQUIRED_SUBJECTS) {
-            System.out.println("필수과목이 " + (MIN_REQUIRED_SUBJECTS - rSub) + "과목 부족해 수강생이 등록되지 않습니다.");
-        } else {
-            System.out.println("선택과목이 " + (MIN_ELECTIVE_SUBJECTS - eSub) + "과목 부족해 수강생이 등록되지 않습니다.");
-
         }
-
     }
 
     //String 값 입력
