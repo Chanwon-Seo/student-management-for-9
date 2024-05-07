@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum SubjectType {
-    Required("필수"),
+    REQUIRED("필수"),
     ELECTIVE("선택"),
     ;
 

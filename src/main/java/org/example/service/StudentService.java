@@ -1,6 +1,7 @@
 package org.example.service;
 
 
+import lombok.Getter;
 import org.example.DBStorage;
 import org.example.Main;
 import org.example.domain.Student;
@@ -9,12 +10,8 @@ import org.example.domain.Subject;
 import java.util.*;
 
 import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
 
 public class StudentService {
-
-
     static final int MIN_REQUIRED_SUBJECTS = 3;
     static final int MIN_ELECTIVE_SUBJECTS = 2;
     List<Subject> sub = DBStorage.getSubjectList();
@@ -118,25 +115,26 @@ public class StudentService {
     }
 
     //String 값 입력
-    public String inputString(String m) {
+    public String inputString(String m){
         System.out.print(m);
         return sc.nextLine();
     }
 
     //수강 과목 추가
-    public Integer addSubject() {
-        while (true) {
+    public Integer addSubject(){
+        while(true){
             String s = sc.nextLine();
-            if ("exit".equals(s)) {
+            if("exit".equals(s)){
                 return 0;
             }
-            for (Subject si : sub) {
-                if (si.getSubjectName().equals(s)) {
+            for(Subject si:sub){
+                if(si.getSubjectName().equals(s)){
                     System.out.println("과목 추가 완료");
 
-                    if (si.getSubjectType().equals("SUBJECT_TYPE_MANDATORY")) {
+                    if(si.getSubjectType().equals("SUBJECT_TYPE_MANDATORY")){
                         rSub++;
-                    } else {
+                    }
+                    else{
                         eSub++;
                     }
 
