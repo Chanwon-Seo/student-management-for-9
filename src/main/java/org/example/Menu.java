@@ -1,13 +1,19 @@
 package org.example;
 
+import org.example.db.DBManager;
+import org.example.db.DBStorage;
+
 import java.util.Scanner;
 
 public class Menu {
-    static DBStorage dbStorage = new DBStorage();
     static Scanner sc = new Scanner(System.in);
 
     public void startPage() {
-
+        /**
+         * DBStorage 생성 및 DBManager 생성
+         */
+        DBStorage dbStorage = new DBStorage();
+        DBManager dbManager = new DBManager(dbStorage);
 
         while (true) {
             System.out.printf("%n");
@@ -30,7 +36,7 @@ public class Menu {
                         case 1:
                             System.out.println("***** 수강생 관리 *****");
                             System.out.println("초기메뉴>수강생 관리>...");
-                            new StudentMenu().displayStudentView();
+                            new StudentMenu(dbManager).displayStudentView();
 //                    studentService.displayStudentView();
 //                    manageStudents(students, studentCount, scanner);
                             break;
@@ -39,7 +45,7 @@ public class Menu {
                         case 2:
                             System.out.println("***** 수강생 점수관리 *****");
                             System.out.println("메인메뉴>수강생 점수관리>...");
-                            new ScoreMenu().displayScoreView();
+                            new ScoreMenu(dbManager).displayScoreView();
                             break;
 
 

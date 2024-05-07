@@ -1,6 +1,5 @@
 package org.example.parser;
 
-import org.example.DBStorage;
 import org.example.domain.Subject;
 
 public class SubjectParser {

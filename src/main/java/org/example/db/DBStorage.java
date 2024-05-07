@@ -1,4 +1,4 @@
-package org.example;
+package org.example.db;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,24 +8,22 @@ import org.example.domain.Subject;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 
 // TODO: Setter custom
+@Getter
 public class DBStorage {
     @Getter
-    @Setter
+    //TODO CUSTOM Setter
     private static Integer studentIdNum = 2024000;
     private static Integer subjectIdNum = 0;
-    @Getter
-    private static final List<Student> studentList = new LinkedList<>();
-    @Getter
-    private static final List<Score> scoreList = new LinkedList<>();
+
+    private final List<Student> studentList = new LinkedList<>();
+    private final List<Score> scoreList = new LinkedList<>();
 
     //TODO subjectType = 열거형?
-    @Getter
-    private static final List<Subject> subjectList = List.of(
+
+    private final List<Subject> subjectList = List.of(
             new Subject(
                     ++subjectIdNum,
                     "Java",
@@ -72,25 +70,4 @@ public class DBStorage {
                     "SUBJECT_TYPE_CHOICE"
             )
     );
-
-    public void saveScoreList(Score score) {
-        // null 예외처리
-        scoreList.add(score);
-    }
-
-    public static void addStudentList(Student st) {
-        studentList.add(st);
-    }
-    /*
-     * @차도범
-     * 수강생 아이디로 수강생을 찾음
-     * */
-    public Optional<Student> studentFindById(Integer studentId) {
-        for (Student student : studentList) {
-            if (Objects.equals(student.getStudentId(), studentId)) {
-                return Optional.of(student);
-            }
-        }
-        return Optional.empty();
-    }
 }

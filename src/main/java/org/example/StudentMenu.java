@@ -14,6 +14,12 @@ import static org.example.Menu.sc;
 
 public class StudentMenu {
 
+    private final DBManager dbManager;
+
+    public StudentMenu(DBManager dbManager) {
+        this.dbManager = dbManager;
+    }
+
 
     public void displayStudentView() {
         StudentService studentService = new StudentService();
@@ -60,7 +66,7 @@ public class StudentMenu {
                         case 3:
                             System.out.println("이전 화면으로 돌아갑니다.");
                             System.out.println("메인메뉴> 이전메뉴로 이동>...");
-
+                            
                             return;
 
 
