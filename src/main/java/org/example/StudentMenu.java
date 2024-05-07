@@ -3,12 +3,12 @@
 
 package org.example;
 
+import org.example.db.DBManager;
 import org.example.domain.Student;
 import org.example.service.StudentService;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static org.example.Menu.sc;
 
@@ -22,8 +22,8 @@ public class StudentMenu {
 
 
     public void displayStudentView() {
-        StudentService studentService = new StudentService();
-        List<Student> studentList = DBStorage.getStudentList();
+        StudentService studentService = new StudentService(dbManager);
+        List<Student> studentList = dbManager.findByStudents();
 
         /*
         * test 초기값 설정*/
