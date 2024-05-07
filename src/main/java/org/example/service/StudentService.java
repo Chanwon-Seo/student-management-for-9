@@ -1,10 +1,10 @@
 package org.example.service;
 
-
 import org.example.DBStorage;
 import org.example.Main;
 import org.example.domain.Student;
 import org.example.domain.Subject;
+import org.example.parser.Parser;
 
 import java.util.*;
 
@@ -16,6 +16,8 @@ public class StudentService {
     List<Subject> sub = DBStorage.getSubjectList();
     Set<Integer> subjectId = new HashSet<>();
     Scanner sc = new Scanner(System.in);
+    Integer stNum = DBStorage.getStudentIdNum();
+    Parser parser = new Parser();
     int rSub = 0;
     int eSub = 0;
 
@@ -78,7 +80,9 @@ public class StudentService {
 
         if (rSub >= MIN_REQUIRED_SUBJECTS && eSub >= MIN_ELECTIVE_SUBJECTS) {
             System.out.println("수강자가 생성되었습니다.");
-            Student st = new Student(DBStorage.getStudentIdNum(), name, birth, subjectId);
+            //TODO
+            Student st = new Student(stNum, name, birth, subjectId);
+            DBStorage.setStudentIdNum(++stNum);
             DBStorage.getStudentList().add(st);
             rSub=0;
             eSub=0;
@@ -91,12 +95,11 @@ public class StudentService {
         }
         else {
             System.out.println("선택과목이 " + (MIN_ELECTIVE_SUBJECTS - eSub) + "과목 부족해 수강생이 등록되지 않습니다.");
-            //TODO
-//            Student st = new Student(, name, birth, subjectId);
-//            DBStorage.addStudentList(st);
+
             rSub = 0;
             eSub = 0;
         }
+        System.out.println();
     }
 
     //String 값 입력
@@ -105,27 +108,34 @@ public class StudentService {
         return sc.nextLine();
     }
 
-    //수강 과목 추가
-    public Integer addSubject() {
-        while (true) {
+    public Integer addSubject(){
+        while(true){
             String s = sc.nextLine();
-            if ("exit".equals(s)) {
+
+            if("exit".equals(s)) {
                 return 0;
             }
-            for (Subject si : sub) {
-                if (si.getSubjectName().equals(s)) {
-                    System.out.println("과목 추가 완료");
 
-                    if (si.getSubjectType().equals("SUBJECT_TYPE_MANDATORY")) {
+            try {
+                Integer id = Integer.parseInt(s);
+
+                if (parser.subjectIdCheck(id)) {
+                    System.out.println("과목 추가 완료");
+                    Subject subject = parser.subjectReturn(id);
+
+                    if (subject != null && subject.getSubjectType().equals("SUBJECT_TYPE_MANDATORY")) {
                         rSub++;
                     } else {
                         eSub++;
                     }
-
-                    return si.getSubjectId();
+                    return id;
                 }
+
+            } catch (NumberFormatException e){
+                System.out.println("잘못된 입력입니다. 숫자 또는 \"exit\"만 입력해주세요.");
             }
-            System.out.println("일치하는 과목이 없습니다. 다시 입력해주세요.");
+
         }
     }
+
 }

@@ -32,4 +32,35 @@ public class Parser {
         }
         return findSubjectData;
     }
+
+    /**
+     * @return
+     * @성균 수강생 과목 등록 검증
+     * id가 검증되면 참 반환
+     */
+    public boolean subjectIdCheck(Integer subjectId) {
+        try {
+            if (subjectParser.subjectIsEmptyCheck(subjectId)) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    /**
+     * @return
+     * @성균 수강생 과목 등록 검증
+     * id가 검증되면 해당 subject 클래스 반환
+     */
+    public Subject subjectReturn(Integer subjectId){
+        Subject subject = null;
+        try{
+            subject = subjectParser.subjectEmptyCheckValid(subjectId);
+        }catch(RuntimeException e){
+            System.out.println(e.getMessage());
+        }
+        return subject;
+    }
 }
