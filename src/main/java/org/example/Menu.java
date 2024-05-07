@@ -9,9 +9,6 @@ public class Menu {
     static Scanner sc = new Scanner(System.in);
 
     public void startPage() {
-        /**
-         * DBStorage 생성 및 DBManager 생성
-         */
         DBStorage dbStorage = new DBStorage();
         DBManager dbManager = new DBManager(dbStorage);
 
@@ -24,21 +21,14 @@ public class Menu {
             System.out.println("3. 시스템 종료");
             System.out.printf("%n");
 
-
-            //int choice = Integer.parseInt(sc.nextLine());
-
             if (sc.hasNextLine()) {
                 try {
-                    int choice = Integer.parseInt(sc.nextLine());
 
-
-                    switch (choice) {
+                    switch (Integer.parseInt(sc.nextLine())) {
                         case 1:
                             System.out.println("***** 수강생 관리 *****");
                             System.out.println("초기메뉴>수강생 관리>...");
                             new StudentMenu(dbManager).displayStudentView();
-//                    studentService.displayStudentView();
-//                    manageStudents(students, studentCount, scanner);
                             break;
 
 
@@ -67,6 +57,6 @@ public class Menu {
 //else {
 //System.out.println("입력이 없습니다, 다시 입력바랍니다.");
 //fixme: 입력없다면 작동해야지....넌왜 작동안하니..
-            }
         }
     }
+}

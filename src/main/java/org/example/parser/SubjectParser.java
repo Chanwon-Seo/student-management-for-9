@@ -1,9 +1,7 @@
 package org.example.parser;
 
-import org.example.domain.Student;
-import org.example.domain.Subject;
 import org.example.db.DBManager;
-import org.example.db.DBStorage;
+import org.example.domain.Subject;
 
 import java.util.HashSet;
 
@@ -23,18 +21,11 @@ public class SubjectParser {
      * throw 조회된 수강생 정보가 없을 경우
      */
     public Subject subjectEmptyCheckValid(Integer subjectIdInput) {
-        Subject findSubjectData = null;
-        for (Subject subject : dbManager.findBySubjects()) {
-            if (subjectIdInput.equals(subject.getSubjectId())) {
-                findSubjectData = subject;
-            }
+        try {
+            return dbManager.findOneBySubject(subjectIdInput);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e.getMessage());
         }
-
-        if (findSubjectData != null) {
-            return findSubjectData;
-        }
-
-        throw new RuntimeException("등록된 과목이 아닙니다.");
     }
 
     /**

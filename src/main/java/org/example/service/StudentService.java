@@ -2,6 +2,8 @@ package org.example.service;
 
 import org.example.domain.Student;
 import org.example.domain.Subject;
+import org.example.domain.enums.StudentStateType;
+import org.example.domain.enums.SubjectType;
 import org.example.parser.Parser;
 import org.example.db.DBManager;
 import org.example.parser.StudentParser;
@@ -37,8 +39,7 @@ public class StudentService {
 
 
     /**
-     * @차도범
-     * 수강생 목록을 출력
+     * @차도범 수강생 목록을 출력
      */
     public void getStudentList() {
         System.out.println("id / name");
@@ -48,8 +49,7 @@ public class StudentService {
     }
 
     /**
-     * @차도범
-     * 수강생 상세 값 출력
+     * @차도범 수강생 상세 값 출력
      */
     public void getStudentDetail(int studentId) {
         StudentParser studentParser = new StudentParser(dbManager);
@@ -60,7 +60,7 @@ public class StudentService {
             System.out.println("id : " + student.getStudentId());
             System.out.println("이름 : " + student.getStudentName());
             System.out.println("생년월일 : " + student.getBirthDay());
-            System.out.println("상태 : " + student.getStudentState());
+            System.out.println("상태 : " + student.getStudentStateType());
 
             //찾은 과목리스트와 과목리스트를
             for (Subject subject : dbManager.findBySubjects()) {
@@ -95,10 +95,13 @@ public class StudentService {
         }
     }
 
-    //수강자 생성
+    //수강자 등록
     public void createStudent() {
         String name = inputString("수강생 이름 입력: ");
         String birth = inputString("수강생 생년월일 입력: ");
+        String status = inputString("현재 상태를 입력하세요.(선택) green: 좋음, yellow: 보통, red: 나쁨, nostatus: 모름\n");
+
+        StudentStateType stateType = inputStatus(status);
 
         sub.forEach(subject -> {
             System.out.println("고유ID: " + subject.getSubjectId() + ", 제목: " + subject.getSubjectName() + ", 과목: " + subject.getSubjectType());
@@ -117,8 +120,8 @@ public class StudentService {
             System.out.println("수강자가 생성되었습니다.");
             //TODO
             dbManager.updateStudentIdNum(dbManager.findByStudentIdNum());
-            Student st = new Student(dbManager.findByStudentIdNum(), name, birth, subjectId);
-            dbManager.addStudentList(st);
+            Student st = new Student(dbManager.findByStudentIdNum(), name, birth, subjectId, stateType);
+            dbManager.saveStudent(st);
         }
         rSub=0;
         eSub=0;
@@ -132,12 +135,17 @@ public class StudentService {
         return sc.nextLine();
     }
 
+    //상태 값 가져오기
+    public StudentStateType inputStatus(String status){
+        return StudentStateType.studentStateType(status);
+    }
+
     public Integer addSubject(){
         while(true){
             System.out.println("\n수강할 과목의 제목을 입력해주세요. (종료 exit)");
             String s = sc.nextLine();
 
-            if("exit".equals(s)) {
+            if ("exit".equals(s)) {
                 return 0;
             }
 
@@ -149,7 +157,7 @@ public class StudentService {
                         System.out.println("과목 추가 완료.");
                         Subject subject = parser.subjectReturn(id);
 
-                        if (subject != null && subject.getSubjectType().equals("SUBJECT_TYPE_MANDATORY")) {
+                        if (subject != null && subject.getSubjectType().equals(SubjectType.REQUIRED)) {
                             rSub++;
                             System.out.println("필수: " + rSub + ", 선택: " + eSub);
                         } else {
