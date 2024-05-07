@@ -63,11 +63,18 @@ public class StudentService {
             for (Subject subject : dbManager.findBySubjects()) {
                 for (Integer id : student.getSubjectId()) {
                     if (Objects.equals(subject.getSubjectId(), id)) {
-                        System.out.println(subject.getSubjectId() + " : " +
-                                subject.getSubjectName() + " - " + subject.getSubjectType());
+                        if(Objects.equals(subject.getSubjectType(), "SUBJECT_TYPE_MANDATORY")) {
+                            System.out.println("SUBJECT_TYPE_MANDATORY");
+                            System.out.println(subject.getSubjectId() + " : " + subject.getSubjectName());
+                        } else {
+                            System.out.println("SUBJECT_TYPE_CHOICE");
+                            System.out.println(subject.getSubjectId() + " : " + subject.getSubjectName());
+                        }
                     }
                 }
             }
+            System.out.println();
+            System.out.println();
         }
     }
 
