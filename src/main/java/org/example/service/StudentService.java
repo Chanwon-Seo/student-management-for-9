@@ -78,7 +78,7 @@ public class StudentService {
 
         if (rSub >= MIN_REQUIRED_SUBJECTS && eSub >= MIN_ELECTIVE_SUBJECTS) {
             System.out.println("수강자가 생성되었습니다.");
-            Student st = new Student(++Main.uNumber, name, birth, subjectId);
+            Student st = new Student(DBStorage.getStudentIdNum(), name, birth, subjectId);
             DBStorage.getStudentList().add(st);
             rSub=0;
             eSub=0;
