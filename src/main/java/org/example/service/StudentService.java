@@ -1,48 +1,52 @@
 package org.example.service;
 
 
-import org.example.DBStorage;
+import org.example.db.DBManager;
 import org.example.domain.Student;
 import org.example.domain.Subject;
+import org.example.parser.StudentParser;
 
 import java.util.*;
 
 public class StudentService {
 
-    private final DBStorage dbStorage;
+    private final DBManager dbManager;
 
     static final int MIN_REQUIRED_SUBJECTS = 3;
     static final int MIN_ELECTIVE_SUBJECTS = 2;
-    List<Subject> sub = DBStorage.getSubjectList();
+    List<Subject> sub;
     Set<Integer> subjectId = new HashSet<>();
     Scanner sc = new Scanner(System.in);
     int rSub = 0;
     int eSub = 0;
 
-    DBStorage db = new DBStorage();
-    List<Student> studentList = DBStorage.getStudentList();
+    List<Student> studentList;
 
-    public StudentService(DBStorage dbStorage) {
-        this.dbStorage = dbStorage;
+    public StudentService(DBManager dbManager) {
+        this.dbManager = dbManager;
+        sub = dbManager.findBySubjects();
+        studentList = dbManager.findByStudents();
     }
 
-    /*@차도범
+
+    /**
+     * @차도범
      * 수강생 목록을 출력
-     * */
+     */
     public void getStudentList() {
         System.out.println("id / name");
-        for (Student student : DBStorage.getStudentList()) {
+        for (Student student : dbManager.findByStudents()) {
             System.out.println(student.getStudentId() + " : " + student.getStudentName());
         }
     }
 
-    /*
+    /**
      * @차도범
      * 수강생 상세 값 출력
-     * */
+     */
     public void getStudentDetail(int studentId) {
-        Optional<Student> optStudent = db.studentFindById(studentId);
-        Student student = optStudent.orElse(null);
+        StudentParser studentParser = new StudentParser(dbManager);
+        Student student = studentParser.studentFindByIdEmptyCheckValid(studentId);
         if (student == null) return;
         else {
             System.out.println("----학생 상세-----");
@@ -52,7 +56,7 @@ public class StudentService {
             System.out.println("상태 : " + student.getStudentState());
 
             //찾은 과목리스트와 과목리스트를
-            for (Subject subject : DBStorage.getSubjectList()) {
+            for (Subject subject : dbManager.findBySubjects()) {
                 for (Integer id : student.getSubjectId()) {
                     if (Objects.equals(subject.getSubjectId(), id)) {
                         System.out.println(subject.getSubjectId() + " : " +
@@ -103,7 +107,7 @@ public class StudentService {
         if (rSub >= MIN_REQUIRED_SUBJECTS && eSub >= MIN_ELECTIVE_SUBJECTS) {
             System.out.println("수강자가 생성되었습니다.");
             Student st = new Student(1, name, birth, subjectId);
-            DBStorage.addStudentList(st);
+            dbManager.addStudentList(st);
             rSub = 0;
             eSub = 0;
         } else if (rSub < MIN_REQUIRED_SUBJECTS && eSub < MIN_ELECTIVE_SUBJECTS) {
@@ -112,10 +116,7 @@ public class StudentService {
             System.out.println("필수과목이 " + (MIN_REQUIRED_SUBJECTS - rSub) + "과목 부족해 수강생이 등록되지 않습니다.");
         } else {
             System.out.println("선택과목이 " + (MIN_ELECTIVE_SUBJECTS - eSub) + "과목 부족해 수강생이 등록되지 않습니다.");
-
         }
-
-
     }
 
     //String 값 입력

@@ -1,6 +1,6 @@
 package org.example.service;
 
-import org.example.DBStorage;
+import org.example.db.DBManager;
 import org.example.domain.Score;
 
 import java.util.ArrayList;
@@ -10,8 +10,11 @@ import java.util.Map;
 
 public class StudentScoreRead {
 
-    //TODO
-//    public DBStorage storage = new DBStorage();
+    private final DBManager dbManager;
+
+    public StudentScoreRead(DBManager dbManager) {
+        this.dbManager = dbManager;
+    }
 
     public void TempSaveArea() {
         Map<Integer, Integer> scoreId = new HashMap<>();
@@ -40,7 +43,7 @@ public class StudentScoreRead {
 
         System.out.println("학생고유번호: " + studentId + "  과목번호: " + subjectId);
 
-        List<Score> score = storage.getScoreList();
+        List<Score> score = dbManager.findByScores();
         for (Score s : score) {
             if (s.getStudentId().equals(studentId) && s.getSubjectId().equals(subjectId)) {
                 s.getScoreId();
