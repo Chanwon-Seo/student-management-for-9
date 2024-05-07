@@ -1,7 +1,6 @@
 package org.example.db;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.example.domain.Score;
 import org.example.domain.Student;
 import org.example.domain.Subject;
@@ -67,4 +66,9 @@ public class DBStorage {
                     "SUBJECT_TYPE_CHOICE"
             )
     );
+
+    public void setStudentIdNum(Integer studentIdNum){
+        this.studentIdNum = studentIdNum;
+    }
+
 }

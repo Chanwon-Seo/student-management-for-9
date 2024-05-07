@@ -60,5 +60,28 @@ public class DBManager {
         throw new RuntimeException("조회된 수강생 정보가 없습니다.\n");
     }
 
+    public Student studentFindById(int id) {
+        for (Student student : findByStudents()) {
+            if (student.getStudentId() == id) {
+                return student;
+            }
+        }
+        return null;
+    }
 
+    public Integer findByStudentIdNum() {
+        return dbStorage.getStudentIdNum();
+    }
+
+    public List<Subject> findBySubjects() {
+        return dbStorage.getSubjectList();
+    }
+
+    public List<Student> findByStudents() {
+        return dbStorage.getStudentList();
+    }
+
+    public void updateStudentIdNum(Integer studentIdNum) {
+        dbStorage.setStudentIdNum(++studentIdNum);
+    }
 }
