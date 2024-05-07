@@ -20,8 +20,23 @@ public class ScoreService {
         return new Score(findSubjectData.getSubjectId(),
                 studentIdInput,
                 roundMap,
-                LevelType.checkLevelType(findSubjectData.getSubjectType(), scoreInput)
+                checkLevelType(findSubjectData, scoreInput)
         );
     }
+
+    /**
+     * @찬원
+     * 필수 또는 선택에 따른 등급 산정
+     */
+    private static Character checkLevelType(Subject findSubjectData, Integer scoreInput) {
+        Character levelData;
+        if ("필수".equals(findSubjectData.getSubjectType())) {
+            levelData = LevelType.checkRequiredLevelType(findSubjectData.getSubjectType(), scoreInput);
+        } else {
+            levelData = LevelType.checkElectiveLevelType(findSubjectData.getSubjectType(), scoreInput);
+        }
+        return levelData;
+    }
+
 
 }
