@@ -20,36 +20,36 @@ public enum LevelType {
     }
 
     // TODO 과목타입 분류
-    public static Character checkRequiredLevelType(String subjectType, Integer scoreInput) {
+    public static LevelType checkRequiredLevelType(String subjectType, Integer scoreInput) {
         if (scoreInput >= 95) {
-            return LevelType.A.getLevelTypeValue();
+            return LevelType.A;
         } else if (scoreInput >= 90) {
-            return LevelType.B.getLevelTypeValue();
+            return LevelType.B;
         } else if (scoreInput >= 80) {
-            return LevelType.C.getLevelTypeValue();
+            return LevelType.C;
         } else if (scoreInput >= 70) {
-            return LevelType.D.getLevelTypeValue();
+            return LevelType.D;
         } else if (scoreInput >= 60) {
-            return LevelType.F.getLevelTypeValue();
+            return LevelType.F;
         } else {
-            return LevelType.N.getLevelTypeValue();
+            return LevelType.N;
         }
     }
 
-    public static Character checkElectiveLevelType(String subjectType, Integer scoreInput) {
+    public static LevelType checkElectiveLevelType(String subjectType, Integer scoreInput) {
 
         if (scoreInput >= 90) {
-            return LevelType.A.getLevelTypeValue();
+            return LevelType.A;
         } else if (scoreInput >= 80) {
-            return LevelType.B.getLevelTypeValue();
+            return LevelType.B;
         } else if (scoreInput >= 70) {
-            return LevelType.C.getLevelTypeValue();
+            return LevelType.C;
         } else if (scoreInput >= 60) {
-            return LevelType.D.getLevelTypeValue();
+            return LevelType.D;
         } else if (scoreInput >= 50) {
-            return LevelType.F.getLevelTypeValue();
+            return LevelType.F;
         } else {
-            return LevelType.N.getLevelTypeValue();
+            return LevelType.N;
         }
 
     }

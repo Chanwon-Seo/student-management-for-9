@@ -1,6 +1,7 @@
 package org.example.domain;
 
 import lombok.Getter;
+import org.example.domain.enums.LevelType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,13 +15,13 @@ public class Score {
     private Map<Integer, Integer> scoreId; //회차 점수리스트
 
     //TODO
-    private Character level; //점수 레벨
+    private LevelType levelType; //점수 레벨
 
-    public Score(Integer subjectId, Integer studentId, Map<Integer, Integer> scoreId, Character level) {
+    public Score(Integer subjectId, Integer studentId, Map<Integer, Integer> scoreId, LevelType levelType) {
         this.subjectId = subjectId;
         this.studentId = studentId;
         this.scoreId = scoreId;
-        this.level = level;
+        this.levelType = levelType;
     }
 
     public Score(Integer subjectId, Integer studentId, Map<Integer, Integer> scoreId) {

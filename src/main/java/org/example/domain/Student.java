@@ -1,6 +1,7 @@
 package org.example.domain;
 
 import lombok.Getter;
+import org.example.domain.enums.StudentStateType;
 
 import java.util.Set;
 
@@ -14,9 +15,9 @@ public class Student {
 
     private Set<Integer> subjectId; //과목 고유 번호
     //TODO
-    private String studentState; //수강생상태
+    private StudentStateType studentStateType; //수강생상태
 
-    public Student(Integer studentId, String studentName, String birthDay, Set<Integer> subjectId){
+    public Student(Integer studentId, String studentName, String birthDay, Set<Integer> subjectId) {
         this.studentId = studentId;
         this.studentName = studentName;
         this.birthDay = birthDay;

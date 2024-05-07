@@ -23,10 +23,8 @@ public class Menu {
 
             if (sc.hasNextLine()) {
                 try {
-                    int choice = Integer.parseInt(sc.nextLine());
 
-
-                    switch (choice) {
+                    switch (Integer.parseInt(sc.nextLine())) {
                         case 1:
                             System.out.println("***** 수강생 관리 *****");
                             System.out.println("초기메뉴>수강생 관리>...");

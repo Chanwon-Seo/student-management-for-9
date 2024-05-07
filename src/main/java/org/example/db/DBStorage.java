@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.example.domain.Score;
 import org.example.domain.Student;
 import org.example.domain.Subject;
+import org.example.domain.enums.SubjectType;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -23,47 +24,48 @@ public class DBStorage {
             new Subject(
                     ++subjectIdNum,
                     "Java",
-                    "SUBJECT_TYPE_MANDATORY"
+                    SubjectType.REQUIRED
+
             ),
             new Subject(
                     ++subjectIdNum,
                     "객체지향",
-                    "SUBJECT_TYPE_MANDATORY"
+                    SubjectType.REQUIRED
             ),
             new Subject(
                     ++subjectIdNum,
                     "Spring",
-                    "SUBJECT_TYPE_MANDATORY"
+                    SubjectType.REQUIRED
             ),
             new Subject(
                     ++subjectIdNum,
                     "JPA",
-                    "SUBJECT_TYPE_MANDATORY"
+                    SubjectType.REQUIRED
             ),
             new Subject(
                     ++subjectIdNum,
                     "MySQL",
-                    "SUBJECT_TYPE_MANDATORY"
+                    SubjectType.REQUIRED
             ),
             new Subject(
                     ++subjectIdNum,
                     "디자인 패턴",
-                    "SUBJECT_TYPE_CHOICE"
+                    SubjectType.ELECTIVE
             ),
             new Subject(
                     ++subjectIdNum,
                     "Spring Security",
-                    "SUBJECT_TYPE_CHOICE"
+                    SubjectType.ELECTIVE
             ),
             new Subject(
                     ++subjectIdNum,
                     "Redis",
-                    "SUBJECT_TYPE_CHOICE"
+                    SubjectType.ELECTIVE
             ),
             new Subject(
                     ++subjectIdNum,
                     "MongoDB",
-                    "SUBJECT_TYPE_CHOICE"
+                    SubjectType.ELECTIVE
             )
     );
 
