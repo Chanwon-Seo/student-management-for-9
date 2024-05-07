@@ -14,7 +14,7 @@ public class Student {
 
     private Set<Integer> subjectId; //과목 고유 번호
 
-    private String studentState; //수강생상태
+    Enum studentState; //수강생상태
 
     public Student(Integer studentId, String studentName, String birthDay, Set<Integer> subjectId){
         this.studentId = studentId;

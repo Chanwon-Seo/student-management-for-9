@@ -18,6 +18,7 @@ public class StudentService {
     static final int MIN_ELECTIVE_SUBJECTS = 2;
     //TODO
     List<Subject> sub;
+    HashSet<Integer> dup = new HashSet<>();
     Set<Integer> subjectId = new HashSet<>();
     Scanner sc = new Scanner(System.in);
     DBManager dbManager;
@@ -103,34 +104,25 @@ public class StudentService {
             System.out.println("고유ID: " + subject.getSubjectId() + ", 제목: " + subject.getSubjectName() + ", 과목: " + subject.getSubjectType());
         });
 
-        System.out.println("\n수강할 과목의 제목을 입력해주세요. (종료 exit)");
+        //System.out.println("\n수강할 과목의 제목을 입력해주세요. (종료 exit)");
 
         Integer subId;
         while ((subId = addSubject()) != 0) {
             subjectId.add(subId);
+            dup.add(subId);
         }
 
-        if (rSub >= MIN_REQUIRED_SUBJECTS && eSub >= MIN_ELECTIVE_SUBJECTS) {
+
+        if(parser.subjectMinCheck(rSub, eSub)){
             System.out.println("수강자가 생성되었습니다.");
             //TODO
             dbManager.updateStudentIdNum(dbManager.findByStudentIdNum());
             Student st = new Student(dbManager.findByStudentIdNum(), name, birth, subjectId);
             dbManager.addStudentList(st);
-            rSub=0;
-            eSub=0;
         }
-        else if(rSub<MIN_REQUIRED_SUBJECTS && eSub<MIN_ELECTIVE_SUBJECTS){
-            System.out.println("필수과목이 " + (MIN_REQUIRED_SUBJECTS-rSub) + "과목, 선택과목이 " + (MIN_ELECTIVE_SUBJECTS-eSub) + "과목이 부족해 수강생이 등록되지 않습니다.");
-        }
-        else if(rSub<MIN_REQUIRED_SUBJECTS){
-            System.out.println("필수과목이 " + (MIN_REQUIRED_SUBJECTS-rSub) + "과목 부족해 수강생이 등록되지 않습니다.");
-        }
-        else {
-            System.out.println("선택과목이 " + (MIN_ELECTIVE_SUBJECTS - eSub) + "과목 부족해 수강생이 등록되지 않습니다.");
-
-            rSub = 0;
-            eSub = 0;
-        }
+        rSub=0;
+        eSub=0;
+        dup.clear();
         System.out.println();
     }
 
@@ -142,6 +134,7 @@ public class StudentService {
 
     public Integer addSubject(){
         while(true){
+            System.out.println("\n수강할 과목의 제목을 입력해주세요. (종료 exit)");
             String s = sc.nextLine();
 
             if("exit".equals(s)) {
@@ -152,18 +145,21 @@ public class StudentService {
                 Integer id = Integer.parseInt(s);
 
                 if (parser.subjectIdCheck(id)) {
-                    System.out.println("과목 추가 완료");
-                    Subject subject = parser.subjectReturn(id);
+                    if(parser.subjectIdDuplicationCheck(dup, id)) {
+                        System.out.println("과목 추가 완료.");
+                        Subject subject = parser.subjectReturn(id);
 
-                    if (subject != null && subject.getSubjectType().equals("SUBJECT_TYPE_MANDATORY")) {
-                        rSub++;
-                    } else {
-                        eSub++;
+                        if (subject != null && subject.getSubjectType().equals("SUBJECT_TYPE_MANDATORY")) {
+                            rSub++;
+                            System.out.println("필수: " + rSub + ", 선택: " + eSub);
+                        } else {
+                            eSub++;
+                            System.out.println("필수: " + rSub + ", 선택: " + eSub);
+                        }
+                        return id;
                     }
-                    return id;
                 }
-
-            } catch (NumberFormatException e){
+            }catch(NumberFormatException e){
                 System.out.println("잘못된 입력입니다. 숫자 또는 \"exit\"만 입력해주세요.");
             }
 
