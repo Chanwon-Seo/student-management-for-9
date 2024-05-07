@@ -13,7 +13,7 @@ public class Student {
     private String birthDay; //생년월일
 
     private Set<Integer> subjectId; //과목 고유 번호
-
+    //TODO
     private String studentState; //수강생상태
 
     public Student(Integer studentId, String studentName, String birthDay, Set<Integer> subjectId){
