@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ScoreParser {
     static final int SCORE_ROUND_MIN_VALUE = 1;
-    static final int SCORE_ROUND_MAX_VALUE = 1;
+    static final int SCORE_ROUND_MAX_VALUE = 10;
     static final int SCORE_MIN_VALUE = 0;
     static final int SCORE_MAX_VALUE = 100;
 
@@ -43,4 +43,14 @@ public class ScoreParser {
         }
     }
 
+    /**
+     * @세미 해당 과목 점수 데이터 없음
+     */
+    public void scoreNullCheckValid(Integer roundInput) {
+        if (DBStorage.getScoreList().size() <= roundInput) {
+            throw new RuntimeException("해당 과목의 점수 데이터가 없습니다.");
+        }
+    }
+
 }
+
