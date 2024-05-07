@@ -22,5 +22,4 @@ public class Student {
         this.birthDay = birthDay;
         this.subjectId = subjectId;
     }
-
 }

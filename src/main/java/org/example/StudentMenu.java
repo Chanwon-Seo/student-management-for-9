@@ -6,13 +6,25 @@ package org.example;
 import org.example.domain.Student;
 import org.example.service.StudentService;
 
-import static org.example.Menu.dbStorage;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import static org.example.Menu.sc;
 
 public class StudentMenu {
 
 
     public void displayStudentView() {
+        StudentService studentService = new StudentService();
+        List<Student> studentList = DBStorage.getStudentList();
+
+        /*
+        * test 초기값 설정*/
+        int num = 0;
+        studentList.add(new Student(num++, "kimchi", "19990909", new HashSet<>()));
+        studentList.add(new Student(num++, "dubu", "19990909", new HashSet<>()));
+        studentList.add(new Student(num++, "egg", "19990909", new HashSet<>()));
 
         while (true) {
             System.out.println("1. 수강생 등록");
@@ -29,23 +41,26 @@ public class StudentMenu {
                         case 1:  //연결되었습니다.
                             System.out.println("***** 수강생 등록*****");
                             System.out.println("메인메뉴> 수강생 관리>...");
-                            
-                            new StudentService().createStudent();
+
+                            studentService.createStudent();
 
                             break;
                         case 2: //연결되었습니다.
                             System.out.println("***** 수강생 조회*****");
                             System.out.println("메인메뉴> 수강생 관리>...");
-                            
-                           // new StudentService().getStudentDetail();
-                            new StudentService().getStudentList();
+
+                            // new StudentService().getStudentDetail();
+                            studentService.getStudentList();
+                            System.out.println("조회할 수강생 아이디 입력");
+                            int studentId = Integer.parseInt(sc.nextLine());
+                            studentService.getStudentDetail(studentId);
 
                             break;
 
                         case 3:
                             System.out.println("이전 화면으로 돌아갑니다.");
                             System.out.println("메인메뉴> 이전메뉴로 이동>...");
-                            
+
                             return;
 
 
