@@ -4,10 +4,9 @@
 package org.example;
 
 import lombok.RequiredArgsConstructor;
+import org.example.domain.Subject;
 import org.example.parser.Parser;
-import org.example.parser.ScoreParser;
 import org.example.service.ScoreService;
-import org.example.service.StudentScoreRead;
 
 import static org.example.Menu.dbStorage;
 import static org.example.Menu.sc;
@@ -31,8 +30,16 @@ public class ScoreMenu {
                             System.out.println("***** 수강생 점수 등록*****");
                             System.out.println("메인메뉴> 수강생 점수관리>...");
 
-                            new Parser().scoreCreate(1, 1, 1, 1);
-                            dbStorage.saveScoreList(new ScoreService().scoreCreateV1(1, 1, 1, 1));
+                            System.out.print("과목 고유번호 입력 : ");
+                            int subjectIdInput = Integer.parseInt(sc.nextLine());
+                            System.out.print("학생 고유번호 입력 : ");
+                            int studentIdInput = Integer.parseInt(sc.nextLine());
+                            System.out.print("회차 번호 입력 : ");
+                            int roundInput = Integer.parseInt(sc.nextLine());
+                            System.out.print("학생 점수 입력 : ");
+                            int scoreInput = Integer.parseInt(sc.nextLine());
+                            Subject findSubjectData = new Parser().scoreCreate(subjectIdInput, studentIdInput, roundInput, scoreInput);
+                            dbStorage.saveScoreList(new ScoreService().scoreCreateV1(findSubjectData, studentIdInput, roundInput, scoreInput));
                             break;
 
 
