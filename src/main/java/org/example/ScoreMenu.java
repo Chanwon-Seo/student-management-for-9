@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.domain.Subject;
 import org.example.parser.Parser;
 import org.example.service.ScoreService;
+import org.example.service.StudentScoreRead;
 
 import static org.example.Menu.dbStorage;
 import static org.example.Menu.sc;
@@ -47,8 +48,12 @@ public class ScoreMenu {
                         case 2:
                             System.out.println("*****수강생 점수 조회*****");
                             System.out.println("메인메뉴> 수강생 점수관리>...");
+                            System.out.print("수강생 고유번호 입력 : ");
+                            int studentInput = Integer.parseInt(sc.nextLine());
+                            System.out.print("과목 고유번호 입력 : ");
+                            int subjectInput = Integer.parseInt(sc.nextLine());
+                            new StudentScoreRead().LoadScore(studentInput, subjectInput);
 
-                           // new StudentScoreRead().LoadScore();
                             break;
 
 
