@@ -35,6 +35,7 @@ public class Menu {
 
                     switch (Integer.parseInt(sc.nextLine())) {
                         case 1:
+
                             System.out.println("***** 수강생 관리 *****");
                             System.out.println("메인메뉴> 수강생 관리>...");
                             studentMenu.displayStudentView();
@@ -63,9 +64,6 @@ public class Menu {
                 }
 
             }
-//else {
-//System.out.println("입력이 없습니다, 다시 입력바랍니다.");
-//fixme: 입력없다면 작동해야지....넌왜 작동안하니..
         }
     }
 }
