@@ -6,13 +6,19 @@ import org.example.domain.Subject;
 import org.example.domain.enums.StudentStateType;
 import org.example.domain.enums.SubjectType;
 import org.example.parser.Parser;
+import org.example.parser.ScoreParser;
 import org.example.parser.StudentParser;
+import org.example.parser.SubjectParser;
 
 import java.util.*;
 
+
 public class StudentService {
 
-    //private final DBManager dbManager;
+    private final DBManager dbManager;
+    private final StudentParser studentParser;
+    private final SubjectParser subjectParser;
+    private final ScoreParser scoreParser;
 
     static final int MIN_REQUIRED_SUBJECTS = 3;
     static final int MIN_ELECTIVE_SUBJECTS = 2;
@@ -21,18 +27,20 @@ public class StudentService {
     HashSet<Integer> dup = new HashSet<>();
     Set<Integer> subjectId = new HashSet<>();
     Scanner sc = new Scanner(System.in);
-    DBManager dbManager;
     Parser parser;
     int rSub = 0;
     int eSub = 0;
 
     List<Student> studentList;
-
     public StudentService(DBManager dbManager) {
         this.dbManager = dbManager;
-        parser = new Parser(dbManager);
+        this.studentParser = new StudentParser(dbManager);
+        this.subjectParser = new SubjectParser(dbManager);
+        this.scoreParser = new ScoreParser(dbManager);
         sub = dbManager.findBySubjects();
         studentList = dbManager.findByStudents();
+        //TODO 코드 변경
+//        parser = new Parser(dbManager);
     }
 
 

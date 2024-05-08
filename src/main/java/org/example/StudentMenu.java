@@ -6,7 +6,9 @@ package org.example;
 import org.example.db.DBManager;
 import org.example.domain.Student;
 import org.example.domain.enums.StudentStateType;
+import org.example.service.ScoreService;
 import org.example.service.StudentService;
+import org.example.service.SubjectService;
 
 import java.util.List;
 import java.util.Set;
@@ -16,11 +18,17 @@ import static org.example.Menu.sc;
 public class StudentMenu {
 
     private final DBManager dbManager;
-
+    private final StudentService studentService;
+    private final ScoreService scoreService;
+    private final SubjectService subjectService;
 
     public StudentMenu(DBManager dbManager) {
         this.dbManager = dbManager;
+        this.studentService = new StudentService(dbManager);
+        this.scoreService = new ScoreService(dbManager);
+        this.subjectService = new SubjectService(dbManager);
     }
+
 
     boolean next = true;
 
@@ -34,7 +42,7 @@ public class StudentMenu {
         while (true) {
             System.out.println("1. 수강생 등록");
             System.out.println("2. 수강생 조회");
-            System.out.println("3. 이전메뉴로 이동");
+            System.out.println("0. 이전메뉴로 이동");
             System.out.printf("%n");
 
 
