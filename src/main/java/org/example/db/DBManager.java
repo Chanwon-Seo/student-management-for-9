@@ -90,38 +90,37 @@ public class DBManager {
         dbStorage.setStudentIdNum(++studentIdNum);
     }
 
-    /*
-     * 차도범
+    /**
+     * @차도범
      * 수정 메서드
-     * */
+     */
     public void editStudent(Student student, String name, String birthDay, StudentStateType studentStateType) {
         student.editStudent(name, birthDay, studentStateType);
     }
 
-    /*
+    /**
      * @차도범
      * 수강생 아이디로 삭제
-     * */
-
+     */
     public boolean deleteStudentById(int studentId) {
         List<Student> studentList = dbStorage.getStudentList();
         return studentList.removeIf(student -> studentId == student.getStudentId());
     }
 
-    /*
+    /**
      * @차도범
      * 수강생 아이디로 삭제
-     * */
+     */
     public boolean deleteScoreByStudentId(int studentId) {
         List<Score> scoreList = dbStorage.getScoreList();
         return scoreList.removeIf(score -> score.getStudentId() == studentId);
     }
 
 
-    /*
+    /**
      * @세미
      * subject id로 필수인지 아닌지 판별
-     * */
+     */
     public boolean FindSubjectTypebySubjectId(int subjectId) {
         List<Subject> subjectList = dbStorage.getSubjectList();
         Subject sub = subjectList.get(subjectId-1);

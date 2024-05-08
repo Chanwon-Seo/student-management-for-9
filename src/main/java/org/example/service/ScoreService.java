@@ -5,7 +5,6 @@ import org.example.domain.Score;
 import org.example.domain.Student;
 import org.example.domain.Subject;
 import org.example.domain.enums.LevelType;
-import org.example.domain.enums.StudentStateType;
 import org.example.parser.ScoreParser;
 import org.example.parser.StudentParser;
 import org.example.parser.SubjectParser;
@@ -58,7 +57,6 @@ public class ScoreService {
         Map<Integer, Integer> roundMap = new LinkedHashMap<>();
         roundMap.put(roundInput, scoreInput);
 
-        //TODO 점수에 대한 level 검증
         Score score = new Score(findSubjectData.get().getSubjectId(),
                 studentIdInput,
                 roundMap,
@@ -88,10 +86,10 @@ public class ScoreService {
         return levelType;
     }
 
-    /*
+    /**
      * @차도범
      * 수강생 아이디로 삭제
-     * */
+     */
     public void deleteScoreByStudentId(int studentId) {
         try {
             boolean b = dbManager.deleteScoreByStudentId(studentId);

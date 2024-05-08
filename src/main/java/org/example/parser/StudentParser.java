@@ -14,7 +14,6 @@ public class StudentParser {
     }
 
     /**
-     * @return
      * @찬원 수강생 정보 조회
      * throw 조회된 수강생 정보가 없을 경우
      */
@@ -33,7 +32,7 @@ public class StudentParser {
     }
 
     public void studentAndSubjectCheckValid(Integer findSubjectData, Student findStudentData) {
-        if (!findStudentData.getSubjectId().contains(findSubjectData)) {
+        if (!findStudentData.getSubjectSet().contains(findSubjectData)) {
             throw new NullPointerException("해당 학생은 수강하지 않은 과목입니다.\n");
         }
     }

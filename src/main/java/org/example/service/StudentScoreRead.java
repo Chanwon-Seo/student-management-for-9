@@ -119,7 +119,7 @@ public class StudentScoreRead {
         for (Student student : studentList) {
             sum = 0;
             count = 0;
-            for (Integer sub : student.getSubjectId()) {
+            for (Integer sub : student.getSubjectSet()) {
                 boolean isRequired = dbManager.FindSubjectTypebySubjectId(sub);
                 if (isRequired) {
                     if (LoadAvgScoreRequired(student.getStudentId(), sub) != 0) {
@@ -153,7 +153,7 @@ public class StudentScoreRead {
 
         for (Score s : score) {
             if (s.getStudentId().equals(studentId) && s.getSubjectId().equals(subjectId)) {
-                Map<Integer,Integer> temp = s.getScoreId();
+                Map<Integer,Integer> temp = s.getScoreMap();
                 if (temp.size() <= 0) { //TEMP EXCEPTION
                     System.out.println("해당 과목의 점수가 없습니다");
                     break;
