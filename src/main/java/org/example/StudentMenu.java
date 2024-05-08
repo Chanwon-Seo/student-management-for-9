@@ -5,11 +5,14 @@ package org.example;
 
 import org.example.db.DBManager;
 import org.example.domain.Student;
+import org.example.domain.Subject;
 import org.example.domain.enums.StudentStateType;
 import org.example.service.ScoreService;
 import org.example.service.StudentService;
 import org.example.service.SubjectService;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.example.Menu.sc;
@@ -32,6 +35,16 @@ public class StudentMenu {
     boolean next = true;
 
     public void displayStudentView() {
+        List<Subject> bySubjects = dbManager.findBySubjects();
+        for (Subject subject : bySubjects) {
+            System.out.println(subject.getSubjectId() + " " + subject.getSubjectName());
+        }
+        System.out.println();
+        for (int i = 0; i < 9; i++) {
+            Optional<Subject> oneBySubject = dbManager.findOneBySubject(i);
+            System.out.println(oneBySubject.get().getSubjectId() + " " + oneBySubject.get().getSubjectName());
+        }
+
         int studentId;
         StudentStateType studentStateType;
         StudentService studentService = new StudentService(dbManager);
