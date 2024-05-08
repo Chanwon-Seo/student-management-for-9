@@ -29,9 +29,6 @@ public class ScoreMenu {
 
     public void displayScoreView() {
         while (true) {
-            System.out.println("[*****상세메뉴로 돌아왔습니다.*****]");
-            System.out.println("***** 수강생 점수 메뉴 *****");
-            System.out.println("메인메뉴> 수강생 점수 관리>...");
             System.out.println("1. 수강생 점수 등록");
             System.out.println("2. 수강생 점수 조회");
             System.out.println("3. 수강생 과목별 회차 점수 수정");
