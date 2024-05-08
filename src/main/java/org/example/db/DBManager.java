@@ -130,14 +130,17 @@ public class DBManager {
 //    }
     public boolean FindSubjectTypebySubjectId(Integer subjectId) {
         List<Subject> subjectList = dbStorage.getSubjectList();
-        Subject sub;
-        for(Subject s:subjectList){
-            if(s.getSubjectId()==subjectId){
-                sub = s;
-                if(sub.getSubjectType()==SubjectType.REQUIRED) return true;
-            }
-        }
+        Subject sub = subjectList.get(subjectId-1);
+        if(sub.getSubjectType()==SubjectType.REQUIRED) return true;
+        else return false;
+//        Subject sub;
+//        for(Subject s:subjectList){
+//            if(s.getSubjectId()==subjectId){
+//                sub = s;
+//                if(sub.getSubjectType()==SubjectType.REQUIRED) return true;
+//            }
+//        }
 
-        return false;
+        //return false;
     }
 }

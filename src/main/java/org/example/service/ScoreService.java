@@ -34,7 +34,6 @@ public class ScoreService {
     public void scoreCreateV1(Integer subjectIdInput, Integer studentIdInput, Integer roundInput, Integer scoreInput) {
         HashSet<Integer> objects = new HashSet<>();
         objects.add(1);
-        //dbManager.saveStudent(new Student(1, "서찬원", "111111", objects, StudentStateType.GREEN));
 
         Optional<Subject> findSubjectData;
         Optional<Student> findStudentData;

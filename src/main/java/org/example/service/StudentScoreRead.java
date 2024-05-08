@@ -11,7 +11,11 @@ import org.example.parser.ScoreParser;
 import org.example.parser.StudentParser;
 import org.example.parser.SubjectParser;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.LinkedList;
 
 
 public class StudentScoreRead {
@@ -41,7 +45,8 @@ public class StudentScoreRead {
         System.out.println("학생고유번호: " + studentId + "  과목번호: " + subjectId);
 
         //등급계산
-        SubjectType levelType = dbManager.findOneBySubject(subjectId).get().getSubjectType();;
+        SubjectType levelType = dbManager.findOneBySubject(subjectId).get().getSubjectType();
+        ;
         LevelType tempLevelType = LevelType.A;
 
         for (int i = 0; i < score.size(); i++) {
@@ -73,7 +78,7 @@ public class StudentScoreRead {
 
     //과목별 평균등급 조회 (추가 - 점수관리)
     public void LoadAvgScore(Integer studentId, Integer subjectId) {
-        Map<Integer,Integer> score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
+        Map<Integer, Integer> score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
         if (score == null) { //TEMP EXCEPTION
             System.out.println("해당 과목의 점수가 존재하지 않습니다");
             return;
@@ -83,7 +88,7 @@ public class StudentScoreRead {
         double avg = 0;
 
         for (int i = 0; i < score.size(); i++) {
-            sum += score.get(i+1);
+            sum += score.get(i + 1);
         }
         avg = sum / score.size();
         Optional<Subject> subject = dbManager.findOneBySubject(subjectId);
@@ -96,15 +101,15 @@ public class StudentScoreRead {
     public void LoadStudentStateOfRequiredSubject(int state) {
 
         StudentStateType stateType = switch (state) {
-                case 1 -> StudentStateType.GREEN;
-                case 2 -> StudentStateType.RED;
-                case 3 -> StudentStateType.YELLOW;
-                default -> null;
-            };
+            case 1 -> StudentStateType.GREEN;
+            case 2 -> StudentStateType.RED;
+            case 3 -> StudentStateType.YELLOW;
+            default -> null;
+        };
 
 
         List<Student> students = dbManager.findByStudents(); //basic
-        Set<Student> studentList = new HashSet<>(); //가공
+        List<Student> studentList = new LinkedList<>(); //가공
         for (Student student : students) {
             if (student.getStudentStateType() == stateType) {
                 studentList.add(student);
@@ -113,26 +118,29 @@ public class StudentScoreRead {
 
         double count = 0;
         double sum = 0;
+        int avg = 0;
+        LevelType resultLevel = LevelType.A;
         for (Student student : studentList) {
             sum = 0;
             count = 0;
             for (Integer sub : student.getSubjectId()) {
                 boolean isRequired = dbManager.FindSubjectTypebySubjectId(sub);
                 if (isRequired) {
-                    if(LoadAvgScoreRequired(student.getStudentId(), sub)!=0)
-                    {
+                    if (LoadAvgScoreRequired(student.getStudentId(), sub) != 0) {
                         sum += LoadAvgScoreRequired(student.getStudentId(), sub); //해당 과목 평균을 넣기
                         count++;
                     }
+                }
             }
-            int avg = (int)(sum / count); //평균들의 평균을 계산
-                LevelType resultLevel = LevelType.checkRequiredLevelType("", avg); //평균점수를 등급화
+            avg = (int) (sum / count); //평균들의 평균을 계산
+            resultLevel = LevelType.checkRequiredLevelType("", avg); //평균점수를 등급화
 
-                System.out.println(student.getStudentName() + "의 필수 과목 평균 등급: " + resultLevel);
-            }
+            if (avg != 0) System.out.println(student.getStudentName() + "의 필수 과목 평균 등급: " + resultLevel);
         }
 
     }
+
+
 
 
     /* Util */
