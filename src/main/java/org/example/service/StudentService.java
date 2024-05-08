@@ -63,7 +63,7 @@ public class StudentService {
                 for (Integer id : student.getSubjectId()) {
                     if (Objects.equals(subject.getSubjectId(), id)) {
                         System.out.println(subject.getSubjectId() + " : "
-                                + subject.getSubjectName() + subject.getSubjectType());
+                                + subject.getSubjectName() +" - " + subject.getSubjectType());
                     }
                 }
             }
