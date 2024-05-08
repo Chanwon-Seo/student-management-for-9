@@ -1,12 +1,6 @@
 package org.example;
 
 import org.example.db.DBManager;
-import org.example.domain.Subject;
-import org.example.domain.enums.StudentStateType;
-import org.example.parser.Parser;
-import org.example.parser.ScoreParser;
-import org.example.parser.StudentParser;
-import org.example.parser.SubjectParser;
 import org.example.service.ScoreService;
 import org.example.service.StudentScoreRead;
 import org.example.service.StudentService;
@@ -25,7 +19,6 @@ public class ScoreMenu {
     private final StudentService studentService;
     private final ScoreService scoreService;
     private final SubjectService subjectService;
-
 
     public ScoreMenu(DBManager dbManager) {
         this.dbManager = dbManager;
@@ -50,8 +43,6 @@ public class ScoreMenu {
                     int i = Integer.parseInt(sc.nextLine());
                     switch (i) {
                         case 1:
-
-                            Subject findSubjectData;
                             try {
                                 System.out.println("***** 수강생 점수 등록 *****");
                                 System.out.println("메인메뉴> 수강생 점수 관리>...");
@@ -70,6 +61,7 @@ public class ScoreMenu {
 //                                dbManager.saveScore(new ScoreService().scoreCreateV1(findSubjectData, studentIdInput, roundInput, scoreInput));
 //                                System.out.println("수강생의 점수를 등록하였습니다.\n");
                                 //TODO v2
+
                                 scoreService.scoreCreateV1(subjectIdInput, studentIdInput, roundInput, scoreInput);
 
                             } catch (NumberFormatException e) {

@@ -4,12 +4,10 @@ import lombok.Getter;
 import org.example.domain.Score;
 import org.example.domain.Student;
 import org.example.domain.Subject;
-import org.example.domain.enums.StudentStateType;
 import org.example.domain.enums.SubjectType;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 
 // TODO: Setter custom
@@ -21,7 +19,6 @@ public class DBStorage {
     private final List<Student> studentList = new LinkedList<>();
     private final List<Score> scoreList = new LinkedList<>();
 
-    //TODO subjectType = 열거형?
     private final List<Subject> subjectList = List.of(
             new Subject(
                     ++subjectIdNum,
@@ -71,7 +68,7 @@ public class DBStorage {
             )
     );
 
-    public void setStudentIdNum(Integer studentIdNum){
+    public void setStudentIdNum(Integer studentIdNum) {
         this.studentIdNum = studentIdNum;
     }
 }
