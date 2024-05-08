@@ -3,6 +3,7 @@ package org.example.service;
 import org.example.db.DBManager;
 import org.example.domain.Student;
 import org.example.domain.Subject;
+import org.example.domain.enums.StudentStateType;
 import org.example.parser.Parser;
 import org.example.parser.StudentParser;
 
@@ -69,6 +70,22 @@ public class StudentService {
             System.out.println();
             System.out.println();
         }
+    }
+
+    /*
+     * @차도범
+     * 상태별 수강색 목록
+     * */
+    public void studentListByStatus(StudentStateType studentStateType) {
+        List<Student> studentList = dbManager.findByStudents();
+        System.out.println("아이디 / 이름 / 상태");
+        for (Student student : studentList) {
+            if (student.getStudentStateType().equals(studentStateType)) {
+                System.out.println(student.getStudentId() + " : "
+                        + student.getStudentName() + " - " + student.getStudentStateType());
+            }
+        }
+        System.out.print("\n\n");
     }
 
 

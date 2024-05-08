@@ -95,11 +95,20 @@ public class DBManager {
     }
 
     /*
-    * 차도범
-    * 초기밧 위한 메서드
-    * 삭제가능
-    * */
-    public void initData() {
-        dbStorage.testData();
+     * @차도범
+     * 수강생 아이디로 삭제
+     * */
+    public void deleteStudentById(int studentId){
+        List<Student> studentList = dbStorage.getStudentList();
+        studentList.removeIf(student -> studentId == student.getStudentId());
+    }
+
+    /*
+     * @차도범
+     * 수강생 아이디로 삭제
+     * */
+    public void deleteScoreByStudentId(int studentId) {
+        List<Score> scoreList = dbStorage.getScoreList();
+        scoreList.removeIf(score -> score.getStudentId() == studentId);
     }
 }

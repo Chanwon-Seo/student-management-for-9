@@ -68,5 +68,4 @@ public class StudentScoreRead {
     public void LoadStudentStateOfRequiredSubject(String StudentState) {
 
     }
-
 }
