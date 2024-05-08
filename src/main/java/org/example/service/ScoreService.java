@@ -70,12 +70,13 @@ public class ScoreService {
      * */
     public void deleteScoreByStudentId(int studentId) {
         try {
-            studentParser.studentFindByIdEmptyCheckValid(studentId);
-            dbManager.deleteScoreByStudentId(studentId);
+            boolean b = dbManager.deleteScoreByStudentId(studentId);
+            if (b) System.out.println("점수를 삭제했습니다..");
+            else System.out.println("점수를 삭제하지 못햇습니다.");
         } catch (RuntimeException e) {
 //            System.out.println(e.getMessage());
-            System.out.println();
+            System.out.println("~~~~~~~~");
         }
-
+        System.out.print("\n\n");
     }
 }

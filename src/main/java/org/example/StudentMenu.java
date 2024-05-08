@@ -85,14 +85,14 @@ public class StudentMenu {
                                     }
                                     case 2 -> {
                                         studentId = inputStudentId("수정할 수강생의 아이디 입력");
-                                        Student findStudent = dbManager.studentFindById(studentId);
+                                        Student findStudent = studentService.studentFindById(studentId);
                                         if (findStudent != null) {
                                             System.out.println("수정할 정보를 입력(1.이름, 2.생일, 3.상태)>");
                                             switch (Integer.parseInt(sc.nextLine())) {
                                                 case 1 -> {
                                                     System.out.println("수정할 이름>");
                                                     String editName = sc.nextLine();
-                                                    dbManager.editStudent(
+                                                    studentService.editStudent(
                                                             findStudent,
                                                             editName,
                                                             findStudent.getBirthDay(),
@@ -101,7 +101,7 @@ public class StudentMenu {
                                                 case 2 -> {
                                                     System.out.println("수정할 생일>");
                                                     String editBrithDay = sc.nextLine();
-                                                    dbManager.editStudent(
+                                                    studentService.editStudent(
                                                             findStudent,
                                                             findStudent.getStudentName(),
                                                             editBrithDay,
@@ -113,7 +113,7 @@ public class StudentMenu {
                                                     //만약 값이 일치한느 것이 없으면 기존 사용자의 값을 가져온다.
                                                     if (studentStateType == null)
                                                         studentStateType = findStudent.getStudentStateType();
-                                                    dbManager.editStudent(
+                                                    studentService.editStudent(
                                                             findStudent,
                                                             findStudent.getStudentName(),
                                                             findStudent.getBirthDay(),

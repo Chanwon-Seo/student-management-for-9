@@ -44,6 +44,19 @@ public class StudentService {
 //        parser = new Parser(dbManager);
     }
 
+    /**
+     * @차도범 수강생 목록을 출력
+     */
+    public Student studentFindById(int id) {
+        try {
+            studentParser.studentFindByIdEmptyCheckValid(id);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        Student findStudent = dbManager.studentFindById(id);
+        System.out.println("수강생 " + findStudent.getStudentName());
+        return findStudent;
+    }
 
     /**
      * @차도범 수강생 목록을 출력
@@ -83,7 +96,7 @@ public class StudentService {
             System.out.print("\n\n");
         }
 
-   }
+    }
 
     /*
      * @차도범
@@ -101,6 +114,14 @@ public class StudentService {
         System.out.print("\n\n");
     }
 
+    /*
+     * @차도범
+     * 수강생 수정
+     * */
+    public void editStudent(Student student, String name, String birthDay, StudentStateType studentStateType) {
+        dbManager.editStudent(student, name, birthDay, studentStateType);
+    }
+
 
     /*
      * @차도범
@@ -108,8 +129,10 @@ public class StudentService {
      * */
     public void deleteStudentById(int studentId) {
         try {
-            studentParser.studentFindByIdEmptyCheckValid(studentId);
-            dbManager.deleteStudentById(studentId);
+            Student student = studentParser.studentFindByIdEmptyCheckValid(studentId);
+            boolean b = dbManager.deleteStudentById(studentId);
+            if (b) System.out.println(student.getStudentName() + "수강생을 삭제했습니다..");
+            else System.out.println("수강생을 삭제하지 못햇습니다.");
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
