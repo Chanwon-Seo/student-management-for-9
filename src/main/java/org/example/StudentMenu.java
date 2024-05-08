@@ -128,8 +128,8 @@ public class StudentMenu {
                                     }
                                     case 4 -> {
                                         studentId = inputStudentId("삭제할 수각생 아이디 입력>");
-                                        dbManager.deleteStudentById(studentId);
-                                        dbManager.deleteScoreByStudentId(studentId);
+                                        studentService.deleteStudentById(studentId);
+                                        scoreService.deleteScoreByStudentId(studentId);
                                     }
                                     case 0 -> {
                                         break loopA;

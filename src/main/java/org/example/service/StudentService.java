@@ -32,6 +32,7 @@ public class StudentService {
     int eSub = 0;
 
     List<Student> studentList;
+
     public StudentService(DBManager dbManager) {
         this.dbManager = dbManager;
         this.studentParser = new StudentParser(dbManager);
@@ -58,10 +59,8 @@ public class StudentService {
      * @차도범 수강생 상세 값 출력
      */
     public void getStudentDetail(int studentId) {
-        StudentParser studentParser = new StudentParser(dbManager);
-        Student student = studentParser.studentFindByIdEmptyCheckValid(studentId);
-        if (student == null) return;
-        else {
+        try {
+            Student student = studentParser.studentFindByIdEmptyCheckValid(studentId);
             System.out.println("----학생 상세-----");
             System.out.println("id : " + student.getStudentId());
             System.out.println("이름 : " + student.getStudentName());
@@ -79,8 +78,12 @@ public class StudentService {
             }
             System.out.println();
             System.out.println();
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            System.out.print("\n\n");
         }
-    }
+
+   }
 
     /*
      * @차도범
@@ -96,6 +99,20 @@ public class StudentService {
             }
         }
         System.out.print("\n\n");
+    }
+
+
+    /*
+     * @차도범
+     * 아이디로 수강생 삭제
+     * */
+    public void deleteStudentById(int studentId) {
+        try {
+            studentParser.studentFindByIdEmptyCheckValid(studentId);
+            dbManager.deleteStudentById(studentId);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 

@@ -64,5 +64,18 @@ public class ScoreService {
         return levelType;
     }
 
+    /*
+     * @차도범
+     * 수강생 아이디로 삭제
+     * */
+    public void deleteScoreByStudentId(int studentId) {
+        try {
+            studentParser.studentFindByIdEmptyCheckValid(studentId);
+            dbManager.deleteScoreByStudentId(studentId);
+        } catch (RuntimeException e) {
+//            System.out.println(e.getMessage());
+            System.out.println();
+        }
 
+    }
 }
