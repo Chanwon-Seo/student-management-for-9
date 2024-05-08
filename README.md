@@ -23,9 +23,9 @@
     - branch :
 - [ ] 수강생 정보 수정 - 도범
     - branch :
-- [ ] 상태별 수강생 목록 조회 - 찬원,근수
+- [ ] 상태별 수강생 목록 조회 - 도범
     - branch : feat/studentStatusSearchList
-- [ ] 수강생 삭제 - 찬원,근수
+- [ ] 수강생 삭제 - 도범
     - branch :
 - [ ] 수강생 과목별 평균 등급 조회 - 세미
     - branch :
