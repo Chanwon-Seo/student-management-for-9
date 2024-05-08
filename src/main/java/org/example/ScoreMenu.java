@@ -8,6 +8,8 @@ import org.example.parser.StudentParser;
 import org.example.parser.SubjectParser;
 import org.example.service.ScoreService;
 import org.example.service.StudentScoreRead;
+import org.example.service.StudentService;
+import org.example.service.SubjectService;
 
 import static org.example.Menu.sc;
 
@@ -19,14 +21,21 @@ public class ScoreMenu {
 
     private final DBManager dbManager;
 
+    private final StudentService studentService;
+    private final ScoreService scoreService;
+    private final SubjectService subjectService;
+
     StudentParser studentParser;
     SubjectParser subjectParser;
     ScoreParser scoreParser;
 
 
     public ScoreMenu(DBManager dbManager) {
-
         this.dbManager = dbManager;
+        this.studentService = new StudentService(dbManager);
+        this.scoreService = new ScoreService(dbManager);
+        this.subjectService = new SubjectService(dbManager);
+
         studentParser = new StudentParser(dbManager);
         subjectParser = new SubjectParser(dbManager);
         scoreParser = new ScoreParser(dbManager);
@@ -37,7 +46,7 @@ public class ScoreMenu {
             System.out.println("1. 수강생 점수 등록");
             System.out.println("2. 수강생 점수 조회");
             System.out.println("3. 수강생 과목별 회차 점수 수정");
-            System.out.println("4. 이전메뉴로 이동");
+            System.out.println("0. 이전메뉴로 이동");
             System.out.printf("%n");
 
             int subjectIdInput, studentIdInput, roundInput, scoreInput;
@@ -46,11 +55,11 @@ public class ScoreMenu {
                     int i = Integer.parseInt(sc.nextLine());
                     switch (i) {
                         case 1:
-                            //int subjectIdInput, studentIdInput, roundInput, scoreInput;
+
                             Subject findSubjectData;
                             try {
-                                System.out.println("***** 수강생 점수 등록*****");
-                                System.out.println("메인메뉴> 수강생 점수관리>...");
+                                System.out.println("***** 수강생 점수 등록 *****");
+                                System.out.println("메인메뉴> 수강생 점수 관리>...");
 
 
                                 System.out.print("과목 고유번호 입력 : ");
@@ -61,10 +70,12 @@ public class ScoreMenu {
                                 roundInput = Integer.parseInt(sc.nextLine());
                                 System.out.print("학생 점수 입력 : ");
                                 scoreInput = Integer.parseInt(sc.nextLine());
-
-                                findSubjectData = new Parser(dbManager).scoreCreate(subjectIdInput, studentIdInput, roundInput, scoreInput);
-                                dbManager.saveScore(new ScoreService().scoreCreateV1(findSubjectData, studentIdInput, roundInput, scoreInput));
-                                System.out.println("수강생의 점수를 등록하였습니다.\n");
+                                //TODO v1
+//                                findSubjectData = new Parser(dbManager).scoreCreate(subjectIdInput, studentIdInput, roundInput, scoreInput);
+//                                dbManager.saveScore(new ScoreService().scoreCreateV1(findSubjectData, studentIdInput, roundInput, scoreInput));
+//                                System.out.println("수강생의 점수를 등록하였습니다.\n");
+                                //TODO v2
+                                scoreService.scoreCreateV1(subjectIdInput, studentIdInput, roundInput, scoreInput);
 
                             } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
@@ -122,7 +133,7 @@ public class ScoreMenu {
 
                             break;
 
-                        case 4:
+                        case 0:
                             System.out.println("이전 화면으로 돌아갑니다.");
                             System.out.println("메인메뉴> 이전메뉴로 이동>...");
                             System.out.printf("%n");

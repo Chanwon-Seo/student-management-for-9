@@ -1,6 +1,7 @@
 package org.example.domain;
 
 import lombok.Getter;
+import org.example.domain.enums.SubjectType;
 
 
 @Getter
@@ -9,9 +10,9 @@ public class Subject {
 
     private String subjectName; //과목이름
     //TODO
-    private String subjectType; //과목타입
+    private SubjectType subjectType; //과목타입
 
-    public Subject(Integer subjectId, String subjectName, String subjectType) {
+    public Subject(Integer subjectId, String subjectName, SubjectType subjectType) {
         this.subjectId = subjectId;
         this.subjectName = subjectName;
         this.subjectType = subjectType;

@@ -3,6 +3,8 @@ package org.example.parser;
 import org.example.db.DBManager;
 import org.example.domain.Subject;
 
+import java.util.HashSet;
+
 //@RequiredArgsConstructor
 public class Parser {
     //TODO 의존성 주입
@@ -54,6 +56,22 @@ public class Parser {
 
     /**
      * @return
+     * @성균 수강생 과목 중복 검증
+     * 중복이면 거짓 반환
+     */
+    public boolean subjectIdDuplicationCheck(HashSet<Integer> dup, Integer subjectId){
+        try{
+            if(subjectParser.subjectIdDuplicationCheck(dup, subjectId)) {
+                return true;
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    /**
+     * @return
      * @성균 수강생 과목 등록 검증
      * id가 검증되면 해당 subject 클래스 반환
      */
@@ -66,4 +84,23 @@ public class Parser {
         }
         return subject;
     }
+
+    /**
+     * @return
+     * @성균 과목 등록 검증
+     */
+
+    public boolean subjectMinCheck(int rSub, int eSub){
+        try{
+            if(subjectParser.subjectMinCheck(rSub,eSub)) {
+                return true;
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        return false;
+    }
+
+
 }
