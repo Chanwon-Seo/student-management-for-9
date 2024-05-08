@@ -61,13 +61,13 @@ public class DBManager {
         throw new RuntimeException("조회된 수강생 정보가 없습니다.\n");
     }
 
-    public Student studentFindById(int id) {
+    public Student studentFindById(int id) throws NullPointerException {
         for (Student student : findByStudents()) {
             if (student.getStudentId() == id) {
                 return student;
             }
         }
-        return null;
+        throw new NullPointerException("일치하는 수강생이 없습니다.");
     }
 
     public Integer findByStudentIdNum() {
@@ -87,9 +87,9 @@ public class DBManager {
     }
 
     /*
-    * 차도범
-    * 수정 메서드
-    * */
+     * 차도범
+     * 수정 메서드
+     * */
     public void editStudent(Student student, String name, String birthDay, StudentStateType studentStateType) {
         student.editStudent(name, birthDay, studentStateType);
     }
@@ -98,17 +98,17 @@ public class DBManager {
      * @차도범
      * 수강생 아이디로 삭제
      * */
-    public void deleteStudentById(int studentId){
+    public boolean deleteStudentById(int studentId) {
         List<Student> studentList = dbStorage.getStudentList();
-        studentList.removeIf(student -> studentId == student.getStudentId());
+        return studentList.removeIf(student -> studentId == student.getStudentId());
     }
 
     /*
      * @차도범
      * 수강생 아이디로 삭제
      * */
-    public void deleteScoreByStudentId(int studentId) {
+    public boolean deleteScoreByStudentId(int studentId) {
         List<Score> scoreList = dbStorage.getScoreList();
-        scoreList.removeIf(score -> score.getStudentId() == studentId);
+        return scoreList.removeIf(score -> score.getStudentId() == studentId);
     }
 }

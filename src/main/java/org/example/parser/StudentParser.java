@@ -30,9 +30,7 @@ public class StudentParser {
         }
     }
 
-    public Student studentFindByIdEmptyCheckValid(Integer studentIdInput) {
-        Student student = dbManager.studentFindById(studentIdInput);
-        if (student == null) throw new RuntimeException("조회된 수강생 정보가 없습니다.");
-        return student;
+    public Student studentFindByIdEmptyCheckValid(Integer studentIdInput) throws NullPointerException {
+        return dbManager.studentFindById(studentIdInput);
     }
 }
