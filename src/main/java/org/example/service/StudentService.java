@@ -104,7 +104,11 @@ public class StudentService {
         StudentStateType stateType = inputStatus(status);
 
         sub.forEach(subject -> {
-            System.out.println("고유ID: " + subject.getSubjectId() + ", 제목: " + subject.getSubjectName() + ", 과목: " + subject.getSubjectType());
+            String output = String.format("고유ID: %-5d 제목: %-20s \t과목: %s",
+                    subject.getSubjectId(),
+                    subject.getSubjectName(),
+                    subject.getSubjectType());
+            System.out.println(output);
         });
 
         //System.out.println("\n수강할 과목의 제목을 입력해주세요. (종료 exit)");
