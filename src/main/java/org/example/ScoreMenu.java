@@ -3,6 +3,9 @@ package org.example;
 import org.example.db.DBManager;
 import org.example.domain.Subject;
 import org.example.parser.Parser;
+import org.example.parser.ScoreParser;
+import org.example.parser.StudentParser;
+import org.example.parser.SubjectParser;
 import org.example.service.ScoreService;
 import org.example.service.StudentScoreRead;
 
@@ -16,8 +19,17 @@ public class ScoreMenu {
 
     private final DBManager dbManager;
 
+    StudentParser studentParser;
+    SubjectParser subjectParser;
+    ScoreParser scoreParser;
+
+
     public ScoreMenu(DBManager dbManager) {
+
         this.dbManager = dbManager;
+        studentParser = new StudentParser(dbManager);
+        subjectParser = new SubjectParser(dbManager);
+        scoreParser = new ScoreParser(dbManager);
     }
 
     public void displayScoreView() {
@@ -28,12 +40,13 @@ public class ScoreMenu {
             System.out.println("4. 이전메뉴로 이동");
             System.out.printf("%n");
 
+            int subjectIdInput, studentIdInput, roundInput, scoreInput;
             if (sc.hasNextLine()) {
                 try {
                     int i = Integer.parseInt(sc.nextLine());
                     switch (i) {
                         case 1:
-                            int subjectIdInput, studentIdInput, roundInput, scoreInput;
+                            //int subjectIdInput, studentIdInput, roundInput, scoreInput;
                             Subject findSubjectData;
                             try {
                                 System.out.println("***** 수강생 점수 등록*****");
@@ -62,30 +75,51 @@ public class ScoreMenu {
                             break;
 
                         case 2: /* @세미 */
-                            System.out.println("*****수강생 점수 조회*****");
-                            System.out.println("메인메뉴> 수강생 점수관리>...");
-                            System.out.print("수강생 고유번호 입력 : ");
-                            int studentInput = Integer.parseInt(sc.nextLine());
-                            //존재하는 수강생인가?
-                            System.out.print("과목 고유번호 입력 : ");
-                            int subjectInput = Integer.parseInt(sc.nextLine());
-                            // 수강생이 가지고있는 과목인가?
-                            new StudentScoreRead(dbManager).LoadScore(studentInput, subjectInput);
+                            try{
+                                System.out.println("*****수강생 점수 조회*****");
+                                System.out.println("메인메뉴> 수강생 점수관리>...");
+
+                                System.out.print("수강생 고유번호 입력 : ");
+                                studentIdInput = Integer.parseInt(sc.nextLine());
+                                studentParser.studentFindByIdEmptyCheckValid(studentIdInput);  //존재하는 수강생인가?
+
+                                System.out.print("과목 고유번호 입력 : ");
+                                subjectIdInput = Integer.parseInt(sc.nextLine());
+                                subjectParser.HavingsubjectCheck(studentIdInput,subjectIdInput);  // 수강생이 가지고있는 과목인가?
+
+                                new StudentScoreRead(dbManager).LoadScore(studentIdInput, subjectIdInput);
+                            }
+                            catch(NumberFormatException e){
+                                throw new NumberFormatException();
+                            }
+
                             break;
 
                         case 3: /* @세미 */
-                            System.out.println("*****수강생 과목별 회차점수 수정*****");
-                            System.out.println("메인메뉴> 수강생 점수관리>...");
-                            System.out.print("수강생 고유번호 입력 : ");
-                            studentInput = Integer.parseInt(sc.nextLine());
-                            // 존재하는 수강생인가?
-                            System.out.print("과목 고유번호 입력 : ");
-                            subjectInput = Integer.parseInt(sc.nextLine());
-                            // 수강생이 가지고있는 과목인가?
-                            System.out.print("회차 번호 조회 : ");
-                            int round = Integer.parseInt(sc.nextLine());
-                            // 해당 수강생의 과목에 존재하는 회차인가?
-                            new StudentScoreRead(dbManager).UpdateScore(studentInput, subjectInput, round);
+                            try{
+                                System.out.println("*****수강생 과목별 회차점수 수정*****");
+                                System.out.println("메인메뉴> 수강생 점수관리>...");
+                                System.out.print("수강생 고유번호 입력 : ");
+                                studentIdInput = Integer.parseInt(sc.nextLine());
+                                studentParser.studentFindByIdEmptyCheckValid(studentIdInput);  //존재하는 수강생인가?
+
+                                System.out.print("과목 고유번호 입력 : ");
+                                subjectIdInput = Integer.parseInt(sc.nextLine());
+                                subjectParser.HavingsubjectCheck(studentIdInput,subjectIdInput);  // 수강생이 가지고있는 과목인가?
+
+                                System.out.print("회차 번호 조회 : ");
+                                int round = Integer.parseInt(sc.nextLine());
+                                //scoreParser.scoreUpdateCheckValid(studentIdInput,subjectIdInput,round); // 존재하는 회차인가?
+
+                                System.out.print("점수 입력 : ");
+                                int score = Integer.parseInt(sc.nextLine());
+                                scoreParser.scoreInputZeroToOneHundredCheckValid(score); //알맞은 점수범위인가
+
+                                new StudentScoreRead(dbManager).UpdateScore(scoreParser,studentIdInput, subjectIdInput, round,score);
+                            }catch (NumberFormatException e){
+                                throw new NumberFormatException();
+                            }
+
                             break;
 
                         case 4:
