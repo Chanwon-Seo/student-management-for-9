@@ -17,9 +17,11 @@ public class StudentService {
     private final DBManager dbManager;
     private final StudentParser studentParser;
     private final SubjectParser subjectParser;
+    //FIXME 사용하고 있지 않음
     private final ScoreParser scoreParser;
-
+    //FIXME 사용하고 있지 않음
     static final int MIN_REQUIRED_SUBJECTS = 3;
+    //FIXME 사용하고 있지 않음
     static final int MIN_ELECTIVE_SUBJECTS = 2;
     List<Subject> sub;
     HashSet<Integer> dup = new HashSet<>();
