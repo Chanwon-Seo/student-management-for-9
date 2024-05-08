@@ -63,6 +63,10 @@ public class DBManager {
         return subjectOptional;
     }
 
+    /**
+     * @찬원
+     * FIXME 설명
+     */
     public Optional<Student> findOneByStudent(Integer studentId) {
         Optional<Student> studentOptional = Optional.empty();
         for (Student student : dbStorage.getStudentList()) {
@@ -72,7 +76,9 @@ public class DBManager {
         }
         return studentOptional;
     }
-
+    /**
+     * FIXME 설명
+     */
     public Student studentFindById(Integer id) throws NullPointerException {
         for (Student student : dbStorage.getStudentList()) {
             if (student.getStudentId() == id) {
