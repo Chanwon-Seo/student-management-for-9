@@ -28,10 +28,8 @@ public class StudentParser {
         throw new NullPointerException("조회된 수강생 정보가 없습니다.\n");
     }
 
-    public Student studentFindByIdEmptyCheckValid(Integer studentIdInput) {
-        Student student = dbManager.studentFindById(studentIdInput);
-        if (student == null) throw new RuntimeException("조회된 수강생 정보가 없습니다.\n");
-        return student;
+    public Student studentFindByIdEmptyCheckValid(Integer studentIdInput) throws NullPointerException {
+        return dbManager.studentFindById(studentIdInput);
     }
 
     public void studentAndSubjectCheckValid(Integer findSubjectData, Student findStudentData) {

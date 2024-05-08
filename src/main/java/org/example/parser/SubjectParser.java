@@ -29,6 +29,7 @@ public class SubjectParser {
         if (findBySubjectData.isPresent()) {
             return findBySubjectData;
         }
+
         throw new NullPointerException("등록된 과목이 아닙니다.\n");
     }
 
