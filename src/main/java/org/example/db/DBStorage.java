@@ -19,7 +19,6 @@ public class DBStorage {
     private final List<Student> studentList = new LinkedList<>();
     private final List<Score> scoreList = new LinkedList<>();
 
-    //TODO subjectType = 열거형?
     private final List<Subject> subjectList = List.of(
             new Subject(
                     ++subjectIdNum,

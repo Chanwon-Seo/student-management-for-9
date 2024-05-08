@@ -10,7 +10,6 @@ import org.example.service.ScoreService;
 import org.example.service.StudentService;
 import org.example.service.SubjectService;
 
-import java.util.List;
 import java.util.Set;
 
 import static org.example.Menu.sc;
@@ -37,7 +36,6 @@ public class StudentMenu {
         StudentStateType studentStateType;
         StudentService studentService = new StudentService(dbManager);
 
-        testData();
         while (true) {
             System.out.println("1. 수강생 등록");
             System.out.println("2. 수강생 조회");
