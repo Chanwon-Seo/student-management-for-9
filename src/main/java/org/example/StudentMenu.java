@@ -36,7 +36,6 @@ public class StudentMenu {
         StudentStateType studentStateType;
         StudentService studentService = new StudentService(dbManager);
 
-        testData();
         while (true) {
             System.out.println("1. 수강생 등록");
             System.out.println("2. 수강생 조회");
@@ -189,7 +188,7 @@ public class StudentMenu {
 
     //초기값
     public void testData() {
-        Set<Integer> set = Set.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+        Set<Integer> set = Set.of(1, 2, 3, 4, 5, 6, 7, 8, 9);
         dbManager.findByStudents().add(new Student(1, "서찬원", "990204", set, StudentStateType.GREEN));
         dbManager.findByStudents().add(new Student(2, "박세미", "990204", set, StudentStateType.RED));
         dbManager.findByStudents().add(new Student(3, "박상균", "990204", set, StudentStateType.RED));

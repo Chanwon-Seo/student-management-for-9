@@ -199,6 +199,7 @@ public class StudentService {
                 if (subjectIdCheck(id)) {
                     if (subjectIdDuplicationCheck(dup, id)) {
                         System.out.println("과목 추가 완료.");
+
                         Subject subject = subjectReturn(id);
 
                         if (subject != null && subject.getSubjectType().equals(SubjectType.REQUIRED)) {
@@ -256,13 +257,13 @@ public class StudentService {
      * id가 검증되면 해당 subject 클래스 반환
      */
     public Subject subjectReturn(Integer subjectId) {
-        Subject subject = null;
+        Optional<Subject> subject = Optional.empty();
         try {
             subject = subjectParser.subjectEmptyCheckValid(subjectId);
-        } catch (RuntimeException e) {
+        } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
-        return subject;
+        return subject.get();
     }
 
     /**

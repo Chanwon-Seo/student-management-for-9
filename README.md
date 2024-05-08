@@ -13,7 +13,7 @@
 - [x] 수강생 특정 과목 회차별 등급을 조회 - 세미
     - branch : feat/student_read
 - [x] 수강생 과목별 회차 점수 수정 - 세미
-    - branch : 
+    - branch : feat/score_edit
 
 ## 선택
 
@@ -27,7 +27,7 @@
     - branch : feat/studentStatusSearchList
 - [x] 수강생 삭제 - 도범
     - branch : studentList
-- [ ] 수강생 과목별 평균 등급 조회 - 세미
-    - branch : 
+- [x] 수강생 과목별 평균 등급 조회 - 세미
+    - branch : feat/state_avgLevel
 - [ ] 특성 상태 수강생들의 필수 과목 평균 등급 조회 - 세미
-    - branch : 
+    - branch : feat/state_avgLevel
