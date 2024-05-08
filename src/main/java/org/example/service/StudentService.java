@@ -98,27 +98,6 @@ public class StudentService {
         System.out.print("\n\n");
     }
 
-
-    //수강생 등록, 조회 화면
-    public void displayStudentView() {
-        while (true) {
-            System.out.println("==================================");
-            System.out.println("1. 수강생 등록");
-            System.out.println("2. 수강생 목록 조회");
-            System.out.println("3. 메인 화면 이동");
-            int choice = sc.nextInt();
-            sc.nextLine();
-            switch (choice) {
-                case 1 -> createStudent();
-                case 2 -> getStudentList();
-                case 3 -> {
-                    return;
-                }
-                default -> System.out.println("잘못 입력하셨습니다.");
-            }
-        }
-    }
-
     //수강자 등록
     public void createStudent() {
         String name = inputString("수강생 이름 입력: ");
