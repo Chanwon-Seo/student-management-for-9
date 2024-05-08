@@ -85,9 +85,4 @@ public class StudentMenu {
                 System.out.println("입력이 없습니다, 다시입력바랍니다.");
         }
     }
-
-    public void testDAta() {
-        Set set = Set.of();
-        dbManager.saveStudent(new Student(1, "서찬원", "990204", set));
-    }
 }
