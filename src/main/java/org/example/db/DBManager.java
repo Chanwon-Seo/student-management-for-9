@@ -42,6 +42,14 @@ public class DBManager {
         return dbStorage.getScoreList();
     }
 
+    public List<Subject> findBySubjects() {
+        return dbStorage.getSubjectList();
+    }
+
+    public List<Student> findByStudents() {
+        return dbStorage.getStudentList();
+    }
+
     /**
      * 단건 조회
      */
@@ -65,8 +73,8 @@ public class DBManager {
         return studentOptional;
     }
 
-    public Student studentFindById(int id) throws NullPointerException {
-        for (Student student : findByStudents()) {
+    public Student studentFindById(Integer id) throws NullPointerException {
+        for (Student student : dbStorage.getStudentList()) {
             if (student.getStudentId() == id) {
                 return student;
             }
@@ -74,18 +82,18 @@ public class DBManager {
         throw new NullPointerException("일치하는 수강생이 없습니다.");
     }
 
+    /**
+     * @성균
+     * //FIXME 설명
+     */
     public Integer findByStudentIdNum() {
         return dbStorage.getStudentIdNum();
     }
 
-    public List<Subject> findBySubjects() {
-        return dbStorage.getSubjectList();
-    }
-
-    public List<Student> findByStudents() {
-        return dbStorage.getStudentList();
-    }
-
+    /**
+     * @성균
+     * //FIXME 설명
+     */
     public void updateStudentIdNum(Integer studentIdNum) {
         dbStorage.setStudentIdNum(++studentIdNum);
     }
@@ -102,7 +110,7 @@ public class DBManager {
      * @차도범
      * 수강생 아이디로 삭제
      */
-    public boolean deleteStudentById(int studentId) {
+    public boolean deleteStudentById(Integer studentId) {
         List<Student> studentList = dbStorage.getStudentList();
         return studentList.removeIf(student -> studentId == student.getStudentId());
     }
@@ -111,7 +119,7 @@ public class DBManager {
      * @차도범
      * 수강생 아이디로 삭제
      */
-    public boolean deleteScoreByStudentId(int studentId) {
+    public boolean deleteScoreByStudentId(Integer studentId) {
         List<Score> scoreList = dbStorage.getScoreList();
         return scoreList.removeIf(score -> score.getStudentId() == studentId);
     }
@@ -121,7 +129,7 @@ public class DBManager {
      * @세미
      * subject id로 필수인지 아닌지 판별
      */
-    public boolean FindSubjectTypebySubjectId(int subjectId) {
+    public boolean FindSubjectTypebySubjectId(Integer subjectId) {
         List<Subject> subjectList = dbStorage.getSubjectList();
         Subject sub = subjectList.get(subjectId-1);
         if(sub.getSubjectType()==SubjectType.REQUIRED) return true;
