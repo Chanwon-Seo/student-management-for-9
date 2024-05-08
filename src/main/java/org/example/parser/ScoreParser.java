@@ -7,6 +7,8 @@ import org.example.domain.Score;
 import java.util.InputMismatchException;
 import java.util.Optional;
 
+import java.util.Map;
+
 public class ScoreParser {
     private final DBManager dbManager;
 
@@ -76,4 +78,29 @@ public class ScoreParser {
         }
     }
 
+    /**
+     * @세미 점수 수정시, 존재하는 회차인지
+     * throw 회차가 존재하지 않을 때
+     */
+    public void scoreUpdateCheckValid(Integer subjectIdInput, Integer studentIdInput, Integer roundInput){
+        Score findScoreData = null;
+        for (Score score : dbManager.findByScores()) {
+            if (subjectIdInput.equals(score.getSubjectId()) && studentIdInput.equals(score.getStudentId())) {
+                findScoreData = score;
+                break;
+            }
+        }
+
+        if(findScoreData==null) {
+            //throw new RuntimeException("해당 과목의 점수 정보가 없습니다");
+            System.out.println("해당 과목의 점수 정보가 없습니다");
+            return;
+        };
+
+        Map<Integer,Integer> temp = findScoreData.getScoreId();
+        if(temp.containsKey(roundInput)) {
+            //throw new RuntimeException("해당 회차가 없습니다.");
+            System.out.println("해당 회차가 없습니다.");
+        }
+    }
 }

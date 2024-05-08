@@ -5,6 +5,7 @@ import org.example.domain.Score;
 import org.example.domain.Student;
 import org.example.domain.Subject;
 import org.example.domain.enums.StudentStateType;
+import org.example.domain.enums.SubjectType;
 
 import java.util.List;
 import java.util.Optional;
@@ -114,5 +115,17 @@ public class DBManager {
     public boolean deleteScoreByStudentId(int studentId) {
         List<Score> scoreList = dbStorage.getScoreList();
         return scoreList.removeIf(score -> score.getStudentId() == studentId);
+    }
+
+
+    /*
+     * @세미
+     * subject id로 필수인지 아닌지 판별
+     * */
+    public boolean FindSubjectTypebySubjectId(int subjectId) {
+        List<Subject> subjectList = dbStorage.getSubjectList();
+        Subject sub = subjectList.get(subjectId);
+        if(sub.getSubjectType()==SubjectType.REQUIRED) return true;
+        else return false;
     }
 }

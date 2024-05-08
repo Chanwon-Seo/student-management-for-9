@@ -36,7 +36,6 @@ public class StudentMenu {
         StudentStateType studentStateType;
         StudentService studentService = new StudentService(dbManager);
 
-        testData();
         while (true) {
             System.out.println("1. 수강생 등록");
             System.out.println("2. 수강생 조회");
