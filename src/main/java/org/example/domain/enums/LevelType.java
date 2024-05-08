@@ -19,7 +19,9 @@ public enum LevelType {
         this.levelTypeValue = levelTypeValue;
     }
 
-    // TODO 과목타입 분류
+    /**
+     * 필수과목 등급 산정
+     */
     public static LevelType checkRequiredLevelType(String subjectType, Integer scoreInput) {
         if (scoreInput >= 95) {
             return LevelType.A;
@@ -36,6 +38,9 @@ public enum LevelType {
         }
     }
 
+    /**
+     * 선택과목 등급 산정
+     */
     public static LevelType checkElectiveLevelType(String subjectType, Integer scoreInput) {
 
         if (scoreInput >= 90) {
@@ -51,7 +56,6 @@ public enum LevelType {
         } else {
             return LevelType.N;
         }
-
     }
 
 }
