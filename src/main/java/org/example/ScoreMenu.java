@@ -15,9 +15,10 @@ import static org.example.Menu.sc;
 public class ScoreMenu {
 
     private final DBManager dbManager;
-
+    //FIXME 불필요한 선언
     private final StudentService studentService;
     private final ScoreService scoreService;
+    //FIXME 불필요한 선언
     private final SubjectService subjectService;
 
     public ScoreMenu(DBManager dbManager) {
