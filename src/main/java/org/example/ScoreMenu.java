@@ -25,20 +25,12 @@ public class ScoreMenu {
     private final ScoreService scoreService;
     private final SubjectService subjectService;
 
-    StudentParser studentParser;
-    SubjectParser subjectParser;
-    ScoreParser scoreParser;
-
 
     public ScoreMenu(DBManager dbManager) {
         this.dbManager = dbManager;
         this.studentService = new StudentService(dbManager);
         this.scoreService = new ScoreService(dbManager);
         this.subjectService = new SubjectService(dbManager);
-
-        studentParser = new StudentParser(dbManager);
-        subjectParser = new SubjectParser(dbManager);
-        scoreParser = new ScoreParser(dbManager);
     }
 
     public void displayScoreView() {
@@ -46,6 +38,8 @@ public class ScoreMenu {
             System.out.println("1. 수강생 점수 등록");
             System.out.println("2. 수강생 점수 조회");
             System.out.println("3. 수강생 과목별 회차 점수 수정");
+            System.out.println("4. 수강생의 과목별 평균 등급을 조회");
+            System.out.println("5. 특정 상태 수강생들의 필수 과목 평균 등급을 조회");
             System.out.println("0. 이전메뉴로 이동");
             System.out.printf("%n");
 
@@ -92,12 +86,9 @@ public class ScoreMenu {
 
                                 System.out.print("수강생 고유번호 입력 : ");
                                 studentIdInput = Integer.parseInt(sc.nextLine());
-                                studentParser.studentFindByIdEmptyCheckValid(studentIdInput);  //존재하는 수강생인가?
 
                                 System.out.print("과목 고유번호 입력 : ");
                                 subjectIdInput = Integer.parseInt(sc.nextLine());
-                                subjectParser.HavingsubjectCheck(studentIdInput,subjectIdInput);  // 수강생이 가지고있는 과목인가?
-
                                 new StudentScoreRead(dbManager).LoadScore(studentIdInput, subjectIdInput);
                             }
                             catch(NumberFormatException e){
@@ -112,24 +103,32 @@ public class ScoreMenu {
                                 System.out.println("메인메뉴> 수강생 점수관리>...");
                                 System.out.print("수강생 고유번호 입력 : ");
                                 studentIdInput = Integer.parseInt(sc.nextLine());
-                                studentParser.studentFindByIdEmptyCheckValid(studentIdInput);  //존재하는 수강생인가?
 
                                 System.out.print("과목 고유번호 입력 : ");
                                 subjectIdInput = Integer.parseInt(sc.nextLine());
-                                subjectParser.HavingsubjectCheck(studentIdInput,subjectIdInput);  // 수강생이 가지고있는 과목인가?
 
                                 System.out.print("회차 번호 조회 : ");
                                 int round = Integer.parseInt(sc.nextLine());
-                                //scoreParser.scoreUpdateCheckValid(studentIdInput,subjectIdInput,round); // 존재하는 회차인가?
 
                                 System.out.print("점수 입력 : ");
                                 int score = Integer.parseInt(sc.nextLine());
-                                scoreParser.scoreInputZeroToOneHundredCheckValid(score); //알맞은 점수범위인가
 
-                                new StudentScoreRead(dbManager).UpdateScore(scoreParser,studentIdInput, subjectIdInput, round,score);
+                                new StudentScoreRead(dbManager).UpdateScore(studentIdInput, subjectIdInput, round,score);
                             }catch (NumberFormatException e){
                                 throw new NumberFormatException();
                             }
+
+                            break;
+
+                        case 4:
+                            System.out.println("*****수강생의 과목별 평균 등급을 조회*****");
+                            System.out.println("메인메뉴> 수강생 점수관리>...");
+
+                            break;
+
+                        case 5:
+                            System.out.println("*****특정 상태 수강생들의 필수 과목 평균 등급을 조회*****");
+                            System.out.println("메인메뉴> 수강생 점수관리>...");
 
                             break;
 

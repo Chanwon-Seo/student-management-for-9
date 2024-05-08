@@ -69,7 +69,7 @@ public class ScoreParser {
                 throw new RuntimeException("이미 등록된 회차입니다.\n");
             }
             //이전 회차 미등록인 경우
-            if (scoreSize == roundInput - 1) {
+            if (scoreSize != roundInput - 1) {
                 throw new RuntimeException("이전 회차에서 미등록한 회차가 있습니다.\n");
             }
         }
