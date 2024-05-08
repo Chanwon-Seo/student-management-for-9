@@ -16,6 +16,7 @@ public class StudentService {
 
     static final int MIN_REQUIRED_SUBJECTS = 3;
     static final int MIN_ELECTIVE_SUBJECTS = 2;
+
     //TODO
     List<Subject> sub;
     HashSet<Integer> dup = new HashSet<>();
@@ -34,7 +35,6 @@ public class StudentService {
         sub = dbManager.findBySubjects();
         studentList = dbManager.findByStudents();
     }
-
 
     /**
      * @차도범 수강생 목록을 출력
