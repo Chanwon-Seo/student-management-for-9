@@ -14,7 +14,7 @@ import org.example.parser.SubjectParser;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Optional;
 
 
 public class StudentScoreRead {
@@ -35,13 +35,16 @@ public class StudentScoreRead {
     public void LoadScore(Integer studentId, Integer subjectId) {
         var score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
 
+
         if (score == null) { //TEMPEXCEPTION
             System.out.println("해당 과목의 점수가 존재하지 않습니다");
             return;
         }
 
+        System.out.println("학생고유번호: " + studentId + "  과목번호: " + subjectId);
+
         //등급계산
-        SubjectType levelType = dbManager.findOneBySubject(subjectId).getSubjectType();
+        SubjectType levelType = dbManager.findOneBySubject(subjectId).get().getSubjectType();;
         LevelType tempLevelType = LevelType.A;
 
         for (int i = 0; i < score.size(); i++) {
@@ -73,7 +76,7 @@ public class StudentScoreRead {
 
     //과목별 평균등급 조회 (추가 - 점수관리)
     public void LoadAvgScore(Integer studentId, Integer subjectId) {
-        var score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
+        Map<Integer,Integer> score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
         if (score == null) { //TEMP EXCEPTION
             System.out.println("해당 과목의 점수가 존재하지 않습니다");
             return;
@@ -83,11 +86,11 @@ public class StudentScoreRead {
         double avg = 0;
 
         for (int i = 0; i < score.size(); i++) {
-            sum += (double) score.values().toArray()[i];
+            sum += score.get(i+1);
         }
         avg = sum / score.size();
-        Subject subject = dbManager.findOneBySubject(subjectId);
-        System.out.println(subject.getSubjectName() + "과목의 평균은 " + avg + "입니다.");
+        Optional<Subject> subject = dbManager.findOneBySubject(subjectId);
+        System.out.println(subject.get().getSubjectName() + "과목의 평균은 " + avg + "입니다.");
 
     }
 
@@ -119,10 +122,13 @@ public class StudentScoreRead {
             for (Integer sub : student.getSubjectId()) {
                 boolean isRequired = dbManager.FindSubjectTypebySubjectId(sub);
                 if (isRequired) {
-                    sum += LoadAvgScoreRequired(student.getStudentId(), sub); //해당 과목 평균을 넣기
-                    count++;
-                }
-                Integer avg = Integer.parseInt(String.valueOf(sum/count)); //평균들의 평균을 계산
+                    if(LoadAvgScoreRequired(student.getStudentId(), sub)!=0)
+                    {
+                        sum += LoadAvgScoreRequired(student.getStudentId(), sub); //해당 과목 평균을 넣기
+                        count++;
+                    }
+            }
+            int avg = (int)(sum / count); //평균들의 평균을 계산
                 LevelType resultLevel = LevelType.checkRequiredLevelType("", avg); //평균점수를 등급화
 
                 System.out.println(student.getStudentName() + "의 필수 과목 평균 등급: " + resultLevel);
@@ -137,12 +143,11 @@ public class StudentScoreRead {
     // 수강생 과목번호 받아 score 리스트 return
     public Map<Integer, Integer> FindScoresByStudentIdANDSubjectId(Integer studentId, Integer subjectId) {
 
-        Subject findSubjectData = subjectParser.subjectEmptyCheckValid(subjectId);
-        studentParser.studentEmptyCheckValid(findSubjectData, studentId);
+        Optional<Subject> findSubjectData = subjectParser.subjectEmptyCheckValid(subjectId);
+        studentParser.studentEmptyCheckValidV2(studentId);
 
         if (dbManager.findByScores().isEmpty() || dbManager.findByScores() == null) return null;
 
-        System.out.println("학생고유번호: " + studentId + "  과목번호: " + subjectId);
         List<Score> score = dbManager.findByScores();
 
         for (Score s : score) {
@@ -167,7 +172,7 @@ public class StudentScoreRead {
         double sum = 0, avg = 0;
 
         for (int i = 0; i < score.size(); i++) {
-            sum += (double) score.values().toArray()[i];
+            sum += (double) score.get(i+1);
         }
         avg = sum / score.size();
         return avg;

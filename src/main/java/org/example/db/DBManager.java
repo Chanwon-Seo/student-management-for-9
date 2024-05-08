@@ -124,7 +124,7 @@ public class DBManager {
      * */
     public boolean FindSubjectTypebySubjectId(int subjectId) {
         List<Subject> subjectList = dbStorage.getSubjectList();
-        Subject sub = subjectList.get(subjectId-1);
+        Subject sub = subjectList.get(subjectId);
         if(sub.getSubjectType()==SubjectType.REQUIRED) return true;
         else return false;
     }

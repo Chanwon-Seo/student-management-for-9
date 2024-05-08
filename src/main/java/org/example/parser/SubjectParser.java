@@ -5,7 +5,6 @@ import org.example.domain.Student;
 import org.example.domain.Subject;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 
 public class SubjectParser {
@@ -38,8 +37,8 @@ public class SubjectParser {
      * throw 해당 과목을 수강하지 않은 수강생일 경우
      */
     public void HavingsubjectCheck(Integer studentIdInput, Integer subjectIdInput) {
-        Student student = dbManager.findOneByStudent(studentIdInput);
-        for (Integer sub : student.getSubjectId()) {
+        Optional<Student> student = dbManager.findOneByStudent(studentIdInput);
+        for (Integer sub : student.get().getSubjectId()) {
             if (sub.equals(subjectIdInput)) {
                 return;
             }
