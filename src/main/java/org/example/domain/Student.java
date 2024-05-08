@@ -17,10 +17,11 @@ public class Student {
     //TODO
     private StudentStateType studentStateType; //수강생상태
 
-    public Student(Integer studentId, String studentName, String birthDay, Set<Integer> subjectId) {
+    public Student(Integer studentId, String studentName, String birthDay, Set<Integer> subjectId, StudentStateType studentStateType){
         this.studentId = studentId;
         this.studentName = studentName;
         this.birthDay = birthDay;
         this.subjectId = subjectId;
+        this.studentStateType = studentStateType;
     }
 }

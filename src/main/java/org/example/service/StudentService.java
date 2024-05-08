@@ -2,6 +2,8 @@ package org.example.service;
 
 import org.example.domain.Student;
 import org.example.domain.Subject;
+import org.example.domain.enums.StudentStateType;
+import org.example.domain.enums.SubjectType;
 import org.example.parser.Parser;
 import org.example.db.DBManager;
 import org.example.parser.StudentParser;
@@ -18,6 +20,7 @@ public class StudentService {
     static final int MIN_ELECTIVE_SUBJECTS = 2;
     //TODO
     List<Subject> sub;
+    HashSet<Integer> dup = new HashSet<>();
     Set<Integer> subjectId = new HashSet<>();
     Scanner sc = new Scanner(System.in);
     DBManager dbManager;
@@ -57,7 +60,7 @@ public class StudentService {
             System.out.println("id : " + student.getStudentId());
             System.out.println("이름 : " + student.getStudentName());
             System.out.println("생년월일 : " + student.getBirthDay());
-            System.out.println("상태 : " + student.getStudentState());
+            System.out.println("상태 : " + student.getStudentStateType());
 
             //찾은 과목리스트와 과목리스트를
             for (Subject subject : dbManager.findBySubjects()) {
@@ -99,40 +102,41 @@ public class StudentService {
         }
     }
 
-    //수강자 생성
+    //수강자 등록
     public void createStudent() {
         String name = inputString("수강생 이름 입력: ");
         String birth = inputString("수강생 생년월일 입력: ");
+        String status = inputString("현재 상태를 입력하세요.(선택) green: 좋음, yellow: 보통, red: 나쁨, nostatus: 모름\n");
 
-//        sub.forEach(subject -> {
-//            System.out.println("고유ID: " + subject.getSubjectId() + ", 제목: " + subject.getSubjectName() + ", 과목: " + subject.getSubjectType());
-//        });
+        StudentStateType stateType = inputStatus(status);
 
-        System.out.println("\n수강할 과목의 제목을 입력해주세요. (종료 exit)");
+        sub.forEach(subject -> {
+            String output = String.format("고유ID: %-5d 제목: %-20s \t과목: %s",
+                    subject.getSubjectId(),
+                    subject.getSubjectName(),
+                    subject.getSubjectType());
+            System.out.println(output);
+        });
+
+        //System.out.println("\n수강할 과목의 제목을 입력해주세요. (종료 exit)");
 
         Integer subId;
         while ((subId = addSubject()) != 0) {
             subjectId.add(subId);
+            dup.add(subId);
         }
 
-        if (rSub >= MIN_REQUIRED_SUBJECTS && eSub >= MIN_ELECTIVE_SUBJECTS) {
+
+        if(parser.subjectMinCheck(rSub, eSub)){
             System.out.println("수강자가 생성되었습니다.");
             //TODO
             dbManager.updateStudentIdNum(dbManager.findByStudentIdNum());
-            Student st = new Student(dbManager.findByStudentIdNum(), name, birth, subjectId);
+            Student st = new Student(dbManager.findByStudentIdNum(), name, birth, subjectId, stateType);
             dbManager.saveStudent(st);
-            rSub = 0;
-            eSub = 0;
-        } else if (rSub < MIN_REQUIRED_SUBJECTS && eSub < MIN_ELECTIVE_SUBJECTS) {
-            System.out.println("필수과목이 " + (MIN_REQUIRED_SUBJECTS - rSub) + "과목, 선택과목이 " + (MIN_ELECTIVE_SUBJECTS - eSub) + "과목이 부족해 수강생이 등록되지 않습니다.");
-        } else if (rSub < MIN_REQUIRED_SUBJECTS) {
-            System.out.println("필수과목이 " + (MIN_REQUIRED_SUBJECTS - rSub) + "과목 부족해 수강생이 등록되지 않습니다.");
-        } else {
-            System.out.println("선택과목이 " + (MIN_ELECTIVE_SUBJECTS - eSub) + "과목 부족해 수강생이 등록되지 않습니다.");
-
-            rSub = 0;
-            eSub = 0;
         }
+        rSub=0;
+        eSub=0;
+        dup.clear();
         System.out.println();
     }
 
@@ -142,8 +146,14 @@ public class StudentService {
         return sc.nextLine();
     }
 
-    public Integer addSubject() {
-        while (true) {
+    //상태 값 가져오기
+    public StudentStateType inputStatus(String status){
+        return StudentStateType.studentStateType(status);
+    }
+
+    public Integer addSubject(){
+        while(true){
+            System.out.println("\n수강할 과목의 제목을 입력해주세요. (종료 exit)");
             String s = sc.nextLine();
 
             if ("exit".equals(s)) {
@@ -154,20 +164,24 @@ public class StudentService {
                 Integer id = Integer.parseInt(s);
 
                 if (parser.subjectIdCheck(id)) {
-                    System.out.println("과목 추가 완료");
-                    Subject subject = parser.subjectReturn(id);
+                    if(parser.subjectIdDuplicationCheck(dup, id)) {
+                        System.out.println("과목 추가 완료.");
+                        Subject subject = parser.subjectReturn(id);
 
-                    if (subject != null && subject.getSubjectType().equals("SUBJECT_TYPE_MANDATORY")) {
-                        rSub++;
-                    } else {
-                        eSub++;
+                        if (subject != null && subject.getSubjectType().equals(SubjectType.REQUIRED)) {
+                            rSub++;
+                            System.out.println("필수: " + rSub + ", 선택: " + eSub);
+                        } else {
+                            eSub++;
+                            System.out.println("필수: " + rSub + ", 선택: " + eSub);
+                        }
+                        return id;
                     }
-                    return id;
                 }
-
-            } catch (NumberFormatException e) {
+            }catch(NumberFormatException e){
                 System.out.println("잘못된 입력입니다. 숫자 또는 \"exit\"만 입력해주세요.");
             }
+
         }
     }
 

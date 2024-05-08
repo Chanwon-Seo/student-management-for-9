@@ -4,6 +4,7 @@
 package org.example;
 
 import org.example.db.DBManager;
+import org.example.parser.Parser;
 import org.example.domain.Student;
 import org.example.service.StudentService;
 
@@ -16,18 +17,21 @@ public class StudentMenu {
 
     private final DBManager dbManager;
 
+
     public StudentMenu(DBManager dbManager) {
         this.dbManager = dbManager;
     }
 
+
     public void displayStudentView() {
 
         StudentService studentService = new StudentService(dbManager);
+        List<Student> studentList = dbManager.findByStudents();
 
         while (true) {
             System.out.println("1. 수강생 등록");
             System.out.println("2. 수강생 조회");
-            System.out.println("3. 이전메뉴로 이동");
+            System.out.println("0. 이전메뉴로 이동");
             System.out.printf("%n");
 
 
