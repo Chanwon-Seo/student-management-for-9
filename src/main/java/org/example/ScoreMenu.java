@@ -42,12 +42,9 @@ public class ScoreMenu {
                     int i = Integer.parseInt(sc.nextLine());
                     switch (i) {
                         case 1:
-//                            int subjectIdInput, studentIdInput, roundInput, scoreInput;
-//                            Subject findSubjectData;
                             try {
                                 System.out.println("***** 수강생 점수 등록 *****");
                                 System.out.println("메인메뉴> 수강생 점수 관리>...");
-
 
                                 System.out.print("과목 고유번호 입력 : ");
                                 int subjectIdInput = Integer.parseInt(sc.nextLine());
@@ -57,17 +54,11 @@ public class ScoreMenu {
                                 int roundInput = Integer.parseInt(sc.nextLine());
                                 System.out.print("학생 점수 입력 : ");
                                 int scoreInput = Integer.parseInt(sc.nextLine());
-                                //TODO v1
-//                                findSubjectData = new Parser(dbManager).scoreCreate(subjectIdInput, studentIdInput, roundInput, scoreInput);
-//                                dbManager.saveScore(new ScoreService().scoreCreateV1(findSubjectData, studentIdInput, roundInput, scoreInput));
-//                                System.out.println("수강생의 점수를 등록하였습니다.\n");
-                                //TODO v2
-                                scoreService.scoreCreateV1(subjectIdInput, studentIdInput, roundInput, scoreInput);
 
+                                scoreService.scoreCreateV1(subjectIdInput, studentIdInput, roundInput, scoreInput);
                             } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
                             } catch (RuntimeException e) {
-                                System.out.println(e.getMessage());
                                 break;
                             }
                             break;

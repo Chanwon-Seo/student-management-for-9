@@ -32,6 +32,7 @@ public class StudentService {
     int eSub = 0;
 
     List<Student> studentList;
+
     public StudentService(DBManager dbManager) {
         this.dbManager = dbManager;
         this.studentParser = new StudentParser(dbManager);
@@ -183,7 +184,8 @@ public class StudentService {
                 if (parser.subjectIdCheck(id)) {
                     if (parser.subjectIdDuplicationCheck(dup, id)) {
                         System.out.println("과목 추가 완료.");
-                        Subject subject = parser.subjectReturn(id);
+                        Subject subject = null;
+//                        parser.subjectReturn(id);
 
                         if (subject != null && subject.getSubjectType().equals(SubjectType.REQUIRED)) {
                             rSub++;
