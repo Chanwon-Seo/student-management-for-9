@@ -1,8 +1,6 @@
 package org.example;
 
 import org.example.db.DBManager;
-import org.example.domain.Subject;
-import org.example.parser.SubjectParser;
 import org.example.service.ScoreService;
 import org.example.service.StudentScoreRead;
 import org.example.service.StudentService;

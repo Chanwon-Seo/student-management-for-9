@@ -59,12 +59,12 @@ public class Parser {
      * @성균 수강생 과목 중복 검증
      * 중복이면 거짓 반환
      */
-    public boolean subjectIdDuplicationCheck(HashSet<Integer> dup, Integer subjectId){
-        try{
-            if(subjectParser.subjectIdDuplicationCheck(dup, subjectId)) {
+    public boolean subjectIdDuplicationCheck(HashSet<Integer> dup, Integer subjectId) {
+        try {
+            if (subjectParser.subjectIdDuplicationCheck(dup, subjectId)) {
                 return true;
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return false;
@@ -75,11 +75,11 @@ public class Parser {
      * @성균 수강생 과목 등록 검증
      * id가 검증되면 해당 subject 클래스 반환
      */
-    public Subject subjectReturn(Integer subjectId){
+    public Subject subjectReturn(Integer subjectId) {
         Subject subject = null;
-        try{
+        try {
             subject = subjectParser.subjectEmptyCheckValid(subjectId);
-        }catch(RuntimeException e){
+        } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
         return subject;
@@ -90,12 +90,12 @@ public class Parser {
      * @성균 과목 등록 검증
      */
 
-    public boolean subjectMinCheck(int rSub, int eSub){
-        try{
-            if(subjectParser.subjectMinCheck(rSub,eSub)) {
+    public boolean subjectMinCheck(int rSub, int eSub) {
+        try {
+            if (subjectParser.subjectMinCheck(rSub, eSub)) {
                 return true;
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
