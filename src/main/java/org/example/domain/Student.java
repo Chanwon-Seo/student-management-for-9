@@ -23,4 +23,12 @@ public class Student {
         this.birthDay = birthDay;
         this.subjectId = subjectId;
     }
+
+    public Student(Integer studentId, String studentName, String birthDay, Set<Integer> subjectId, StudentStateType studentStateType) {
+        this.studentId = studentId;
+        this.studentName = studentName;
+        this.birthDay = birthDay;
+        this.subjectId = subjectId;
+        this.studentStateType = studentStateType;
+    }
 }

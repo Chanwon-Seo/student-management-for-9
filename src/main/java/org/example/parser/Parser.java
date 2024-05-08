@@ -1,7 +1,10 @@
 package org.example.parser;
 
 import org.example.db.DBManager;
+import org.example.domain.Student;
 import org.example.domain.Subject;
+
+import java.util.List;
 
 //@RequiredArgsConstructor
 public class Parser {
@@ -57,13 +60,25 @@ public class Parser {
      * @성균 수강생 과목 등록 검증
      * id가 검증되면 해당 subject 클래스 반환
      */
-    public Subject subjectReturn(Integer subjectId){
+    public Subject subjectReturn(Integer subjectId) {
         Subject subject = null;
-        try{
+        try {
             subject = subjectParser.subjectEmptyCheckValid(subjectId);
-        }catch(RuntimeException e){
+        } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
         return subject;
+    }
+
+    /**
+     * @return
+     * @찬원 상태별 수강생 목록 조회
+     */
+    public List<Student> findAllStudentStateList() {
+        try {
+            return studentParser.findAllStudentEmptyCheckValid();
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

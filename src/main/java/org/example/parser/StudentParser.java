@@ -4,6 +4,8 @@ import org.example.db.DBManager;
 import org.example.domain.Student;
 import org.example.domain.Subject;
 
+import java.util.List;
+
 
 public class StudentParser {
     private final DBManager dbManager;
@@ -34,5 +36,14 @@ public class StudentParser {
         Student student = dbManager.studentFindById(studentIdInput);
         if (student == null) throw new RuntimeException("조회된 수강생 정보가 없습니다.");
         return student;
+    }
+
+    public List<Student> findAllStudentEmptyCheckValid() {
+        List<Student> findAllByStudentData = dbManager.findByStudents();
+        if (!findAllByStudentData.isEmpty()) {
+            return findAllByStudentData;
+        }
+
+        throw new RuntimeException("수강생 목록이 없습니다.");
     }
 }

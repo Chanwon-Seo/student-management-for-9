@@ -2,6 +2,8 @@ package org.example.service;
 
 import org.example.domain.Student;
 import org.example.domain.Subject;
+import org.example.domain.enums.StudentStateType;
+import org.example.domain.enums.SubjectType;
 import org.example.parser.Parser;
 import org.example.db.DBManager;
 import org.example.parser.StudentParser;
@@ -57,7 +59,7 @@ public class StudentService {
             System.out.println("id : " + student.getStudentId());
             System.out.println("이름 : " + student.getStudentName());
             System.out.println("생년월일 : " + student.getBirthDay());
-            System.out.println("상태 : " + student.getStudentState());
+            System.out.println("상태 : " + student.getStudentStateType());
 
             //찾은 과목리스트와 과목리스트를
             for (Subject subject : dbManager.findBySubjects()) {
@@ -150,7 +152,7 @@ public class StudentService {
                     System.out.println("과목 추가 완료");
                     Subject subject = parser.subjectReturn(id);
 
-                    if (subject != null && subject.getSubjectType().equals("SUBJECT_TYPE_MANDATORY")) {
+                    if (subject != null && subject.getSubjectType().equals(SubjectType.REQUIRED)) {
                         rSub++;
                     } else {
                         eSub++;
