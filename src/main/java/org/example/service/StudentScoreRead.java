@@ -16,7 +16,7 @@ import java.util.*;
 
 public class StudentScoreRead {
 
-    DBManager dbManager;
+    private final DBManager dbManager;
     private final StudentParser studentParser;
     private final SubjectParser subjectParser;
     private final ScoreParser scoreParser;
@@ -28,6 +28,7 @@ public class StudentScoreRead {
         this.scoreParser = new ScoreParser(dbManager);
     }
 
+    //FIXME 메서드명
     // 과목의 [회차: 등급] 전체조회 (필수 - 과목의 회차별 등급 조회)
     public void LoadScore(Integer studentId, Integer subjectId) {
         Map<Integer,Integer> score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
@@ -42,7 +43,8 @@ public class StudentScoreRead {
 
         //등급계산
         SubjectType levelType = dbManager.findOneBySubject(subjectId).get().getSubjectType();
-        ;
+
+        //FIXME 초기화
         LevelType tempLevelType = LevelType.A;
 
         for (int i = 0; i < score.size(); i++) {
@@ -56,6 +58,7 @@ public class StudentScoreRead {
         }
     }
 
+    //FIXME 메서드명
     // 회차 점수 수정 (필수 - 점수수정)
     public void UpdateScore(Integer studentId, Integer subjectId, Integer roundInput, Integer scoreInput) {
 
@@ -71,7 +74,7 @@ public class StudentScoreRead {
         score.put(roundInput, scoreInput);
         System.out.println(roundInput + " 회차 : " + scoreInput + "점 수정완료!");
     }
-
+    //FIXME 메서드명
     //과목별 평균등급 조회 (추가 - 점수관리)
     public void LoadAvgScore(Integer studentId, Integer subjectId) {
         Map<Integer, Integer> score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
@@ -92,7 +95,7 @@ public class StudentScoreRead {
 
     }
 
-
+    //FIXME 메서드명
     //특정상태 수강생들의 필수 과목 평균 등급 (추가 - 점수관리)
     public void LoadStudentStateOfRequiredSubject(int state) {
 
@@ -115,6 +118,7 @@ public class StudentScoreRead {
         double count = 0;
         double sum = 0;
         int avg = 0;
+        //FIXME 초기화
         LevelType resultLevel = LevelType.A;
         for (Student student : studentList) {
             sum = 0;
@@ -140,7 +144,7 @@ public class StudentScoreRead {
 
 
     /* Util */
-
+    //FIXME 메서드명
     // 수강생 과목번호 받아 score 리스트 return
     public Map<Integer, Integer> FindScoresByStudentIdANDSubjectId(Integer studentId, Integer subjectId) {
 
@@ -163,7 +167,7 @@ public class StudentScoreRead {
         }
         return null;
     }
-
+    //FIXME 메서드명
     public double LoadAvgScoreRequired(Integer studentId, Integer subjectId) {
         Map<Integer,Integer> score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
         if (score == null || score.isEmpty()) {
