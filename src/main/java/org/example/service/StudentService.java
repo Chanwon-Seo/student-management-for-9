@@ -4,7 +4,6 @@ import org.example.db.DBManager;
 import org.example.domain.Student;
 import org.example.domain.Subject;
 import org.example.domain.enums.StudentStateType;
-import org.example.domain.enums.StudentStateType;
 import org.example.domain.enums.SubjectType;
 import org.example.parser.Parser;
 import org.example.parser.StudentParser;
@@ -137,15 +136,15 @@ public class StudentService {
         }
 
 
-        if(parser.subjectMinCheck(rSub, eSub)){
+        if (parser.subjectMinCheck(rSub, eSub)) {
             System.out.println("수강자가 생성되었습니다.");
             //TODO
             dbManager.updateStudentIdNum(dbManager.findByStudentIdNum());
             Student st = new Student(dbManager.findByStudentIdNum(), name, birth, subjectId, stateType);
             dbManager.saveStudent(st);
         }
-        rSub=0;
-        eSub=0;
+        rSub = 0;
+        eSub = 0;
         dup.clear();
         System.out.println();
     }
@@ -157,12 +156,12 @@ public class StudentService {
     }
 
     //상태 값 가져오기
-    public StudentStateType inputStatus(String status){
+    public StudentStateType inputStatus(String status) {
         return StudentStateType.studentStateType(status);
     }
 
-    public Integer addSubject(){
-        while(true){
+    public Integer addSubject() {
+        while (true) {
             System.out.println("\n수강할 과목의 제목을 입력해주세요. (종료 exit)");
             String s = sc.nextLine();
 
@@ -174,7 +173,7 @@ public class StudentService {
                 Integer id = Integer.parseInt(s);
 
                 if (parser.subjectIdCheck(id)) {
-                    if(parser.subjectIdDuplicationCheck(dup, id)) {
+                    if (parser.subjectIdDuplicationCheck(dup, id)) {
                         System.out.println("과목 추가 완료.");
                         Subject subject = parser.subjectReturn(id);
 
@@ -188,7 +187,7 @@ public class StudentService {
                         return id;
                     }
                 }
-            }catch(NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.out.println("잘못된 입력입니다. 숫자 또는 \"exit\"만 입력해주세요.");
             }
 
