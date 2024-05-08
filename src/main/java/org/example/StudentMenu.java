@@ -16,6 +16,7 @@ public class StudentMenu {
 
     private final DBManager dbManager;
 
+
     public StudentMenu(DBManager dbManager) {
         this.dbManager = dbManager;
     }
@@ -26,6 +27,7 @@ public class StudentMenu {
         int studentId;
         StudentStateType studentStateType;
         StudentService studentService = new StudentService(dbManager);
+        List<Student> studentList = dbManager.findByStudents();
 
         testData();
         while (true) {
@@ -38,8 +40,8 @@ public class StudentMenu {
             if (sc.hasNextLine()) {
                 loopA:
                 try {
-
                     int i = Integer.parseInt(sc.nextLine());
+
                     switch (i) {
                         case 1:  //연결되었습니다.
                             System.out.println("***** 수강생 등록*****");
@@ -140,9 +142,8 @@ public class StudentMenu {
                     //ystem.out.println("숫자외 문자를 입력하였습니다, 다시 입력바랍니다.");
                     System.out.println("something wrong~, 다시 입력바랍니다.");
                 }
-            } else {
+            } else
                 System.out.println("입력이 없습니다, 다시입력바랍니다.");
-            }
         }
     }
 
