@@ -263,6 +263,7 @@ public class StudentService {
     /**
      * @성균 과목 등록 검증
      */
+    //FIXME if문
     public boolean subjectMinCheck(int rSub, int eSub) {
         try {
             if (subjectParser.subjectMinCheck(rSub, eSub)) {
