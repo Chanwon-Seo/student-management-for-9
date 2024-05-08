@@ -10,7 +10,6 @@ import org.example.service.ScoreService;
 import org.example.service.StudentService;
 import org.example.service.SubjectService;
 
-import java.util.List;
 import java.util.Set;
 
 import static org.example.Menu.sc;
