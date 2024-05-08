@@ -19,7 +19,6 @@ public enum StudentStateType {
 
         for(StudentStateType s: StudentStateType.values()){
             if(s.getStudentTypeValue().equals(status)){
-                System.out.println("!!!!!!!!");
                 stateType = s;
 
                 return stateType;

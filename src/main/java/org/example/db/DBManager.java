@@ -4,6 +4,7 @@ package org.example.db;
 import org.example.domain.Score;
 import org.example.domain.Student;
 import org.example.domain.Subject;
+import org.example.domain.enums.StudentStateType;
 
 import java.util.List;
 
@@ -83,5 +84,31 @@ public class DBManager {
 
     public void updateStudentIdNum(Integer studentIdNum) {
         dbStorage.setStudentIdNum(++studentIdNum);
+    }
+
+    /*
+    * 차도범
+    * 수정 메서드
+    * */
+    public void editStudent(Student student, String name, String birthDay, StudentStateType studentStateType) {
+        student.editStudent(name, birthDay, studentStateType);
+    }
+
+    /*
+     * @차도범
+     * 수강생 아이디로 삭제
+     * */
+    public void deleteStudentById(int studentId){
+        List<Student> studentList = dbStorage.getStudentList();
+        studentList.removeIf(student -> studentId == student.getStudentId());
+    }
+
+    /*
+     * @차도범
+     * 수강생 아이디로 삭제
+     * */
+    public void deleteScoreByStudentId(int studentId) {
+        List<Score> scoreList = dbStorage.getScoreList();
+        scoreList.removeIf(score -> score.getStudentId() == studentId);
     }
 }
