@@ -22,6 +22,7 @@ public class StudentService {
 
     static final int MIN_REQUIRED_SUBJECTS = 3;
     static final int MIN_ELECTIVE_SUBJECTS = 2;
+
     //TODO
     List<Subject> sub;
     HashSet<Integer> dup = new HashSet<>();
@@ -42,7 +43,6 @@ public class StudentService {
         //TODO 코드 변경
 //        parser = new Parser(dbManager);
     }
-
 
     /**
      * @차도범 수강생 목록을 출력
@@ -135,8 +135,6 @@ public class StudentService {
             System.out.println(output);
         });
 
-        //System.out.println("\n수강할 과목의 제목을 입력해주세요. (종료 exit)");
-
         Integer subId;
         while ((subId = addSubject()) != 0) {
             subjectId.add(subId);
@@ -144,7 +142,7 @@ public class StudentService {
         }
 
 
-        if (parser.subjectMinCheck(rSub, eSub)) {
+        if (subjectMinCheck(rSub, eSub)) {
             System.out.println("수강자가 생성되었습니다.");
             //TODO
             dbManager.updateStudentIdNum(dbManager.findByStudentIdNum());
@@ -180,10 +178,10 @@ public class StudentService {
             try {
                 Integer id = Integer.parseInt(s);
 
-                if (parser.subjectIdCheck(id)) {
-                    if (parser.subjectIdDuplicationCheck(dup, id)) {
+                if (subjectIdCheck(id)) {
+                    if (subjectIdDuplicationCheck(dup, id)) {
                         System.out.println("과목 추가 완료.");
-                        Subject subject = parser.subjectReturn(id);
+                        Subject subject = subjectReturn(id);
 
                         if (subject != null && subject.getSubjectType().equals(SubjectType.REQUIRED)) {
                             rSub++;
@@ -201,5 +199,70 @@ public class StudentService {
 
         }
     }
+
+    /**
+     * @return
+     * @성균 수강생 과목 등록 검증
+     * id가 검증되면 참 반환
+     */
+    public boolean subjectIdCheck(Integer subjectId) {
+        try {
+            if (subjectParser.subjectIsEmptyCheck(subjectId)) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    /**
+     * @return
+     * @성균 수강생 과목 중복 검증
+     * 중복이면 거짓 반환
+     */
+    public boolean subjectIdDuplicationCheck(HashSet<Integer> dup, Integer subjectId){
+        try{
+            if(subjectParser.subjectIdDuplicationCheck(dup, subjectId)) {
+                return true;
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    /**
+     * @return
+     * @성균 수강생 과목 등록 검증
+     * id가 검증되면 해당 subject 클래스 반환
+     */
+    public Subject subjectReturn(Integer subjectId){
+        Subject subject = null;
+        try{
+            subject = subjectParser.subjectEmptyCheckValid(subjectId);
+        }catch(RuntimeException e){
+            System.out.println(e.getMessage());
+        }
+        return subject;
+    }
+
+    /**
+     * @return
+     * @성균 과목 등록 검증
+     */
+
+    public boolean subjectMinCheck(int rSub, int eSub){
+        try{
+            if(subjectParser.subjectMinCheck(rSub,eSub)) {
+                return true;
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        return false;
+    }
+
 
 }
