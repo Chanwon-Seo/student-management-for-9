@@ -49,27 +49,30 @@ public class StudentMenu {
                     int i = Integer.parseInt(sc.nextLine());
 
                     switch (i) {
-                        case 1:  //연결되었습니다.
+                        case 1:
                             System.out.println("***** 수강생 등록*****");
                             System.out.println("메인메뉴> 수강생 관리>...");
 
                             studentService.createStudent();
 
                             break;
-                        case 2: //연결되었습니다.
+                        case 2:
                             System.out.println("***** 수강생 조회*****");
                             System.out.println("메인메뉴> 수강생 관리>...");
 
 
                             while (next) {
                                 studentService.getStudentList();
-                                System.out.println();
-                                System.out.println();
-                                System.out.println("1. 수강생 조회");
+                                System.out.printf("%n *****상세메뉴로 이동하려면 엔터를 눌러주세요.*****%n");
+                                sc.nextLine();
+                                System.out.println("***** 수강생 상세조회*****");
+                                System.out.println("메인메뉴> 수강생 관리>...");
+                                System.out.println("1. 상세 수강생 조회");
                                 System.out.println("2. 수강생 정보 수정");
                                 System.out.println("3. 상태별 수강생 목록");
                                 System.out.println("4. 수강생 삭제");
                                 System.out.println("0. 뒤로가기");
+                                System.out.printf("%n");
                                 switch (Integer.parseInt(sc.nextLine())) {
                                     case 1 -> {
                                         studentId = inputStudentId("조회할 수강생 아이디 입력");
