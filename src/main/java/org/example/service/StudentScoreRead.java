@@ -14,10 +14,15 @@ public class StudentScoreRead {
         this.dbManager = dbManager;
     }
 
-    // 과목의 회차: 점수 전체조회
+    // 과목의 [회차: 점수] 전체조회
     public void LoadScore(Integer studentId, Integer subjectId) {
 
         var score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
+
+        if(score.size()<=0) { //TEMP EXCEPTION
+            System.out.println("과목의 데이터가 없습니다.");
+            return;
+        }
 
         for (int i = 0; i < score.size(); i++) {
             System.out.print("회차: " + score.keySet().toArray()[i]);
@@ -30,11 +35,12 @@ public class StudentScoreRead {
 
         var score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
 
-        if(score.get(roundInput)==null) { //예외처리
+        if(score.get(roundInput)==null) { //TEMP EXCEPTION
             System.out.println("수정할 회차가 없습니다.");
         }
         else{
             score.put(roundInput,scoreInput);
+            System.out.println(roundInput+" 회차 : "+scoreInput +"점 수정완료!");
         }
     }
 
@@ -42,6 +48,11 @@ public class StudentScoreRead {
     public void LoadAvgScore(Integer studentId, Integer subjectId) {
         var score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
         double sum = 0, avg = 0;
+
+        if(score.size()<=0) { //TEMP EXCEPTION
+            System.out.println("과목의 데이터가 없습니다.");
+            return;
+        }
 
         for (int i = 0; i < score.size(); i++) {
             sum += (double) score.values().toArray()[i];
@@ -56,6 +67,8 @@ public class StudentScoreRead {
 
     }
 
+
+    /* Util */
 
     // 수강생 과목번호 받아 score 리스트 return
     public Map<Integer, Integer> FindScoresByStudentIdANDSubjectId(Integer studentId, Integer subjectId) {
