@@ -135,8 +135,6 @@ public class StudentService {
             System.out.println(output);
         });
 
-        //System.out.println("\n수강할 과목의 제목을 입력해주세요. (종료 exit)");
-
         Integer subId;
         while ((subId = addSubject()) != 0) {
             subjectId.add(subId);
