@@ -2,15 +2,19 @@ package org.example.service;
 
 import org.example.db.DBManager;
 import org.example.domain.Score;
+import org.example.domain.Student;
 import org.example.domain.Subject;
 import org.example.domain.enums.LevelType;
+import org.example.domain.enums.StudentStateType;
 import org.example.domain.enums.SubjectType;
 import org.example.parser.ScoreParser;
 import org.example.parser.StudentParser;
 import org.example.parser.SubjectParser;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 
 
 public class StudentScoreRead {
@@ -27,7 +31,7 @@ public class StudentScoreRead {
         this.scoreParser = new ScoreParser(dbManager);
     }
 
-    // 과목의 [회차: 점수] 전체조회
+    // 과목의 [회차: 등급] 전체조회 (필수 - 과목의 회차별 등급 조회)
     public void LoadScore(Integer studentId, Integer subjectId) {
         var score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
 
@@ -41,7 +45,7 @@ public class StudentScoreRead {
         LevelType tempLevelType = LevelType.A;
 
         for (int i = 0; i < score.size(); i++) {
-            System.out.print(score.keySet().toArray()[i]+ " 회차: " );
+            System.out.print(score.keySet().toArray()[i] + " 회차: ");
             // 등급계산
             if (levelType == SubjectType.REQUIRED)
                 tempLevelType = LevelType.checkRequiredLevelType("", (Integer) score.values().toArray()[i]);
@@ -51,7 +55,7 @@ public class StudentScoreRead {
         }
     }
 
-    // 회차 점수 수정
+    // 회차 점수 수정 (필수 - 점수수정)
     public void UpdateScore(Integer studentId, Integer subjectId, Integer roundInput, Integer scoreInput) {
 
         var score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
@@ -75,18 +79,55 @@ public class StudentScoreRead {
             return;
         }
 
-        double sum = 0, avg = 0;
+        double sum = 0;
+        double avg = 0;
 
         for (int i = 0; i < score.size(); i++) {
             sum += (double) score.values().toArray()[i];
         }
         avg = sum / score.size();
-        System.out.println("해당과목의 평균은 " + avg + "입니다.");
+        Subject subject = dbManager.findOneBySubject(subjectId);
+        System.out.println(subject.getSubjectName() + "과목의 평균은 " + avg + "입니다.");
+
     }
 
 
     //특정상태 수강생들의 필수 과목 평균 등급 (추가 - 점수관리)
-    public void LoadStudentStateOfRequiredSubject(String StudentState) {
+    public void LoadStudentStateOfRequiredSubject(int state) {
+
+        StudentStateType stateType = switch (state) {
+                case 1 -> StudentStateType.GREEN;
+                case 2 -> StudentStateType.RED;
+                case 3 -> StudentStateType.YELLOW;
+                default -> null;
+            };
+
+
+        List<Student> students = dbManager.findByStudents(); //basic
+        List<Student> studentList = new ArrayList<>(); //가공
+        for (Student student : students) {
+            if (student.getStudentStateType() == stateType) {
+                studentList.add(student);
+            }
+        } //특정상태 수강생들 뽑음 (studentList)
+
+        double count = 0;
+        double sum = 0;
+        for (Student student : studentList) {
+            sum = 0;
+            count = 0;
+            for (Integer sub : student.getSubjectId()) {
+                boolean isRequired = dbManager.FindSubjectTypebySubjectId(sub);
+                if (isRequired) {
+                    sum += LoadAvgScoreRequired(student.getStudentId(), sub); //해당 과목 평균을 넣기
+                    count++;
+                }
+                Integer avg = Integer.parseInt(String.valueOf(sum/count)); //평균들의 평균을 계산
+                LevelType resultLevel = LevelType.checkRequiredLevelType("", avg); //평균점수를 등급화
+
+                System.out.println(student.getStudentName() + "의 필수 과목 평균 등급: " + resultLevel);
+            }
+        }
 
     }
 
@@ -115,6 +156,21 @@ public class StudentScoreRead {
             }
         }
         return null;
+    }
+
+    public double LoadAvgScoreRequired(Integer studentId, Integer subjectId) {
+        var score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
+        if (score == null) {
+            return 0;
+        }
+
+        double sum = 0, avg = 0;
+
+        for (int i = 0; i < score.size(); i++) {
+            sum += (double) score.values().toArray()[i];
+        }
+        avg = sum / score.size();
+        return avg;
     }
 
 }

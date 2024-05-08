@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.db.DBManager;
 import org.example.domain.Subject;
+import org.example.domain.enums.StudentStateType;
 import org.example.parser.Parser;
 import org.example.parser.ScoreParser;
 import org.example.parser.StudentParser;
@@ -103,16 +104,12 @@ public class ScoreMenu {
                                 System.out.println("메인메뉴> 수강생 점수관리>...");
                                 System.out.print("수강생 고유번호 입력 : ");
                                 studentIdInput = Integer.parseInt(sc.nextLine());
-
                                 System.out.print("과목 고유번호 입력 : ");
                                 subjectIdInput = Integer.parseInt(sc.nextLine());
-
                                 System.out.print("회차 번호 조회 : ");
                                 int round = Integer.parseInt(sc.nextLine());
-
                                 System.out.print("점수 입력 : ");
                                 int score = Integer.parseInt(sc.nextLine());
-
                                 new StudentScoreRead(dbManager).UpdateScore(studentIdInput, subjectIdInput, round,score);
                             }catch (NumberFormatException e){
                                 throw new NumberFormatException();
@@ -123,13 +120,20 @@ public class ScoreMenu {
                         case 4:
                             System.out.println("*****수강생의 과목별 평균 등급을 조회*****");
                             System.out.println("메인메뉴> 수강생 점수관리>...");
+                            System.out.print("수강생 고유번호 입력 : ");
+                            studentIdInput = Integer.parseInt(sc.nextLine());
+                            System.out.print("과목 고유번호 입력 : ");
+                            subjectIdInput = Integer.parseInt(sc.nextLine());
+                            new StudentScoreRead(dbManager).LoadAvgScore(studentIdInput,subjectIdInput);
 
                             break;
 
                         case 5:
                             System.out.println("*****특정 상태 수강생들의 필수 과목 평균 등급을 조회*****");
                             System.out.println("메인메뉴> 수강생 점수관리>...");
-
+                            System.out.println("1.Green 2.Yellow 3.Red ");
+                            int state = Integer.parseInt(sc.nextLine());
+                            new StudentScoreRead(dbManager).LoadStudentStateOfRequiredSubject(state);
                             break;
 
                         case 0:
