@@ -2,7 +2,8 @@ package org.example.parser;
 
 import org.example.db.DBManager;
 import org.example.domain.Student;
-import org.example.domain.Subject;
+
+import java.util.Optional;
 
 
 public class StudentParser {
@@ -17,22 +18,23 @@ public class StudentParser {
      * @찬원 수강생 정보 조회
      * throw 조회된 수강생 정보가 없을 경우
      */
-    public void studentEmptyCheckValid(Subject findSubjectData, Integer studentIdInput) {
-        try {
-            Student findStudentData = dbManager.findOneByStudent(studentIdInput);
-            if (findStudentData.getSubjectId().contains(findSubjectData.getSubjectId())) {
+    public Optional<Student> studentEmptyCheckValidV2(Integer studentIdInput) {
+        Optional<Student> findStudentData = dbManager.findOneByStudent(studentIdInput);
 
-                return;
-            }
-            throw new RuntimeException("수강한 과목 목록에 없습니다.\n");
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e.getMessage());
+        if (findStudentData.isPresent()) {
+            return findStudentData;
         }
+
+        throw new NullPointerException("조회된 수강생 정보가 없습니다.\n");
     }
 
-    public Student studentFindByIdEmptyCheckValid(Integer studentIdInput) {
-        Student student = dbManager.studentFindById(studentIdInput);
-        if (student == null) throw new RuntimeException("조회된 수강생 정보가 없습니다.");
-        return student;
+    public Student studentFindByIdEmptyCheckValid(Integer studentIdInput) throws NullPointerException {
+        return dbManager.studentFindById(studentIdInput);
+    }
+
+    public void studentAndSubjectCheckValid(Integer findSubjectData, Student findStudentData) {
+        if (!findStudentData.getSubjectId().contains(findSubjectData)) {
+            throw new NullPointerException("해당 학생은 수강하지 않은 과목입니다.\n");
+        }
     }
 }

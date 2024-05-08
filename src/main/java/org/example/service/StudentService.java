@@ -33,6 +33,7 @@ public class StudentService {
     int eSub = 0;
 
     List<Student> studentList;
+
     public StudentService(DBManager dbManager) {
         this.dbManager = dbManager;
         this.studentParser = new StudentParser(dbManager);
@@ -42,6 +43,16 @@ public class StudentService {
         studentList = dbManager.findByStudents();
         //TODO 코드 변경
 //        parser = new Parser(dbManager);
+    }
+
+    /**
+     * @차도범 수강생 목록을 출력
+     */
+    public Student studentFindById(int id) throws NullPointerException {
+        studentParser.studentFindByIdEmptyCheckValid(id);
+        Student findStudent = dbManager.studentFindById(id);
+        System.out.println("수강생 " + findStudent.getStudentName());
+        return findStudent;
     }
 
     /**
@@ -58,10 +69,8 @@ public class StudentService {
      * @차도범 수강생 상세 값 출력
      */
     public void getStudentDetail(int studentId) {
-        StudentParser studentParser = new StudentParser(dbManager);
-        Student student = studentParser.studentFindByIdEmptyCheckValid(studentId);
-        if (student == null) return;
-        else {
+        try {
+            Student student = studentParser.studentFindByIdEmptyCheckValid(studentId);
             System.out.println("----학생 상세-----");
             System.out.println("id : " + student.getStudentId());
             System.out.println("이름 : " + student.getStudentName());
@@ -79,6 +88,9 @@ public class StudentService {
             }
             System.out.println();
             System.out.println();
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            System.out.print("\n\n");
         }
     }
 
@@ -96,6 +108,34 @@ public class StudentService {
             }
         }
         System.out.print("\n\n");
+    }
+
+    /*
+     * @차도범
+     * 수강생 수정
+     * */
+    public void editStudent(Student student, String name, String birthDay, StudentStateType studentStateType) {
+        try {
+            dbManager.editStudent(student, name, birthDay, studentStateType);
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+    /*
+     * @차도범
+     * 아이디로 수강생 삭제
+     * */
+    public void deleteStudentById(int studentId) {
+        try {
+            Student student = studentParser.studentFindByIdEmptyCheckValid(studentId);
+            boolean b = dbManager.deleteStudentById(studentId);
+            if (b) System.out.println(student.getStudentName() + "수강생을 삭제했습니다..");
+            else System.out.println("수강생을 삭제하지 못햇습니다.");
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     //수강자 등록
@@ -160,6 +200,7 @@ public class StudentService {
                 if (subjectIdCheck(id)) {
                     if (subjectIdDuplicationCheck(dup, id)) {
                         System.out.println("과목 추가 완료.");
+
                         Subject subject = subjectReturn(id);
 
                         if (subject != null && subject.getSubjectType().equals(SubjectType.REQUIRED)) {
@@ -200,12 +241,12 @@ public class StudentService {
      * @성균 수강생 과목 중복 검증
      * 중복이면 거짓 반환
      */
-    public boolean subjectIdDuplicationCheck(HashSet<Integer> dup, Integer subjectId){
-        try{
-            if(subjectParser.subjectIdDuplicationCheck(dup, subjectId)) {
+    public boolean subjectIdDuplicationCheck(HashSet<Integer> dup, Integer subjectId) {
+        try {
+            if (subjectParser.subjectIdDuplicationCheck(dup, subjectId)) {
                 return true;
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return false;
@@ -216,14 +257,14 @@ public class StudentService {
      * @성균 수강생 과목 등록 검증
      * id가 검증되면 해당 subject 클래스 반환
      */
-    public Subject subjectReturn(Integer subjectId){
-        Subject subject = null;
-        try{
+    public Subject subjectReturn(Integer subjectId) {
+        Optional<Subject> subject = Optional.empty();
+        try {
             subject = subjectParser.subjectEmptyCheckValid(subjectId);
-        }catch(RuntimeException e){
+        } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
-        return subject;
+        return subject.get();
     }
 
     /**
@@ -231,12 +272,12 @@ public class StudentService {
      * @성균 과목 등록 검증
      */
 
-    public boolean subjectMinCheck(int rSub, int eSub){
-        try{
-            if(subjectParser.subjectMinCheck(rSub,eSub)) {
+    public boolean subjectMinCheck(int rSub, int eSub) {
+        try {
+            if (subjectParser.subjectMinCheck(rSub, eSub)) {
                 return true;
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
