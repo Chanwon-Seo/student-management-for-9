@@ -36,7 +36,6 @@ public class StudentMenu {
         int studentId;
         StudentStateType studentStateType;
         StudentService studentService = new StudentService(dbManager);
-        List<Student> studentList = dbManager.findByStudents();
 
         testData();
         while (true) {
@@ -85,7 +84,12 @@ public class StudentMenu {
                                     }
                                     case 2 -> {
                                         studentId = inputStudentId("수정할 수강생의 아이디 입력");
-                                        Student findStudent = studentService.studentFindById(studentId);
+                                        Student findStudent = null;
+                                        try {
+                                            findStudent = studentService.studentFindById(studentId);
+                                        } catch (NullPointerException e) {
+                                            System.out.println(e.getMessage());
+                                        }
                                         if (findStudent != null) {
                                             System.out.println("수정할 정보를 입력(1.이름, 2.생일, 3.상태)>");
                                             switch (Integer.parseInt(sc.nextLine())) {
@@ -111,16 +115,20 @@ public class StudentMenu {
                                                     //사용자가 입력받은 사용자의 상태
                                                     studentStateType = getStudentStateType();
                                                     //만약 값이 일치한느 것이 없으면 기존 사용자의 값을 가져온다.
-                                                    if (studentStateType == null)
+                                                    if (studentStateType == null) {
                                                         studentStateType = findStudent.getStudentStateType();
+                                                        System.out.println("불일치 !! 기존값으로 ");
+                                                        System.out.println();
+                                                    }
                                                     studentService.editStudent(
                                                             findStudent,
                                                             findStudent.getStudentName(),
                                                             findStudent.getBirthDay(),
                                                             studentStateType);
                                                 }
+                                                default -> System.out.println("불일치!!!");
                                             }
-                                        } else System.out.println("없는 수강생!!");
+                                        } else System.out.println();
                                     }
                                     case 3 -> {
                                         studentStateType = getStudentStateType();
