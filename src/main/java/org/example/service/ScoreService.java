@@ -79,7 +79,7 @@ public class ScoreService {
     /**
      * @찬원 필수 또는 선택에 따른 등급 산정
      */
-    private static LevelType checkLevelType(String findSubjectData, Integer scoreInput) {
+    private LevelType checkLevelType(String findSubjectData, Integer scoreInput) {
         LevelType levelType;
         if ("필수".equals(findSubjectData)) {
             levelType = LevelType.checkRequiredLevelType(findSubjectData, scoreInput);
