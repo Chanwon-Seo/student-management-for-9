@@ -30,7 +30,7 @@ public class StudentScoreRead {
 
     // 과목의 [회차: 등급] 전체조회 (필수 - 과목의 회차별 등급 조회)
     public void LoadScore(Integer studentId, Integer subjectId) {
-        var score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
+        Map<Integer,Integer> score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
 
 
         if (score == null) { //TEMPEXCEPTION
@@ -59,7 +59,7 @@ public class StudentScoreRead {
     // 회차 점수 수정 (필수 - 점수수정)
     public void UpdateScore(Integer studentId, Integer subjectId, Integer roundInput, Integer scoreInput) {
 
-        var score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
+        Map<Integer,Integer> score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
 
         if (score == null || !score.containsKey(roundInput)) { //TEMPEXCEPTION
             System.out.println("해당 과목의 회차가 존재하지 않습니다");
@@ -153,7 +153,7 @@ public class StudentScoreRead {
 
         for (Score s : score) {
             if (s.getStudentId().equals(studentId) && s.getSubjectId().equals(subjectId)) {
-                var temp = s.getScoreId();
+                Map<Integer,Integer> temp = s.getScoreId();
                 if (temp.size() <= 0) { //TEMP EXCEPTION
                     System.out.println("해당 과목의 점수가 없습니다");
                     break;
@@ -165,7 +165,7 @@ public class StudentScoreRead {
     }
 
     public double LoadAvgScoreRequired(Integer studentId, Integer subjectId) {
-        var score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
+        Map<Integer,Integer> score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
         if (score == null || score.isEmpty()) {
             return 0;
         }
