@@ -123,7 +123,7 @@ public class StudentService {
      */
     public void deleteStudentById(int studentId) {
         try {
-            Student student = studentParser.studentFindByIdEmptyCheckValid(studentId);
+            Student student = studentParser.studentEmptyCheckValidV2(studentId).get();
             boolean b = dbManager.deleteStudentById(studentId);
             if (b) System.out.println(student.getStudentName() + "수강생을 삭제했습니다..");
             else System.out.println("수강생을 삭제하지 못햇습니다.");
