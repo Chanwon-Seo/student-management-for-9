@@ -7,6 +7,7 @@ import org.example.domain.Subject;
 import org.example.domain.enums.StudentStateType;
 import org.example.domain.enums.SubjectType;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,7 +65,10 @@ public class DBManager {
     }
 
     /**
-     * @찬원 FIXME 설명
+     * @찬원 FIXME 설명 완료
+     * 특정 학생 고유번호를 통해 수강생인지 판별
+     * 수강생이 아닌 경우 = Optional<Student> NULL
+     * 수강생인 경우 = Optional<Student> NOT NUll
      */
     public Optional<Student> findOneByStudent(Integer studentId) {
         Optional<Student> studentOptional = Optional.empty();
@@ -141,6 +145,8 @@ public class DBManager {
      */
     public void initData() {
         //찬원
-        //~~~
+        HashSet<Integer> objects = new HashSet<>();
+        objects.add(1);
+        saveStudent(new Student(2024001, "서찬원", "991121", objects, StudentStateType.GREEN));
     }
 }
