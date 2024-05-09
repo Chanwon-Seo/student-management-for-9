@@ -3,8 +3,6 @@ package org.example;
 import org.example.db.DBManager;
 import org.example.service.ScoreService;
 import org.example.service.StudentScoreRead;
-import org.example.service.StudentService;
-import org.example.service.SubjectService;
 
 import static org.example.Menu.sc;
 
