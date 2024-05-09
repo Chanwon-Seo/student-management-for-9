@@ -1,9 +1,9 @@
-package org.example;
+package org.example.view;
 
 import org.example.db.DBManager;
 import org.example.service.ScoreService;
 
-import static org.example.Menu.sc;
+import static org.example.view.Menu.sc;
 
 public class ScoreMenu {
     private final ScoreService scoreService;

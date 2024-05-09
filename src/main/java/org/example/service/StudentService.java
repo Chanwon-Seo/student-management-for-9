@@ -8,7 +8,7 @@ import org.example.domain.enums.SubjectType;
 import org.example.parser.StudentParser;
 import org.example.parser.SubjectParser;
 
-import static org.example.Menu.sc;
+import static org.example.view.Menu.sc;
 
 import java.util.*;
 

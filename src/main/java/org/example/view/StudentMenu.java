@@ -1,4 +1,4 @@
-package org.example;
+package org.example.view;
 
 import org.example.db.DBManager;
 import org.example.domain.Student;
@@ -6,7 +6,7 @@ import org.example.domain.enums.StudentStateType;
 import org.example.service.ScoreService;
 import org.example.service.StudentService;
 
-import static org.example.Menu.sc;
+import static org.example.view.Menu.sc;
 
 public class StudentMenu {
     private final ScoreService scoreService;

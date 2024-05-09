@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.example.Menu.sc;
+import static org.example.view.Menu.sc;
 
 public class ScoreService {
     private final DBManager dbManager;

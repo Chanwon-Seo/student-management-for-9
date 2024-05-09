@@ -1,4 +1,4 @@
-package org.example;
+package org.example.view;
 
 import org.example.db.DBManager;
 import org.example.db.DBStorage;
