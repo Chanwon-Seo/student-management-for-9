@@ -18,6 +18,8 @@ public enum StudentStateType {
 
     /**
      * FIXME 메서드 설명
+     * 수강생 상태 검증
+     * 없는 경우 NOSTATUS 반환
      */
     public static StudentStateType studentStateType(String status) {
         StudentStateType stateType;
