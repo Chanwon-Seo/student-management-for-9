@@ -9,6 +9,7 @@ import org.example.domain.enums.SubjectType;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * DBStorage의 데이터를 CRUD하기 위한 클래스
@@ -42,6 +43,14 @@ public class DBManager {
         return dbStorage.getScoreList();
     }
 
+    public List<Subject> findBySubjects() {
+        return dbStorage.getSubjectList();
+    }
+
+    public List<Student> findByStudents() {
+        return dbStorage.getStudentList();
+    }
+
     /**
      * 단건 조회
      */
@@ -55,6 +64,9 @@ public class DBManager {
         return subjectOptional;
     }
 
+    /**
+     * @찬원 FIXME 설명
+     */
     public Optional<Student> findOneByStudent(Integer studentId) {
         Optional<Student> studentOptional = Optional.empty();
         for (Student student : dbStorage.getStudentList()) {
@@ -65,67 +77,65 @@ public class DBManager {
         return studentOptional;
     }
 
-    public Student studentFindById(int id) throws NullPointerException {
-        for (Student student : findByStudents()) {
-            if (student.getStudentId() == id) {
-                return student;
-            }
-        }
-        throw new NullPointerException("일치하는 수강생이 없습니다.");
-    }
-
+    /**
+     * @성균 //FIXME 설명
+     */
     public Integer findByStudentIdNum() {
         return dbStorage.getStudentIdNum();
     }
 
-    public List<Subject> findBySubjects() {
-        return dbStorage.getSubjectList();
-    }
-
-    public List<Student> findByStudents() {
-        return dbStorage.getStudentList();
-    }
-
+    /**
+     * @성균 //FIXME 설명
+     */
     public void updateStudentIdNum(Integer studentIdNum) {
         dbStorage.setStudentIdNum(++studentIdNum);
     }
 
-    /*
-     * 차도범
-     * 수정 메서드
-     * */
+    /**
+     * @차도범 수정 메서드
+     */
     public void editStudent(Student student, String name, String birthDay, StudentStateType studentStateType) {
         student.editStudent(name, birthDay, studentStateType);
     }
 
-    /*
-     * @차도범
-     * 수강생 아이디로 삭제
-     * */
-
-    public boolean deleteStudentById(int studentId) {
+    /**
+     * @차도범 수강생 아이디로 삭제
+     */
+    public boolean deleteStudentById(Integer studentId) {
         List<Student> studentList = dbStorage.getStudentList();
         return studentList.removeIf(student -> studentId == student.getStudentId());
     }
 
-    /*
-     * @차도범
-     * 수강생 아이디로 삭제
-     * */
-    public boolean deleteScoreByStudentId(int studentId) {
+    /**
+     * @차도범 수강생 아이디로 삭제
+     */
+    public boolean deleteScoreByStudentId(Integer studentId) {
         List<Score> scoreList = dbStorage.getScoreList();
         return scoreList.removeIf(score -> score.getStudentId() == studentId);
     }
 
 
-    /*
-     * @세미
-     * subject id로 필수인지 아닌지 판별
-     * */
-    public boolean FindSubjectTypebySubjectId(int subjectId) {
+    //FIXME 메서드명수정 완료
+    /**
+     * @세미 subject id로 필수인지 아닌지 판별
+     */
+    public boolean findSubjectTypebySubjectId(Integer subjectId) {
         List<Subject> subjectList = dbStorage.getSubjectList();
-        Subject sub = subjectList.get(subjectId-1);
-        if(sub.getSubjectType()==SubjectType.REQUIRED) return true;
+        Subject sub = subjectList.get(subjectId - 1);
+        if (sub.getSubjectType() == SubjectType.REQUIRED) return true;
         else return false;
+    }
+
+    /**
+     * 테스트 데이터
+     */
+    public void initData() {
+        Set<Integer> set = Set.of(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        dbStorage.getStudentList().add(new Student(1, "서찬원", "990204", set, StudentStateType.GREEN));
+        dbStorage.getStudentList().add(new Student(2, "박세미", "990204", set, StudentStateType.RED));
+        dbStorage.getStudentList().add(new Student(3, "박상균", "990204", set, StudentStateType.RED));
+        dbStorage.getStudentList().add(new Student(4, "차도범", "990204", set, StudentStateType.YELLOW));
+        dbStorage.getStudentList().add(new Student(5, "이근수", "990204", set, StudentStateType.GREEN));
+
     }
 }

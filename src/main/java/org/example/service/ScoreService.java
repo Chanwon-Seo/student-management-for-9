@@ -5,7 +5,6 @@ import org.example.domain.Score;
 import org.example.domain.Student;
 import org.example.domain.Subject;
 import org.example.domain.enums.LevelType;
-import org.example.domain.enums.StudentStateType;
 import org.example.parser.ScoreParser;
 import org.example.parser.StudentParser;
 import org.example.parser.SubjectParser;
@@ -32,6 +31,7 @@ public class ScoreService {
      * @찬원 수강생 점수 등록 메서드
      */
     public void scoreCreateV1(Integer subjectIdInput, Integer studentIdInput, Integer roundInput, Integer scoreInput) {
+        //FIXME 불필요 코드
         HashSet<Integer> objects = new HashSet<>();
         objects.add(1);
 
@@ -58,7 +58,6 @@ public class ScoreService {
         Map<Integer, Integer> roundMap = new LinkedHashMap<>();
         roundMap.put(roundInput, scoreInput);
 
-        //TODO 점수에 대한 level 검증
         Score score = new Score(findSubjectData.get().getSubjectId(),
                 studentIdInput,
                 roundMap,
@@ -81,25 +80,26 @@ public class ScoreService {
     private LevelType checkLevelType(String findSubjectData, Integer scoreInput) {
         LevelType levelType;
         if ("필수".equals(findSubjectData)) {
-            levelType = LevelType.checkRequiredLevelType(findSubjectData, scoreInput);
+            levelType = LevelType.checkRequiredLevelType(scoreInput);
         } else {
-            levelType = LevelType.checkElectiveLevelType(findSubjectData, scoreInput);
+            levelType = LevelType.checkElectiveLevelType(scoreInput);
         }
         return levelType;
     }
 
-    /*
+    /**
      * @차도범
      * 수강생 아이디로 삭제
-     * */
+     */
     public void deleteScoreByStudentId(int studentId) {
         try {
             boolean b = dbManager.deleteScoreByStudentId(studentId);
             if (b) System.out.println("점수를 삭제했습니다..");
             else System.out.println("점수를 삭제하지 못햇습니다.");
+            System.out.println();
         } catch (RuntimeException e) {
-//            System.out.println(e.getMessage());
-            System.out.println("~~~~~~~~");
+            System.out.println(e.getMessage());
+            System.out.println();
         }
         System.out.print("\n\n");
     }

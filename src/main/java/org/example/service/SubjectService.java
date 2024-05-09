@@ -5,6 +5,7 @@ import org.example.parser.ScoreParser;
 import org.example.parser.StudentParser;
 import org.example.parser.SubjectParser;
 
+//FIXME 불필요한 클래스
 public class SubjectService {
     private final DBManager dbManager;
     private final StudentParser studentParser;

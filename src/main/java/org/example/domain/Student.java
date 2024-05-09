@@ -13,28 +13,25 @@ public class Student {
 
     private String birthDay; //생년월일
 
-    private Set<Integer> subjectId; //과목 고유 번호
+    private Set<Integer> subjectSet; //과목 고유 번호
 
-    /*
-    * @차조범
-    * 초기값을 위한 생성자 추후 삭제 가능
-    * */
-    public Student(Integer studentId, String studentName, String birthDay, Set<Integer> subjectId, StudentStateType studentStateType) {
+    private StudentStateType studentStateType; //수강생상태
+
+    /**
+     * @차도범
+     * 초기값을 위한 생성자 추후 삭제 가능
+     */
+    public Student(Integer studentId, String studentName, String birthDay, Set<Integer> subjectSet, StudentStateType studentStateType) {
         this.studentId = studentId;
         this.studentName = studentName;
         this.birthDay = birthDay;
-        this.subjectId = subjectId;
+        this.subjectSet = subjectSet;
         this.studentStateType = studentStateType;
     }
-
-    //TODO
-    private StudentStateType studentStateType; //수강생상태
-
-
-    /*
-    * @차도범
-    * 수정을 위한 세터
-    * */
+    /**
+     * @차도범
+     * 수정을 위한 세터
+     */
     public void editStudent(String name, String birthDay, StudentStateType studentStateType) {
         studentName = name;
         this.birthDay = birthDay;

@@ -18,9 +18,9 @@ public class Menu {
     }
 
     public void startPage() {
+        //init data
+        dbManager.initData();
 
-
-        studentMenu.testData();
         while (true) {
             System.out.printf("%n");
             System.out.println("[스파르타코딩클럽내일배움부트캠프 B_09조 팀프로젝트 수강생관리프로그램]");
@@ -35,7 +35,6 @@ public class Menu {
 
                     switch (Integer.parseInt(sc.nextLine())) {
                         case 1:
-
                             System.out.println("***** 수강생 관리 *****");
                             System.out.println("메인메뉴> 수강생 관리>...");
                             studentMenu.displayStudentView();
@@ -49,7 +48,7 @@ public class Menu {
                             break;
 
 
-                        case 0: // 종료
+                        case 0:
                             System.out.println("시스템을 종료합니다.");
                             return;
 

@@ -15,9 +15,10 @@ import static org.example.Menu.sc;
 public class ScoreMenu {
 
     private final DBManager dbManager;
-
+    //FIXME 불필요한 선언
     private final StudentService studentService;
     private final ScoreService scoreService;
+    //FIXME 불필요한 선언
     private final SubjectService subjectService;
 
     public ScoreMenu(DBManager dbManager) {
@@ -29,6 +30,8 @@ public class ScoreMenu {
 
     public void displayScoreView() {
         while (true) {
+            System.out.println("***** 수강생 점수 관리 *****");
+            System.out.println("메인메뉴> 수강생 점수 관리>...");
             System.out.println("1. 수강생 점수 등록");
             System.out.println("2. 수강생 점수 조회");
             System.out.println("3. 수강생 과목별 회차 점수 수정");
@@ -45,53 +48,48 @@ public class ScoreMenu {
                         case 1:
                             try {
                                 System.out.println("***** 수강생 점수 등록 *****");
-                                System.out.println("메인메뉴> 수강생 점수 관리>...");
+                                System.out.println("메인메뉴> 수강생 점수 관리>수강생 점수 등록...");
 
-
+                                System.out.print("수강생 고유번호 입력 : ");
+                                studentIdInput = Integer.parseInt(sc.nextLine());
                                 System.out.print("과목 고유번호 입력 : ");
                                 subjectIdInput = Integer.parseInt(sc.nextLine());
-                                System.out.print("학생 고유번호 입력 : ");
-                                studentIdInput = Integer.parseInt(sc.nextLine());
                                 System.out.print("회차 번호 입력 : ");
                                 roundInput = Integer.parseInt(sc.nextLine());
                                 System.out.print("학생 점수 입력 : ");
                                 scoreInput = Integer.parseInt(sc.nextLine());
-                                //TODO v1
-//                                findSubjectData = new Parser(dbManager).scoreCreate(subjectIdInput, studentIdInput, roundInput, scoreInput);
-//                                dbManager.saveScore(new ScoreService().scoreCreateV1(findSubjectData, studentIdInput, roundInput, scoreInput));
-//                                System.out.println("수강생의 점수를 등록하였습니다.\n");
-                                //TODO v2
 
                                 scoreService.scoreCreateV1(subjectIdInput, studentIdInput, roundInput, scoreInput);
 
                             } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
                             } catch (RuntimeException e) {
-                                System.out.println(e.getMessage());
                                 break;
                             }
                             break;
 
-                        case 2: /* @세미 */
+                        case 2: /** @세미 */
                             try{
                                 System.out.println("*****수강생 점수 조회*****");
-                                System.out.println("메인메뉴> 수강생 점수관리>...");
+                                System.out.println("메인메뉴> 수강생 점수관리>수강생 점수 조회...");
 
                                 System.out.print("수강생 고유번호 입력 : ");
                                 studentIdInput = Integer.parseInt(sc.nextLine());
 
                                 System.out.print("과목 고유번호 입력 : ");
                                 subjectIdInput = Integer.parseInt(sc.nextLine());
-                                new StudentScoreRead(dbManager).LoadScore(studentIdInput, subjectIdInput);
-                            }
-                            catch(NumberFormatException e){
+                                new StudentScoreRead(dbManager).loadAllScore(studentIdInput, subjectIdInput);
+                            } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
+                            } catch (RuntimeException e) {
+                                System.out.println(e.getMessage());
+                                break;
                             }
 
                             break;
 
-                        case 3: /* @세미 */
-                            try{
+                        case 3:
+                            try {
                                 System.out.println("*****수강생 과목별 회차점수 수정*****");
                                 System.out.println("메인메뉴> 수강생 점수관리>...");
                                 System.out.print("수강생 고유번호 입력 : ");
@@ -102,30 +100,46 @@ public class ScoreMenu {
                                 int round = Integer.parseInt(sc.nextLine());
                                 System.out.print("점수 입력 : ");
                                 int score = Integer.parseInt(sc.nextLine());
-                                new StudentScoreRead(dbManager).UpdateScore(studentIdInput, subjectIdInput, round,score);
-                            }catch (NumberFormatException e){
+                                new StudentScoreRead(dbManager).updateScore(studentIdInput, subjectIdInput, round, score);
+                            } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
+                            } catch (RuntimeException e) {
+                                System.out.println(e.getMessage());
+                                break;
                             }
 
                             break;
 
                         case 4:
-                            System.out.println("*****수강생의 과목별 평균 등급을 조회*****");
-                            System.out.println("메인메뉴> 수강생 점수관리>...");
-                            System.out.print("수강생 고유번호 입력 : ");
-                            studentIdInput = Integer.parseInt(sc.nextLine());
-                            System.out.print("과목 고유번호 입력 : ");
-                            subjectIdInput = Integer.parseInt(sc.nextLine());
-                            new StudentScoreRead(dbManager).LoadAvgScore(studentIdInput,subjectIdInput);
-
+                            try {
+                                System.out.println("*****수강생의 과목별 평균 등급을 조회*****");
+                                System.out.println("메인메뉴> 수강생 점수관리>...");
+                                System.out.print("수강생 고유번호 입력 : ");
+                                studentIdInput = Integer.parseInt(sc.nextLine());
+                                System.out.print("과목 고유번호 입력 : ");
+                                subjectIdInput = Integer.parseInt(sc.nextLine());
+                                new StudentScoreRead(dbManager).loadAvgScore(studentIdInput, subjectIdInput);
+                            } catch (NumberFormatException e) {
+                                throw new NumberFormatException();
+                            } catch (RuntimeException e) {
+                                System.out.println(e.getMessage());
+                                break;
+                            }
                             break;
 
                         case 5:
-                            System.out.println("*****특정 상태 수강생들의 필수 과목 평균 등급을 조회*****");
-                            System.out.println("메인메뉴> 수강생 점수관리>...");
-                            System.out.println("1.Green 2.Yellow 3.Red ");
-                            int state = Integer.parseInt(sc.nextLine());
-                            new StudentScoreRead(dbManager).LoadStudentStateOfRequiredSubject(state);
+                            try {
+                                System.out.println("*****특정 상태 수강생들의 필수 과목 평균 등급을 조회*****");
+                                System.out.println("메인메뉴> 수강생 점수관리>...");
+                                System.out.println("1.Green 2.Yellow 3.Red ");
+                                int state = Integer.parseInt(sc.nextLine());
+                                new StudentScoreRead(dbManager).loadStudentStateOfRequiredSubject(state);
+                            } catch (NumberFormatException e) {
+                                throw new NumberFormatException();
+                            } catch (RuntimeException e) {
+                                System.out.println(e.getMessage());
+                                break;
+                            }
                             break;
 
                         case 0:
@@ -139,7 +153,10 @@ public class ScoreMenu {
 
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("something wrong~, 다시 입력바랍니다.");
+                    System.out.println("something wrong!, 다시 입력바랍니다.");
+                    System.out.printf("\n");
+
+
                 }
             }
         }
