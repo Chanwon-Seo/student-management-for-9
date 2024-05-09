@@ -12,18 +12,16 @@ import static org.example.Menu.sc;
 public class ScoreMenu {
 
     private final DBManager dbManager;
-    //FIXME 불필요한 선언 [사용중, 불필요 선언 제거시 실행오류!]
-    private final StudentService studentService;
+    //FIXME 불필요한 선언 [해결됨]
     private final ScoreService scoreService;
-    //FIXME 불필요한 선언 [사용중, 불필요 선언 제거시 실행오류!]
-    private final SubjectService subjectService;
+    //FIXME 불필요한 선언 [해결됨]
+
 
 
     public ScoreMenu(DBManager dbManager) {
         this.dbManager = dbManager;
-        this.studentService = new StudentService(dbManager);
         this.scoreService = new ScoreService(dbManager);
-        this.subjectService = new SubjectService(dbManager);
+
     }
 
     public void displayScoreView() {
