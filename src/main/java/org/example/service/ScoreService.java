@@ -31,6 +31,7 @@ public class ScoreService {
      * @찬원 수강생 점수 등록 메서드
      */
     public void scoreCreateV1(Integer subjectIdInput, Integer studentIdInput, Integer roundInput, Integer scoreInput) {
+        //FIXME 불필요 코드
         HashSet<Integer> objects = new HashSet<>();
         objects.add(1);
 
@@ -79,9 +80,9 @@ public class ScoreService {
     private LevelType checkLevelType(String findSubjectData, Integer scoreInput) {
         LevelType levelType;
         if ("필수".equals(findSubjectData)) {
-            levelType = LevelType.checkRequiredLevelType(findSubjectData, scoreInput);
+            levelType = LevelType.checkRequiredLevelType(scoreInput);
         } else {
-            levelType = LevelType.checkElectiveLevelType(findSubjectData, scoreInput);
+            levelType = LevelType.checkElectiveLevelType(scoreInput);
         }
         return levelType;
     }
