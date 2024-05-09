@@ -28,8 +28,7 @@ public class StudentScoreRead {
         this.scoreParser = new ScoreParser(dbManager);
     }
 
-    //FIXME 메서드명
-    // 과목의 [회차: 등급] 전체조회 (필수 - 과목의 회차별 등급 조회)
+    //FIXME 메서드명 완료
     /**
      * @세미 과목의 [회차: 등급] 전체조회 (필수 - 과목의 회차별 등급 조회)
      * print ex:
@@ -50,8 +49,8 @@ public class StudentScoreRead {
         //등급계산
         SubjectType levelType = dbManager.findOneBySubject(subjectId).get().getSubjectType();
 
-        //FIXME 초기화
-        LevelType tempLevelType = LevelType.A;
+        //FIXME 초기화 완료
+        LevelType tempLevelType;
 
         for (int i = 0; i < score.size(); i++) {
             System.out.print(score.keySet().toArray()[i] + " 회차: ");
@@ -64,8 +63,7 @@ public class StudentScoreRead {
         }
     }
 
-    //FIXME 메서드명
-    // 회차 점수 수정 (필수 - 점수수정)
+    //FIXME 메서드명 완료
     /**
      * @세미 회차 점수 수정 (필수 - 점수수정)
      * print ex: "2회차 : 78점 수정완료!"
@@ -85,7 +83,7 @@ public class StudentScoreRead {
         System.out.println(roundInput + " 회차 : " + scoreInput + "점 수정완료!");
     }
 
-    //FIXME 메서드명
+    //FIXME 메서드명 완료
     //과목별 평균등급 조회 (추가 - 점수관리)
     /**
      * @세미 과목별 평균등급 조회 (추가 - 점수관리)
@@ -110,7 +108,7 @@ public class StudentScoreRead {
 
     }
 
-    //FIXME 메서드명
+    //FIXME 메서드명 완료
     /**
      * @세미 특정상태 수강생들의 필수 과목 평균 등급 (추가 - 점수관리)
      * print ex:
@@ -118,7 +116,7 @@ public class StudentScoreRead {
      * "서찬원의 필수 과목 평균 등급: B"
      * "차도범의 필수 과목 평균 등급: C"
      */
-    public void LoadStudentStateOfRequiredSubject(int state) {
+    public void loadStudentStateOfRequiredSubject(int state) {
 
         StudentStateType stateType = switch (state) {
             case 1 -> StudentStateType.GREEN;
@@ -143,13 +141,13 @@ public class StudentScoreRead {
         double count = 0;
         double sum = 0;
         int avg = 0;
-        //FIXME 초기화
-        LevelType resultLevel = LevelType.A;
+        //FIXME 초기화 완료
+        LevelType resultLevel;
         for (Student student : studentList) {
             sum = 0;
             count = 0;
             for (Integer sub : student.getSubjectSet()) {
-                boolean isRequired = dbManager.FindSubjectTypebySubjectId(sub);
+                boolean isRequired = dbManager.findSubjectTypebySubjectId(sub);
                 if (isRequired) {
                     if (loadAvgScoreRequired(student.getStudentId(), sub) != 0) {
                         sum += loadAvgScoreRequired(student.getStudentId(), sub); //해당 과목 평균을 넣기
@@ -171,7 +169,6 @@ public class StudentScoreRead {
     /*=========================== Utils ===========================  */
 
     //FIXME 메서드명
-    // 수강생 과목번호 받아 score 리스트 return
     /**
      * @세미 수강생 과목번호 받아 score 리스트 return
      * input  : student Id , subject Id
@@ -199,7 +196,7 @@ public class StudentScoreRead {
         return null;
     }
 
-    //FIXME 메서드명
+    //FIXME 메서드명 완료
     /**
      * @세미 모든 회차의 평균 계산
      * input  : student Id , subject Id

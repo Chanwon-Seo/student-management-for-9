@@ -83,6 +83,10 @@ public class ScoreMenu {
                             catch(NumberFormatException e){
                                 throw new NumberFormatException();
                             }
+                            catch (RuntimeException e){
+                                System.out.println(e.getMessage());
+                                break;
+                            }
 
                             break;
 
@@ -105,7 +109,7 @@ public class ScoreMenu {
 
                             break;
 
-                        case 4:
+                        case 4:/** @세미 */
                             System.out.println("*****수강생의 과목별 평균 등급을 조회*****");
                             System.out.println("메인메뉴> 수강생 점수관리>...");
                             System.out.print("수강생 고유번호 입력 : ");
@@ -116,7 +120,7 @@ public class ScoreMenu {
 
                             break;
 
-                        case 5:
+                        case 5: /** @세미 */
                             System.out.println("*****특정 상태 수강생들의 필수 과목 평균 등급을 조회*****");
                             System.out.println("메인메뉴> 수강생 점수관리>...");
                             System.out.println("1.Green 2.Yellow 3.Red ");
