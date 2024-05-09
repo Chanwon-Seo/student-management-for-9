@@ -2,7 +2,6 @@ package org.example;
 
 import org.example.db.DBManager;
 import org.example.service.ScoreService;
-import org.example.service.StudentScoreRead;
 
 import static org.example.Menu.sc;
 
@@ -66,9 +65,10 @@ public class ScoreMenu {
 
                                 System.out.print("과목 고유번호 입력 : ");
                                 subjectIdInput = Integer.parseInt(sc.nextLine());
-//                                new StudentScoreRead(dbManager).LoadScore(studentIdInput, subjectIdInput);
-                            } catch (NumberFormatException e) {
-                                throw new NumberFormatException();
+                                scoreService.loadAllScore(studentIdInput, subjectIdInput);
+                            } catch (NullPointerException e) {
+                                System.out.println(e.getMessage());
+                                throw new NullPointerException();
                             }
 
                             break;
@@ -85,30 +85,46 @@ public class ScoreMenu {
                                 int round = Integer.parseInt(sc.nextLine());
                                 System.out.print("점수 입력 : ");
                                 int score = Integer.parseInt(sc.nextLine());
-//                                new StudentScoreRead(dbManager).UpdateScore(studentIdInput, subjectIdInput, round, score);
+                                scoreService.updateScore(studentIdInput, subjectIdInput, round, score);
                             } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
+                            } catch (NullPointerException e) {
+                                System.out.println(e.getMessage());
+                                break;
                             }
 
                             break;
 
                         case 4:
-                            System.out.println("*****수강생의 과목별 평균 등급을 조회*****");
-                            System.out.println("메인메뉴> 수강생 점수관리> 수강생의 과목별 평균 등급을 조회...");
-                            System.out.print("수강생 고유번호 입력 : ");
-                            studentIdInput = Integer.parseInt(sc.nextLine());
-                            System.out.print("과목 고유번호 입력 : ");
-                            subjectIdInput = Integer.parseInt(sc.nextLine());
-//                            new StudentScoreRead(dbManager).LoadAvgScore(studentIdInput, subjectIdInput);
-
+                            try {
+                                System.out.println("*****수강생의 과목별 평균 등급을 조회*****");
+                                System.out.println("메인메뉴> 수강생 점수관리> 수강생의 과목별 평균 등급을 조회...");
+                                System.out.print("수강생 고유번호 입력 : ");
+                                studentIdInput = Integer.parseInt(sc.nextLine());
+                                System.out.print("과목 고유번호 입력 : ");
+                                subjectIdInput = Integer.parseInt(sc.nextLine());
+                                scoreService.loadAvgScore(studentIdInput, subjectIdInput);
+                            } catch (NumberFormatException e) {
+                                throw new NumberFormatException();
+                            } catch (NullPointerException e) {
+                                System.out.println(e.getMessage());
+                                break;
+                            }
                             break;
 
                         case 5:
-                            System.out.println("*****특정 상태 수강생들의 필수 과목 평균 등급을 조회*****");
-                            System.out.println("메인메뉴> 수강생 점수관리> 특정상태 수강생들의 필수 과목 평균등급을 조회...");
-                            System.out.println("[1]Green [2]Yellow [3]Red ");
-                            int state = Integer.parseInt(sc.nextLine());
-//                            new StudentScoreRead(dbManager).LoadStudentStateOfRequiredSubject(state);
+                            try {
+                                System.out.println("*****특정 상태 수강생들의 필수 과목 평균 등급을 조회*****");
+                                System.out.println("메인메뉴> 수강생 점수관리> 특정상태 수강생들의 필수 과목 평균등급을 조회...");
+                                System.out.println("[1]Green [2]Yellow [3]Red ");
+                                int state = Integer.parseInt(sc.nextLine());
+                                scoreService.loadStudentStateOfRequiredSubject(state);
+                            } catch (NumberFormatException e) {
+                                throw new NumberFormatException();
+                            } catch (NullPointerException e) {
+                                System.out.println(e.getMessage());
+                                break;
+                            }
                             break;
 
                         case 0:
