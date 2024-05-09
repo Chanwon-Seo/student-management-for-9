@@ -27,10 +27,6 @@ public class StudentParser {
         throw new NullPointerException("조회된 수강생 정보가 없습니다.\n");
     }
 
-    public Student studentFindByIdEmptyCheckValid(Integer studentIdInput) throws NullPointerException {
-        return dbManager.studentFindById(studentIdInput);
-    }
-
     public void studentAndSubjectCheckValid(Integer findSubjectData, Student findStudentData) {
         if (!findStudentData.getSubjectSet().contains(findSubjectData)) {
             throw new NullPointerException("해당 학생은 수강하지 않은 과목입니다.\n");
