@@ -88,8 +88,7 @@ public class ScoreService {
     }
 
     /**
-     * @차도범
-     * 수강생 아이디로 삭제
+     * @차도범 수강생 아이디로 삭제
      */
     public void deleteScoreByStudentId(int studentId) {
         try {
