@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Menu {
     static DBStorage dbStorage = new DBStorage();
     static DBManager dbManager = new DBManager(dbStorage);
-    static Scanner sc = new Scanner(System.in);
+    public static Scanner sc = new Scanner(System.in);
     private final StudentMenu studentMenu;
     private final ScoreMenu scoreMenu;
 
@@ -18,9 +18,9 @@ public class Menu {
     }
 
     public void startPage() {
+        //init data
         dbManager.initData();
 
-        studentMenu.testData();
         while (true) {
             System.out.printf("%n");
             System.out.println("[스파르타코딩클럽내일배움부트캠프 B_09조 팀프로젝트 수강생관리프로그램]");

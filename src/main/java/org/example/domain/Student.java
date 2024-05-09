@@ -18,8 +18,7 @@ public class Student {
     private StudentStateType studentStateType; //수강생상태
 
     /**
-     * @차도범
-     * 초기값을 위한 생성자 추후 삭제 가능
+     * @차도범 초기값을 위한 생성자 추후 삭제 가능
      */
     public Student(Integer studentId, String studentName, String birthDay, Set<Integer> subjectSet, StudentStateType studentStateType) {
         this.studentId = studentId;
@@ -28,9 +27,9 @@ public class Student {
         this.subjectSet = subjectSet;
         this.studentStateType = studentStateType;
     }
+
     /**
-     * @차도범
-     * 수정을 위한 세터
+     * @차도범 수정을 위한 세터
      */
     public void editStudent(String name, String birthDay, StudentStateType studentStateType) {
         studentName = name;

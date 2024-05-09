@@ -5,7 +5,6 @@ import org.example.domain.Student;
 import org.example.domain.Subject;
 import org.example.domain.enums.StudentStateType;
 import org.example.domain.enums.SubjectType;
-import org.example.parser.ScoreParser;
 import org.example.parser.StudentParser;
 import org.example.parser.SubjectParser;
 
@@ -17,12 +16,10 @@ public class StudentService {
     private final DBManager dbManager;
     private final StudentParser studentParser;
     private final SubjectParser subjectParser;
-    //FIXME 사용하고 있지 않음
-    private final ScoreParser scoreParser;
-    //FIXME 사용하고 있지 않음
-    static final int MIN_REQUIRED_SUBJECTS = 3;
-    //FIXME 사용하고 있지 않음
-    static final int MIN_ELECTIVE_SUBJECTS = 2;
+    //FIXME 사용하고 있지 않음 [해결됨]
+    //FIXME 사용하고 있지 않음 [해결됨]
+    //FIXME 사용하고 있지 않음 [해결됨]
+
     List<Subject> sub;
     HashSet<Integer> dup = new HashSet<>();
     Set<Integer> subjectId = new HashSet<>();
@@ -36,7 +33,6 @@ public class StudentService {
         this.dbManager = dbManager;
         this.studentParser = new StudentParser(dbManager);
         this.subjectParser = new SubjectParser(dbManager);
-        this.scoreParser = new ScoreParser(dbManager);
         sub = dbManager.findBySubjects();
         studentList = dbManager.findByStudents();
     }
@@ -45,8 +41,7 @@ public class StudentService {
      * @차도범 수강생 목록을 출력
      */
     public Student studentFindById(int id) throws NullPointerException {
-        studentParser.studentFindByIdEmptyCheckValid(id);
-        Student findStudent = dbManager.studentFindById(id);
+        Student findStudent = studentParser.studentEmptyCheckValidV2(id).get();
         System.out.println("수강생 " + findStudent.getStudentName());
         return findStudent;
     }
@@ -55,10 +50,11 @@ public class StudentService {
      * @차도범 수강생 목록을 출력
      */
     public void getStudentList() {
-        System.out.println("id / name");
+        System.out.println("[ 수강생 목록 (고유번호 / 이름) ]");
         for (Student student : dbManager.findByStudents()) {
             System.out.println(student.getStudentId() + " : " + student.getStudentName());
         }
+        System.out.printf("\n");
     }
 
     /**
@@ -66,8 +62,8 @@ public class StudentService {
      */
     public void getStudentDetail(int studentId) {
         try {
-            Student student = studentParser.studentFindByIdEmptyCheckValid(studentId);
-            System.out.println("----학생 상세-----");
+            Student student = studentParser.studentEmptyCheckValidV2(studentId).get();
+            System.out.println("##### < 학생 상세 > #####");
             System.out.println("id : " + student.getStudentId());
             System.out.println("이름 : " + student.getStudentName());
             System.out.println("생년월일 : " + student.getBirthDay());
@@ -91,8 +87,7 @@ public class StudentService {
     }
 
     /**
-     * @차도범
-     * 상태별 수강색 목록
+     * @차도범 상태별 수강색 목록
      */
     public void studentListByStatus(StudentStateType studentStateType) {
         List<Student> studentList = dbManager.findByStudents();
@@ -107,26 +102,24 @@ public class StudentService {
     }
 
     /**
-     * @차도범
-     * 수강생 수정
+     * @차도범 수강생 수정
      */
     public void editStudent(Student student, String name, String birthDay, StudentStateType studentStateType) {
-        //FIXME 사용자의 빈값 입력에 대한 예외가 없음 더티체킹 필요
+        //FIXME 사용자의 빈값 입력에 대한 예외가 없음 더티체킹 필요 -> 완료
         try {
+            studentParser.editStudentEmptyCheckValid(name, birthDay, studentStateType);
             dbManager.editStudent(student, name, birthDay, studentStateType);
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
     }
 
-
     /**
-     * @차도범
-     * 아이디로 수강생 삭제
+     * @차도범 아이디로 수강생 삭제
      */
     public void deleteStudentById(int studentId) {
         try {
-            Student student = studentParser.studentFindByIdEmptyCheckValid(studentId);
+            Student student = studentParser.studentEmptyCheckValidV2(studentId).get();
             boolean b = dbManager.deleteStudentById(studentId);
             if (b) System.out.println(student.getStudentName() + "수강생을 삭제했습니다..");
             else System.out.println("수강생을 삭제하지 못햇습니다.");
@@ -137,12 +130,24 @@ public class StudentService {
 
     //수강자 등록
     public void createStudent() {
-        String name = inputString("수강생 이름 입력: ");
-        String birth = inputString("수강생 생년월일 입력: ");
-        String status = inputString("현재 상태를 입력하세요.(선택) green: 좋음, yellow: 보통, red: 나쁨, nostatus: 모름\n");
+        System.out.print("수강생 이름 입력: ");
+        String name = sc.nextLine();
+        System.out.print("수강생 생년월일 입력: ");
+        String birth = sc.nextLine();
+        System.out.print("현재 상태를 입력하세요.(번호 선택) 1.green: 좋음\n2.yellow: 보통\n3.red: 나쁨\n아무키.nostatus: 모름\n");
+        String status = sc.nextLine();
+
+        String state = switch (status) {
+            case "1" -> "green";
+            case "2" -> "yellow";
+            case "3" -> "red";
+            default -> "nostatus";
+        };
 
         StudentStateType stateType = inputStatus(status);
+        //FIXME 완료
         //FIXME sub
+        System.out.println("※공통사항※ [필수]3과목,[선택]2과목이상 신청바랍니다.");
         sub.forEach(subject -> {
             String output = String.format("고유ID: %-5d 제목: %-20s \t과목: %s",
                     subject.getSubjectId(),
@@ -226,7 +231,7 @@ public class StudentService {
             if (subjectParser.subjectIsEmptyCheck(subjectId)) {
                 return true;
             }
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
         return false;
@@ -241,9 +246,10 @@ public class StudentService {
             if (subjectParser.subjectIdDuplicationCheck(dup, subjectId)) {
                 return true;
             }
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
+
         return false;
     }
 
@@ -264,17 +270,18 @@ public class StudentService {
     /**
      * @성균 과목 등록 검증
      */
-    //FIXME if문
+    //FIXME 완료(Exception대신 IllegalArgumentException을 사용해 명확성을 올림)
     public boolean subjectMinCheck(int rSub, int eSub) {
         try {
             if (subjectParser.subjectMinCheck(rSub, eSub)) {
                 return true;
             }
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
-
+        
         return false;
+
     }
 
 

@@ -6,16 +6,10 @@ import org.example.service.StudentScoreRead;
 
 import static org.example.Menu.sc;
 
-/**
- * 메인메뉴>수강생 점수관리"
- */
-//@RequiredArgsConstructor
 public class ScoreMenu {
 
     private final DBManager dbManager;
-    //FIXME 불필요한 선언 완료
     private final ScoreService scoreService;
-    //FIXME 불필요한 선언 완료
 
     public ScoreMenu(DBManager dbManager) {
         this.dbManager = dbManager;
@@ -24,6 +18,8 @@ public class ScoreMenu {
 
     public void displayScoreView() {
         while (true) {
+            System.out.println("***** 수강생 점수 관리 *****");
+            System.out.println("메인메뉴> 수강생 점수 관리>...");
             System.out.println("1. 수강생 점수 등록");
             System.out.println("2. 수강생 점수 조회");
             System.out.println("3. 수강생 과목별 회차 점수 수정");
@@ -40,13 +36,12 @@ public class ScoreMenu {
                         case 1:
                             try {
                                 System.out.println("***** 수강생 점수 등록 *****");
-                                System.out.println("메인메뉴> 수강생 점수 관리>...");
+                                System.out.println("메인메뉴> 수강생 점수 관리>수강생 점수 등록...");
 
-
+                                System.out.print("수강생 고유번호 입력 : ");
+                                studentIdInput = Integer.parseInt(sc.nextLine());
                                 System.out.print("과목 고유번호 입력 : ");
                                 subjectIdInput = Integer.parseInt(sc.nextLine());
-                                System.out.print("학생 고유번호 입력 : ");
-                                studentIdInput = Integer.parseInt(sc.nextLine());
                                 System.out.print("회차 번호 입력 : ");
                                 roundInput = Integer.parseInt(sc.nextLine());
                                 System.out.print("학생 점수 입력 : ");
@@ -64,14 +59,14 @@ public class ScoreMenu {
                         case 2: /** @세미 */
                             try {
                                 System.out.println("*****수강생 점수 조회*****");
-                                System.out.println("메인메뉴> 수강생 점수관리>...");
+                                System.out.println("메인메뉴> 수강생 점수관리>수강생 점수 조회...");
 
                                 System.out.print("수강생 고유번호 입력 : ");
                                 studentIdInput = Integer.parseInt(sc.nextLine());
 
                                 System.out.print("과목 고유번호 입력 : ");
                                 subjectIdInput = Integer.parseInt(sc.nextLine());
-                                new StudentScoreRead(dbManager).LoadScore(studentIdInput, subjectIdInput);
+//                                new StudentScoreRead(dbManager).LoadScore(studentIdInput, subjectIdInput);
                             } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
                             }
@@ -81,7 +76,7 @@ public class ScoreMenu {
                         case 3: /** @세미 */
                             try {
                                 System.out.println("*****수강생 과목별 회차점수 수정*****");
-                                System.out.println("메인메뉴> 수강생 점수관리>...");
+                                System.out.println("메인메뉴> 수강생 점수관리> 수강생 과목별 회차점수 수정...");
                                 System.out.print("수강생 고유번호 입력 : ");
                                 studentIdInput = Integer.parseInt(sc.nextLine());
                                 System.out.print("과목 고유번호 입력 : ");
@@ -90,7 +85,7 @@ public class ScoreMenu {
                                 int round = Integer.parseInt(sc.nextLine());
                                 System.out.print("점수 입력 : ");
                                 int score = Integer.parseInt(sc.nextLine());
-                                new StudentScoreRead(dbManager).UpdateScore(studentIdInput, subjectIdInput, round, score);
+//                                new StudentScoreRead(dbManager).UpdateScore(studentIdInput, subjectIdInput, round, score);
                             } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
                             }
@@ -99,21 +94,21 @@ public class ScoreMenu {
 
                         case 4:
                             System.out.println("*****수강생의 과목별 평균 등급을 조회*****");
-                            System.out.println("메인메뉴> 수강생 점수관리>...");
+                            System.out.println("메인메뉴> 수강생 점수관리> 수강생의 과목별 평균 등급을 조회...");
                             System.out.print("수강생 고유번호 입력 : ");
                             studentIdInput = Integer.parseInt(sc.nextLine());
                             System.out.print("과목 고유번호 입력 : ");
                             subjectIdInput = Integer.parseInt(sc.nextLine());
-                            new StudentScoreRead(dbManager).LoadAvgScore(studentIdInput, subjectIdInput);
+//                            new StudentScoreRead(dbManager).LoadAvgScore(studentIdInput, subjectIdInput);
 
                             break;
 
                         case 5:
                             System.out.println("*****특정 상태 수강생들의 필수 과목 평균 등급을 조회*****");
-                            System.out.println("메인메뉴> 수강생 점수관리>...");
-                            System.out.println("1.Green 2.Yellow 3.Red ");
+                            System.out.println("메인메뉴> 수강생 점수관리> 특정상태 수강생들의 필수 과목 평균등급을 조회...");
+                            System.out.println("[1]Green [2]Yellow [3]Red ");
                             int state = Integer.parseInt(sc.nextLine());
-                            new StudentScoreRead(dbManager).LoadStudentStateOfRequiredSubject(state);
+//                            new StudentScoreRead(dbManager).LoadStudentStateOfRequiredSubject(state);
                             break;
 
                         case 0:
@@ -127,7 +122,10 @@ public class ScoreMenu {
 
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("something wrong~, 다시 입력바랍니다.");
+                    System.out.println("something wrong!, 다시 입력바랍니다.");
+                    System.out.printf("\n");
+
+
                 }
             }
         }
