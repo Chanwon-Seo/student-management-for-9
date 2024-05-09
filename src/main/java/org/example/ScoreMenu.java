@@ -6,19 +6,14 @@ import org.example.service.StudentScoreRead;
 
 import static org.example.Menu.sc;
 
-//FIXME 불필요 주석삭제 [해결됨]
 public class ScoreMenu {
 
     private final DBManager dbManager;
-    //FIXME 불필요한 선언 [해결됨]
     private final ScoreService scoreService;
-    //FIXME 불필요한 선언 [해결됨]
-
 
     public ScoreMenu(DBManager dbManager) {
         this.dbManager = dbManager;
         this.scoreService = new ScoreService(dbManager);
-
     }
 
     public void displayScoreView() {
@@ -52,7 +47,7 @@ public class ScoreMenu {
                                 System.out.print("학생 점수 입력 : ");
                                 scoreInput = Integer.parseInt(sc.nextLine());
 
-                                scoreService.scoreCreateV1(subjectIdInput, studentIdInput, roundInput, scoreInput);
+                                scoreService.scoreCreateV2(subjectIdInput, studentIdInput, roundInput, scoreInput);
 
                             } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
@@ -71,7 +66,7 @@ public class ScoreMenu {
 
                                 System.out.print("과목 고유번호 입력 : ");
                                 subjectIdInput = Integer.parseInt(sc.nextLine());
-                                new StudentScoreRead(dbManager).LoadScore(studentIdInput, subjectIdInput);
+//                                new StudentScoreRead(dbManager).LoadScore(studentIdInput, subjectIdInput);
                             } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
                             }
@@ -90,7 +85,7 @@ public class ScoreMenu {
                                 int round = Integer.parseInt(sc.nextLine());
                                 System.out.print("점수 입력 : ");
                                 int score = Integer.parseInt(sc.nextLine());
-                                new StudentScoreRead(dbManager).UpdateScore(studentIdInput, subjectIdInput, round, score);
+//                                new StudentScoreRead(dbManager).UpdateScore(studentIdInput, subjectIdInput, round, score);
                             } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
                             }
@@ -104,7 +99,7 @@ public class ScoreMenu {
                             studentIdInput = Integer.parseInt(sc.nextLine());
                             System.out.print("과목 고유번호 입력 : ");
                             subjectIdInput = Integer.parseInt(sc.nextLine());
-                            new StudentScoreRead(dbManager).LoadAvgScore(studentIdInput, subjectIdInput);
+//                            new StudentScoreRead(dbManager).LoadAvgScore(studentIdInput, subjectIdInput);
 
                             break;
 
@@ -113,7 +108,7 @@ public class ScoreMenu {
                             System.out.println("메인메뉴> 수강생 점수관리> 특정상태 수강생들의 필수 과목 평균등급을 조회...");
                             System.out.println("[1]Green [2]Yellow [3]Red ");
                             int state = Integer.parseInt(sc.nextLine());
-                            new StudentScoreRead(dbManager).LoadStudentStateOfRequiredSubject(state);
+//                            new StudentScoreRead(dbManager).LoadStudentStateOfRequiredSubject(state);
                             break;
 
                         case 0:
