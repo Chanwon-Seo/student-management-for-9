@@ -18,7 +18,7 @@ public class Menu {
     }
 
     public void startPage() {
-
+        dbManager.initData();
 
         studentMenu.testData();
         while (true) {
