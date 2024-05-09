@@ -130,11 +130,22 @@ public class StudentService {
 
     //수강자 등록
     public void createStudent() {
-        String name = inputString("수강생 이름 입력: ");
-        String birth = inputString("수강생 생년월일 (6자리입력): ");
-        String status = inputString("[선택] 현재 상태를 입력하세요. (문자입력) \ngreen: 좋음, yellow: 보통, red: 나쁨, nostatus: 모름\n");
+        System.out.print("수강생 이름 입력: ");
+        String name = sc.nextLine();
+        System.out.print("수강생 생년월일 입력: ");
+        String birth = sc.nextLine();
+        System.out.print("현재 상태를 입력하세요.(번호 선택) 1.green: 좋음\n2.yellow: 보통\n3.red: 나쁨\n아무키.nostatus: 모름\n");
+        String status = sc.nextLine();
+
+        String state = switch (status) {
+            case "1" -> "green";
+            case "2" -> "yellow";
+            case "3" -> "red";
+            default -> "nostatus";
+        };
 
         StudentStateType stateType = inputStatus(status);
+        //FIXME 완료
         //FIXME sub
         System.out.println("※공통사항※ [필수]3과목,[선택]2과목이상 신청바랍니다.");
         sub.forEach(subject -> {
@@ -220,7 +231,7 @@ public class StudentService {
             if (subjectParser.subjectIsEmptyCheck(subjectId)) {
                 return true;
             }
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
         return false;
@@ -235,9 +246,10 @@ public class StudentService {
             if (subjectParser.subjectIdDuplicationCheck(dup, subjectId)) {
                 return true;
             }
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
+
         return false;
     }
 
@@ -258,17 +270,18 @@ public class StudentService {
     /**
      * @성균 과목 등록 검증
      */
-    //FIXME if문
+    //FIXME 완료(Exception대신 IllegalArgumentException을 사용해 명확성을 올림)
     public boolean subjectMinCheck(int rSub, int eSub) {
         try {
             if (subjectParser.subjectMinCheck(rSub, eSub)) {
                 return true;
             }
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
-
+        
         return false;
+
     }
 
 
