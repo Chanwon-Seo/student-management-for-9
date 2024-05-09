@@ -32,7 +32,6 @@ public class SubjectParser {
         throw new NullPointerException("등록된 과목이 아닙니다.\n");
     }
 
-    //FIXME 메서드명 수정 완료
     /**
      * @세미 수강 중인 과목인지 조회
      * throw 해당 과목을 수강하지 않은 수강생일 경우

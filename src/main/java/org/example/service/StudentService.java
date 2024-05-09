@@ -17,9 +17,6 @@ public class StudentService {
     private final DBManager dbManager;
     private final StudentParser studentParser;
     private final SubjectParser subjectParser;
-    //FIXME 사용하고 있지 않음 [해결됨]
-    //FIXME 사용하고 있지 않음 [해결됨]
-    //FIXME 사용하고 있지 않음 [해결됨]
 
     public StudentService(DBManager dbManager) {
         this.dbManager = dbManager;
@@ -95,7 +92,6 @@ public class StudentService {
      * @차도범 수강생 수정
      */
     public void editStudent(Student student, String name, String birthDay, StudentStateType studentStateType) {
-        //FIXME 사용자의 빈값 입력에 대한 예외가 없음 더티체킹 필요 -> 완료
         try {
             studentParser.editStudentEmptyCheckValid(name, birthDay, studentStateType);
             dbManager.editStudent(student, name, birthDay, studentStateType);
@@ -135,8 +131,6 @@ public class StudentService {
         };
 
         StudentStateType stateType = inputStatus(state);
-        //FIXME 완료
-        //FIXME 완료
         System.out.println("※공통사항※ [필수]3과목,[선택]2과목이상 신청바랍니다.");
         List<Subject> sub = dbManager.findBySubjects();
         sub.forEach(subject -> {
@@ -256,7 +250,6 @@ public class StudentService {
     /**
      * @성균 과목 등록 검증
      */
-    //FIXME 완료(Exception대신 IllegalArgumentException을 사용해 명확성을 올림)
     public boolean subjectMinCheck(int rSub, int eSub) {
         try {
             if (subjectParser.subjectMinCheck(rSub, eSub)) {
