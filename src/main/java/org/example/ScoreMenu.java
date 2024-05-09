@@ -2,7 +2,6 @@ package org.example;
 
 import org.example.db.DBManager;
 import org.example.service.ScoreService;
-import org.example.service.StudentScoreRead;
 import org.example.service.StudentService;
 import org.example.service.SubjectService;
 
@@ -78,7 +77,7 @@ public class ScoreMenu {
 
                                 System.out.print("과목 고유번호 입력 : ");
                                 subjectIdInput = Integer.parseInt(sc.nextLine());
-                                new StudentScoreRead(dbManager).loadAllScore(studentIdInput, subjectIdInput);
+                                scoreService.loadAllScore(studentIdInput, subjectIdInput);
                             } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
                             } catch (RuntimeException e) {
@@ -100,7 +99,7 @@ public class ScoreMenu {
                                 int round = Integer.parseInt(sc.nextLine());
                                 System.out.print("점수 입력 : ");
                                 int score = Integer.parseInt(sc.nextLine());
-                                new StudentScoreRead(dbManager).updateScore(studentIdInput, subjectIdInput, round, score);
+                                scoreService.updateScore(studentIdInput, subjectIdInput, round, score);
                             } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
                             } catch (RuntimeException e) {
@@ -118,7 +117,7 @@ public class ScoreMenu {
                                 studentIdInput = Integer.parseInt(sc.nextLine());
                                 System.out.print("과목 고유번호 입력 : ");
                                 subjectIdInput = Integer.parseInt(sc.nextLine());
-                                new StudentScoreRead(dbManager).loadAvgScore(studentIdInput, subjectIdInput);
+                                scoreService.loadAvgScore(studentIdInput, subjectIdInput);
                             } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
                             } catch (RuntimeException e) {
@@ -133,7 +132,7 @@ public class ScoreMenu {
                                 System.out.println("메인메뉴> 수강생 점수관리>...");
                                 System.out.println("1.Green 2.Yellow 3.Red ");
                                 int state = Integer.parseInt(sc.nextLine());
-                                new StudentScoreRead(dbManager).loadStudentStateOfRequiredSubject(state);
+                                scoreService.loadStudentStateOfRequiredSubject(state);
                             } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
                             } catch (RuntimeException e) {
