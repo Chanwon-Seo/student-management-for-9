@@ -44,7 +44,7 @@ public class ScoreParser {
 
     /**
      * @찬원 회차 등록 여부 검증
-     * throw 등록된 회차가 없는 경우
+     * throw 등록된 회차가 없지만 사용자로부터 입력 받은 회차가 1회차가 아닌 경우
      * throw 이미 등록된 회차 등록인 경우
      * throw 이전 회차 미등록인 경우
      */
@@ -57,7 +57,7 @@ public class ScoreParser {
             }
         }
 
-        //등록된 회차가 없는 경우
+        //등록된 회차가 없지만 사용자로부터 입력 받은 회차가 1회차가 아닌 경우
         if (findScoreData.isEmpty() && roundInput != 1) {
             throw new NullPointerException("1회차가 입력되지 않았습니다.\n");
         }
