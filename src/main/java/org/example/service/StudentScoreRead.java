@@ -37,10 +37,10 @@ public class StudentScoreRead {
      * "3회차 N"
      */
     public void loadScore(Integer studentId, Integer subjectId) {
-        Map<Integer, Integer> score = findScoresByStudentIdANDSubjectId(studentId, subjectId);
 
+        Map<Integer, Integer> score = findScoresByStudentIdANDSubjectId(studentId, subjectId);
         if (score == null) { //TEMPEXCEPTION
-            System.out.println("해당 과목의 점수가 존재하지 않습니다");
+            System.out.println("해당 과목의 점수가 존재하지 않습니다.\n\n");
             return;
         }
 
@@ -73,14 +73,14 @@ public class StudentScoreRead {
         Map<Integer, Integer> score = findScoresByStudentIdANDSubjectId(studentId, subjectId);
 
         if (score == null || !score.containsKey(roundInput)) { //TEMPEXCEPTION
-            System.out.println("해당 과목의 회차가 존재하지 않습니다");
+            System.out.println("해당 과목의 회차가 존재하지 않습니다.\n\n");
             return;
         }
 
         scoreParser.scoreInputZeroToOneHundredCheckValid(scoreInput); //점수 범위측정
 
         score.put(roundInput, scoreInput);
-        System.out.println(roundInput + " 회차 : " + scoreInput + "점 수정완료!");
+        System.out.println(roundInput + " 회차 : " + scoreInput + "점 수정완료!\n\n");
     }
 
     //FIXME 메서드명 완료
@@ -92,7 +92,7 @@ public class StudentScoreRead {
     public void loadAvgScore(Integer studentId, Integer subjectId) {
         Map<Integer, Integer> score = findScoresByStudentIdANDSubjectId(studentId, subjectId);
         if (score == null) { //TEMP EXCEPTION
-            System.out.println("해당 과목의 점수가 존재하지 않습니다");
+            System.out.println("해당 과목의 점수가 존재하지 않습니다.\n\n");
             return;
         }
 
@@ -104,7 +104,7 @@ public class StudentScoreRead {
         }
         avg = sum / score.size();
         Optional<Subject> subject = dbManager.findOneBySubject(subjectId);
-        System.out.println(subject.get().getSubjectName() + "과목의 평균은 " + avg + "입니다.");
+        System.out.println(subject.get().getSubjectName() + "과목의 평균은 " + avg + "입니다.\n\n");
 
     }
 
@@ -126,7 +126,7 @@ public class StudentScoreRead {
         };
 
         if(stateType==null) { //매개변수 TEMP EXCEPTION
-            System.out.println("잘못된 상태를 입력하셨습니다.");
+            System.out.println("잘못된 상태를 입력하셨습니다.\n\n");
         }
 
 
@@ -137,6 +137,8 @@ public class StudentScoreRead {
                 studentList.add(student);
             }
         } //특정상태 수강생들 뽑음 (studentList)
+
+        boolean isAnyScoreInquiry = false;
 
         double count = 0;
         double sum = 0;
@@ -158,8 +160,14 @@ public class StudentScoreRead {
             avg = (int) (sum / count); //각 과목당 평균들의 전체평균을 계산
             resultLevel = LevelType.checkRequiredLevelType(avg); //평균점수를 등급화
 
-            if (avg != 0) System.out.println(student.getStudentName() + "의 필수 과목 평균 등급: " + resultLevel);
+            if (avg != 0) {
+                System.out.println(" - "+ student.getStudentName() + "의 필수 과목 평균 등급: " + resultLevel);
+                isAnyScoreInquiry=true;
+            }
         }
+
+        if(!isAnyScoreInquiry) System.out.println("조회할 점수가 없습니다.\n\n");
+        System.out.println("\n");
 
     }
 
@@ -187,7 +195,7 @@ public class StudentScoreRead {
             if (s.getStudentId().equals(studentId) && s.getSubjectId().equals(subjectId)) {
                 Map<Integer, Integer> temp = s.getScoreMap();
                 if (temp.size() <= 0) { //TEMP EXCEPTION
-                    System.out.println("해당 과목의 점수가 없습니다");
+                    System.out.println("해당 과목의 점수가 없습니다.\n\n");
                     break;
                 }
                 return temp;

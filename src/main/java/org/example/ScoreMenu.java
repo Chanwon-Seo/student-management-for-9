@@ -68,8 +68,8 @@ public class ScoreMenu {
                             }
                             break;
 
-                        case 2: /** @세미 */
-                            try{
+                        case 2:
+                            try {
                                 System.out.println("*****수강생 점수 조회*****");
                                 System.out.println("메인메뉴> 수강생 점수관리>...");
 
@@ -79,19 +79,17 @@ public class ScoreMenu {
                                 System.out.print("과목 고유번호 입력 : ");
                                 subjectIdInput = Integer.parseInt(sc.nextLine());
                                 new StudentScoreRead(dbManager).loadScore(studentIdInput, subjectIdInput);
-                            }
-                            catch(NumberFormatException e){
+                            } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
-                            }
-                            catch (RuntimeException e){
+                            } catch (RuntimeException e) {
                                 System.out.println(e.getMessage());
                                 break;
                             }
 
                             break;
 
-                        case 3: /** @세미 */
-                            try{
+                        case 3:
+                            try {
                                 System.out.println("*****수강생 과목별 회차점수 수정*****");
                                 System.out.println("메인메뉴> 수강생 점수관리>...");
                                 System.out.print("수강생 고유번호 입력 : ");
@@ -102,30 +100,45 @@ public class ScoreMenu {
                                 int round = Integer.parseInt(sc.nextLine());
                                 System.out.print("점수 입력 : ");
                                 int score = Integer.parseInt(sc.nextLine());
-                                new StudentScoreRead(dbManager).updateScore(studentIdInput, subjectIdInput, round,score);
-                            }catch (NumberFormatException e){
+                                new StudentScoreRead(dbManager).updateScore(studentIdInput, subjectIdInput, round, score);
+                            } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
+                            } catch (RuntimeException e) {
+                                System.out.println(e.getMessage());
+                                break;
                             }
-
                             break;
 
-                        case 4:/** @세미 */
-                            System.out.println("*****수강생의 과목별 평균 등급을 조회*****");
-                            System.out.println("메인메뉴> 수강생 점수관리>...");
-                            System.out.print("수강생 고유번호 입력 : ");
-                            studentIdInput = Integer.parseInt(sc.nextLine());
-                            System.out.print("과목 고유번호 입력 : ");
-                            subjectIdInput = Integer.parseInt(sc.nextLine());
-                            new StudentScoreRead(dbManager).loadAvgScore(studentIdInput,subjectIdInput);
-
+                        case 4:
+                            try {
+                                System.out.println("*****수강생의 과목별 평균 등급을 조회*****");
+                                System.out.println("메인메뉴> 수강생 점수관리>...");
+                                System.out.print("수강생 고유번호 입력 : ");
+                                studentIdInput = Integer.parseInt(sc.nextLine());
+                                System.out.print("과목 고유번호 입력 : ");
+                                subjectIdInput = Integer.parseInt(sc.nextLine());
+                                new StudentScoreRead(dbManager).loadAvgScore(studentIdInput, subjectIdInput);
+                            } catch (NumberFormatException e) {
+                                throw new NumberFormatException();
+                            } catch (RuntimeException e) {
+                                System.out.println(e.getMessage());
+                                break;
+                            }
                             break;
 
-                        case 5: /** @세미 */
-                            System.out.println("*****특정 상태 수강생들의 필수 과목 평균 등급을 조회*****");
-                            System.out.println("메인메뉴> 수강생 점수관리>...");
-                            System.out.println("1.Green 2.Yellow 3.Red ");
-                            int state = Integer.parseInt(sc.nextLine());
-                            new StudentScoreRead(dbManager).loadStudentStateOfRequiredSubject(state);
+                        case 5:
+                            try {
+                                System.out.println("*****특정 상태 수강생들의 필수 과목 평균 등급을 조회*****");
+                                System.out.println("메인메뉴> 수강생 점수관리>...");
+                                System.out.println("1.Green 2.Yellow 3.Red ");
+                                int state = Integer.parseInt(sc.nextLine());
+                                new StudentScoreRead(dbManager).loadStudentStateOfRequiredSubject(state);
+                            } catch (NumberFormatException e) {
+                                throw new NumberFormatException();
+                            } catch (RuntimeException e) {
+                                System.out.println(e.getMessage());
+                                break;
+                            }
                             break;
 
                         case 0:
