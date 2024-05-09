@@ -21,7 +21,6 @@ public class StudentMenu {
     }
 
 
-    boolean next = true;
 
     public void displayStudentView() {
         int studentId;
@@ -54,7 +53,7 @@ public class StudentMenu {
                             System.out.println("메인메뉴> 수강생 관리>수강생 조회...");
 
 
-                            while (next) {
+                            while (true) {
                                 studentService.getStudentList();
                                 System.out.println();
                                 System.out.println();
