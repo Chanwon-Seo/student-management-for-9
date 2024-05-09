@@ -5,7 +5,6 @@ import org.example.domain.Student;
 import org.example.domain.Subject;
 import org.example.domain.enums.StudentStateType;
 import org.example.domain.enums.SubjectType;
-import org.example.parser.ScoreParser;
 import org.example.parser.StudentParser;
 import org.example.parser.SubjectParser;
 
@@ -88,8 +87,7 @@ public class StudentService {
     }
 
     /**
-     * @차도범
-     * 상태별 수강색 목록
+     * @차도범 상태별 수강색 목록
      */
     public void studentListByStatus(StudentStateType studentStateType) {
         List<Student> studentList = dbManager.findByStudents();
@@ -104,8 +102,7 @@ public class StudentService {
     }
 
     /**
-     * @차도범
-     * 수강생 수정
+     * @차도범 수강생 수정
      */
     public void editStudent(Student student, String name, String birthDay, StudentStateType studentStateType) {
         //FIXME 사용자의 빈값 입력에 대한 예외가 없음 더티체킹 필요
@@ -118,8 +115,7 @@ public class StudentService {
 
 
     /**
-     * @차도범
-     * 아이디로 수강생 삭제
+     * @차도범 아이디로 수강생 삭제
      */
     public void deleteStudentById(int studentId) {
         try {
