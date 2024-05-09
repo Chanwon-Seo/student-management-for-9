@@ -42,8 +42,6 @@ public class Menu {
 
 
                         case 2:
-                            System.out.println("***** 수강생 점수 관리 *****");
-                            System.out.println("메인메뉴> 수강생 점수 관리>...");
                             scoreMenu.displayScoreView();
                             break;
 

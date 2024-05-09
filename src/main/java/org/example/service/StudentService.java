@@ -134,7 +134,7 @@ public class StudentService {
         String name = sc.nextLine();
         System.out.print("수강생 생년월일 입력: ");
         String birth = sc.nextLine();
-        System.out.print("현재 상태를 입력하세요.(번호 선택) 1.green: 좋음\n2.yellow: 보통\n3.red: 나쁨\n아무키.nostatus: 모름\n");
+        System.out.print("현재 상태를 입력하세요.(번호 선택) \n[1]green: 좋음\n[2]yellow: 보통\n[3]red: 나쁨\n[Any Key]nostatus: 모름\n");
         String status = sc.nextLine();
 
         String state = switch (status) {
@@ -147,7 +147,7 @@ public class StudentService {
         StudentStateType stateType = inputStatus(status);
         //FIXME 완료
         //FIXME sub
-        System.out.println("※공통사항※ [필수]3과목,[선택]2과목이상 신청바랍니다.");
+        System.out.println(" ※공통사항※ [필수]3과목,[선택]2과목이상 신청바랍니다.");
         sub.forEach(subject -> {
             String output = String.format("고유ID: %-5d 제목: %-20s \t과목: %s",
                     subject.getSubjectId(),
