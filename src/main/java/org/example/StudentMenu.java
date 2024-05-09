@@ -97,7 +97,7 @@ public class StudentMenu {
                                                             findStudent.getStudentStateType());
                                                 }
                                                 case 2 -> {
-                                                    System.out.print("수정할 생년월일 : ");
+                                                    System.out.print("수정할 생년월일(6자리) : ");
                                                     String editBrithDay = sc.nextLine();
                                                     studentService.editStudent(
                                                             findStudent,

@@ -17,12 +17,10 @@ public class StudentService {
     private final DBManager dbManager;
     private final StudentParser studentParser;
     private final SubjectParser subjectParser;
-    //FIXME 사용하고 있지 않음 [선언 사용중, 불필요 선언 제거시 실행오류!]
-    private final ScoreParser scoreParser;
     //FIXME 사용하고 있지 않음 [해결됨]
-    //static final int MIN_REQUIRED_SUBJECTS = 3;
     //FIXME 사용하고 있지 않음 [해결됨]
-    //static final int MIN_ELECTIVE_SUBJECTS = 2;
+    //FIXME 사용하고 있지 않음 [해결됨]
+
     List<Subject> sub;
     HashSet<Integer> dup = new HashSet<>();
     Set<Integer> subjectId = new HashSet<>();
@@ -36,7 +34,6 @@ public class StudentService {
         this.dbManager = dbManager;
         this.studentParser = new StudentParser(dbManager);
         this.subjectParser = new SubjectParser(dbManager);
-        this.scoreParser = new ScoreParser(dbManager);
         sub = dbManager.findBySubjects();
         studentList = dbManager.findByStudents();
     }
@@ -139,11 +136,12 @@ public class StudentService {
     //수강자 등록
     public void createStudent() {
         String name = inputString("수강생 이름 입력: ");
-        String birth = inputString("수강생 생년월일 입력: ");
+        String birth = inputString("수강생 생년월일 (6자리입력): ");
         String status = inputString("[선택] 현재 상태를 입력하세요. (문자입력) \ngreen: 좋음, yellow: 보통, red: 나쁨, nostatus: 모름\n");
 
         StudentStateType stateType = inputStatus(status);
         //FIXME sub
+        System.out.println("※공통사항※ [필수]3과목,[선택]2과목이상 신청바랍니다.");
         sub.forEach(subject -> {
             String output = String.format("고유ID: %-5d 제목: %-20s \t과목: %s",
                     subject.getSubjectId(),
