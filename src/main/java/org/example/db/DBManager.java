@@ -115,10 +115,11 @@ public class DBManager {
     }
 
 
+    //FIXME 메서드명수정 완료
     /**
      * @세미 subject id로 필수인지 아닌지 판별
      */
-    public boolean FindSubjectTypebySubjectId(Integer subjectId) {
+    public boolean findSubjectTypebySubjectId(Integer subjectId) {
         List<Subject> subjectList = dbStorage.getSubjectList();
         Subject sub = subjectList.get(subjectId - 1);
         if (sub.getSubjectType() == SubjectType.REQUIRED) return true;

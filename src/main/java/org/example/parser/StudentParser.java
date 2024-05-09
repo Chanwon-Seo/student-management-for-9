@@ -34,6 +34,12 @@ public class StudentParser {
         }
     }
 
+    public void studentTypeCheckValid(StudentStateType stateType) {
+        if(stateType==null)
+            throw new NullPointerException("잘못된 학생 상태 입니다.\n");
+
+    }
+
     /**
      * @차도범 수강생 정보 수정 메소드
      */
