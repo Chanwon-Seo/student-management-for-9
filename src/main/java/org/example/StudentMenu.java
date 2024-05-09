@@ -10,9 +10,8 @@ import java.util.Set;
 
 import static org.example.Menu.sc;
 
-/**
- * "메인메뉴> 수강생 관리"
- */
+//FIXME 불필요 주석 삭제 [해결됨]
+
 public class StudentMenu {
 
     private final DBManager dbManager;
