@@ -6,14 +6,10 @@ import org.example.service.ScoreService;
 import static org.example.Menu.sc;
 
 public class ScoreMenu {
-
-    private final DBManager dbManager;
     private final ScoreService scoreService;
 
     public ScoreMenu(DBManager dbManager) {
-        this.dbManager = dbManager;
         this.scoreService = new ScoreService(dbManager);
-
     }
 
     public void displayScoreView() {
@@ -140,11 +136,10 @@ public class ScoreMenu {
                     }
                 } catch (NumberFormatException e) {
                     System.out.println("something wrong!, 다시 입력바랍니다.");
-                    System.out.printf("\n");
-
-
+                    System.out.println();
                 }
             }
         }
     }
+
 }

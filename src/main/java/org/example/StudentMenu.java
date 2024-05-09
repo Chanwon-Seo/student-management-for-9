@@ -9,13 +9,12 @@ import org.example.service.StudentService;
 import static org.example.Menu.sc;
 
 public class StudentMenu {
-
-    private final DBManager dbManager;
     private final ScoreService scoreService;
+    private final StudentService studentService;
 
     public StudentMenu(DBManager dbManager) {
-        this.dbManager = dbManager;
         this.scoreService = new ScoreService(dbManager);
+        this.studentService = new StudentService(dbManager);
     }
 
 
@@ -23,7 +22,6 @@ public class StudentMenu {
     public void displayStudentView() {
         int studentId;
         StudentStateType studentStateType;
-        StudentService studentService = new StudentService(dbManager);
 
         while (true) {
             System.out.println("***** 수강생 관리 *****");
