@@ -264,13 +264,13 @@ public class StudentService {
     /**
      * @성균 과목 등록 검증
      */
-    //FIXME if문
+    //FIXME Exception대신 IllegalArgumentException을 사용해 명확성을 올림
     public boolean subjectMinCheck(int rSub, int eSub) {
         try {
             if (subjectParser.subjectMinCheck(rSub, eSub)) {
                 return true;
             }
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
 
