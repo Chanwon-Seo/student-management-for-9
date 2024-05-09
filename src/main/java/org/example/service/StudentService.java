@@ -105,14 +105,14 @@ public class StudentService {
      * @차도범 수강생 수정
      */
     public void editStudent(Student student, String name, String birthDay, StudentStateType studentStateType) {
-        //FIXME 사용자의 빈값 입력에 대한 예외가 없음 더티체킹 필요
+        //FIXME 사용자의 빈값 입력에 대한 예외가 없음 더티체킹 필요 -> 완료
         try {
+            studentParser.editStudentEmptyCheckValid(name, birthDay, studentStateType);
             dbManager.editStudent(student, name, birthDay, studentStateType);
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
     }
-
 
     /**
      * @차도범 아이디로 수강생 삭제
