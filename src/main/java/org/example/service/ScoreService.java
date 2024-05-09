@@ -9,7 +9,6 @@ import org.example.parser.ScoreParser;
 import org.example.parser.StudentParser;
 import org.example.parser.SubjectParser;
 
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -30,11 +29,8 @@ public class ScoreService {
     /**
      * @찬원 수강생 점수 등록 메서드
      */
-    public void scoreCreateV1(Integer subjectIdInput, Integer studentIdInput, Integer roundInput, Integer scoreInput) {
-        //FIXME 불필요 코드
-        HashSet<Integer> objects = new HashSet<>();
-        objects.add(1);
-
+    public void scoreCreateV2(Integer subjectIdInput, Integer studentIdInput, Integer roundInput, Integer scoreInput) {
+        //FIXME 불필요 코드 완료
         Optional<Subject> findSubjectData;
         Optional<Student> findStudentData;
         try {
@@ -50,8 +46,7 @@ public class ScoreService {
                     roundInput
             );
         } catch (NullPointerException | IllegalArgumentException | IllegalStateException e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException();
+            throw new RuntimeException(e.getMessage());
         }
 
 
@@ -88,17 +83,17 @@ public class ScoreService {
     }
 
     /**
-     * @차도범
-     * 수강생 아이디로 삭제
+     * @차도범 수강생 아이디로 삭제
      */
     public void deleteScoreByStudentId(int studentId) {
         try {
             boolean b = dbManager.deleteScoreByStudentId(studentId);
             if (b) System.out.println("점수를 삭제했습니다..");
             else System.out.println("점수를 삭제하지 못햇습니다.");
+            System.out.println();
         } catch (RuntimeException e) {
-//            System.out.println(e.getMessage());
-            System.out.println("~~~~~~~~");
+            System.out.println(e.getMessage());
+            System.out.println();
         }
         System.out.print("\n\n");
     }

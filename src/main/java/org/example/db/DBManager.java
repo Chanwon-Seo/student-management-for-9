@@ -7,8 +7,10 @@ import org.example.domain.Subject;
 import org.example.domain.enums.StudentStateType;
 import org.example.domain.enums.SubjectType;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * DBStorage의 데이터를 CRUD하기 위한 클래스
@@ -64,7 +66,10 @@ public class DBManager {
     }
 
     /**
-     * @찬원 FIXME 설명
+     * @찬원 FIXME 설명 완료
+     * 특정 학생 고유번호를 통해 수강생인지 판별
+     * 수강생이 아닌 경우 = Optional<Student> NULL
+     * 수강생인 경우 = Optional<Student> NOT NUll
      */
     public Optional<Student> findOneByStudent(Integer studentId) {
         Optional<Student> studentOptional = Optional.empty();
@@ -74,18 +79,6 @@ public class DBManager {
             }
         }
         return studentOptional;
-    }
-
-    /**
-     * FIXME 설명
-     */
-    public Student studentFindById(Integer id) throws NullPointerException {
-        for (Student student : dbStorage.getStudentList()) {
-            if (student.getStudentId() == id) {
-                return student;
-            }
-        }
-        throw new NullPointerException("일치하는 수강생이 없습니다.");
     }
 
     /**
@@ -126,10 +119,11 @@ public class DBManager {
     }
 
 
+    //FIXME 메서드명수정 완료
     /**
      * @세미 subject id로 필수인지 아닌지 판별
      */
-    public boolean FindSubjectTypebySubjectId(Integer subjectId) {
+    public boolean findSubjectTypebySubjectId(Integer subjectId) {
         List<Subject> subjectList = dbStorage.getSubjectList();
         Subject sub = subjectList.get(subjectId - 1);
         if (sub.getSubjectType() == SubjectType.REQUIRED) return true;
@@ -141,6 +135,11 @@ public class DBManager {
      */
     public void initData() {
         //찬원
-        //~~~
+        Set<Integer> set = Set.of(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        dbStorage.getStudentList().add(new Student(1, "서찬원", "990204", set, StudentStateType.GREEN));
+        dbStorage.getStudentList().add(new Student(2, "박세미", "990204", set, StudentStateType.RED));
+        dbStorage.getStudentList().add(new Student(3, "박상균", "990204", set, StudentStateType.RED));
+        dbStorage.getStudentList().add(new Student(4, "차도범", "990204", set, StudentStateType.YELLOW));
+        dbStorage.getStudentList().add(new Student(5, "이근수", "990204", set, StudentStateType.GREEN));
     }
 }
