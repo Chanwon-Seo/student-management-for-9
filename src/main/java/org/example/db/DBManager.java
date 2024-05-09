@@ -83,6 +83,7 @@ public class DBManager {
 
     /**
      * @성균 //FIXME 설명
+     * 수강생 고유번호 가져오기
      */
     public Integer findByStudentIdNum() {
         return dbStorage.getStudentIdNum();
@@ -90,6 +91,7 @@ public class DBManager {
 
     /**
      * @성균 //FIXME 설명
+     * 수강생이 추가된 후 수강생 고유번호 증가
      */
     public void updateStudentIdNum(Integer studentIdNum) {
         dbStorage.setStudentIdNum(++studentIdNum);

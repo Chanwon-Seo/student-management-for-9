@@ -5,14 +5,19 @@ import org.example.service.ScoreService;
 
 import static org.example.Menu.sc;
 
+//FIXME 불필요 주석삭제 [해결됨]
 public class ScoreMenu {
 
     private final DBManager dbManager;
+    //FIXME 불필요한 선언 [해결됨]
     private final ScoreService scoreService;
+    //FIXME 불필요한 선언 [해결됨]
+
 
     public ScoreMenu(DBManager dbManager) {
         this.dbManager = dbManager;
         this.scoreService = new ScoreService(dbManager);
+
     }
 
     public void displayScoreView() {
