@@ -18,12 +18,12 @@ public class Menu {
     }
 
     public void startPage() {
+        //init data
         dbManager.initData();
 
-        studentMenu.testData();
         while (true) {
             System.out.printf("%n");
-            System.out.println("[스파르타코딩클럽내일배움부트캠프 B_09조 팀프로젝트 수강생관리프로그램]");
+            System.out.println("[팀스파르타내일배움부트캠프 B_09조 팀프로젝트 수강생관리프로그램]");
             System.out.println("***** 이동하실 메뉴를 입력하여주십시오. *****");
             System.out.println("1. 수강생 관리");
             System.out.println("2. 수강생 점수 관리");
