@@ -165,8 +165,7 @@ public class StudentMenu {
     }
 
     /**
-     * @차도범
-     * 입력받은 수강생 상태에 String -> StudentStateType enum으로 변경해서 반환
+     * @차도범 입력받은 수강생 상태에 String -> StudentStateType enum으로 변경해서 반환
      */
     //FIXME static x -> 완료
     private StudentStateType getStudentStateType() {

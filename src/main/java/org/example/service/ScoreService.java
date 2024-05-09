@@ -11,7 +11,11 @@ import org.example.parser.ScoreParser;
 import org.example.parser.StudentParser;
 import org.example.parser.SubjectParser;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class ScoreService {
     private final DBManager dbManager;
@@ -29,11 +33,8 @@ public class ScoreService {
     /**
      * @찬원 수강생 점수 등록 메서드
      */
-    public void scoreCreateV1(Integer subjectIdInput, Integer studentIdInput, Integer roundInput, Integer scoreInput) {
-        //FIXME 불필요 코드
-        HashSet<Integer> objects = new HashSet<>();
-        objects.add(1);
-
+    public void scoreCreateV2(Integer subjectIdInput, Integer studentIdInput, Integer roundInput, Integer scoreInput) {
+        //FIXME 불필요 코드 완료
         Optional<Subject> findSubjectData;
         Optional<Student> findStudentData;
         try {
@@ -49,8 +50,7 @@ public class ScoreService {
                     roundInput
             );
         } catch (NullPointerException | IllegalArgumentException | IllegalStateException e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException();
+            throw new RuntimeException(e.getMessage());
         }
 
 
