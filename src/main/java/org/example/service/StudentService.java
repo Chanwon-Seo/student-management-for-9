@@ -31,7 +31,7 @@ public class StudentService {
     }
 
     /**
-     * @차도범 수강생 목록을 출력
+     * @차도범 수강생 아이디로 수강생 반환
      */
     public Student studentFindById(int id) throws NullPointerException {
         Student findStudent = studentParser.studentEmptyCheckValidV2(id).get();
