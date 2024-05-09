@@ -30,10 +30,13 @@ public class StudentScoreRead {
 
     /**
      * @세미 과목의 [회차: 등급] 전체조회 (필수 - 과목의 회차별 등급 조회)
+     * print ex:
+     * "1회차 D"
+     * "2회차 A"
+     * "3회차 N"
      */
-    public void LoadScore(Integer studentId, Integer subjectId) {
-        Map<Integer,Integer> score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
-
+    public void loadScore(Integer studentId, Integer subjectId) {
+        Map<Integer, Integer> score = findScoresByStudentIdANDSubjectId(studentId, subjectId);
 
         if (score == null) { //TEMPEXCEPTION
             System.out.println("해당 과목의 점수가 존재하지 않습니다");
@@ -60,17 +63,18 @@ public class StudentScoreRead {
 
     /**
      * @세미 회차 점수 수정 (필수 - 점수수정)
+     * print ex: "2회차 : 78점 수정완료!"
      */
-    public void UpdateScore(Integer studentId, Integer subjectId, Integer roundInput, Integer scoreInput) {
+    public void updateScore(Integer studentId, Integer subjectId, Integer roundInput, Integer scoreInput) {
 
-        Map<Integer,Integer> score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
+        Map<Integer, Integer> score = findScoresByStudentIdANDSubjectId(studentId, subjectId);
 
         if (score == null || !score.containsKey(roundInput)) { //TEMPEXCEPTION
             System.out.println("해당 과목의 회차가 존재하지 않습니다");
             return;
         }
 
-        scoreParser.scoreInputZeroToOneHundredCheckValid(scoreInput);
+        scoreParser.scoreInputZeroToOneHundredCheckValid(scoreInput); //점수 범위측정
 
         score.put(roundInput, scoreInput);
         System.out.println(roundInput + " 회차 : " + scoreInput + "점 수정완료!");
@@ -78,9 +82,10 @@ public class StudentScoreRead {
 
     /**
      * @세미 과목별 평균등급 조회 (추가 - 점수관리)
+     * print ex: "JAVA과목의 평균은 B 입니다."
      */
-    public void LoadAvgScore(Integer studentId, Integer subjectId) {
-        Map<Integer, Integer> score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
+    public void loadAvgScore(Integer studentId, Integer subjectId) {
+        Map<Integer, Integer> score = findScoresByStudentIdANDSubjectId(studentId, subjectId);
         if (score == null) { //TEMP EXCEPTION
             System.out.println("해당 과목의 점수가 존재하지 않습니다");
             return;
@@ -101,8 +106,12 @@ public class StudentScoreRead {
 
     /**
      * @세미 특정상태 수강생들의 필수 과목 평균 등급 (추가 - 점수관리)
+     * print ex:
+     * "박세미의 필수 과목 평균 등급: A"
+     * "서찬원의 필수 과목 평균 등급: B"
+     * "차도범의 필수 과목 평균 등급: C"
      */
-    public void LoadStudentStateOfRequiredSubject(int state) {
+    public void loadStudentStateOfRequiredSubject(int state) {
 
         StudentStateType stateType = switch (state) {
             case 1 -> StudentStateType.GREEN;
@@ -110,6 +119,10 @@ public class StudentScoreRead {
             case 3 -> StudentStateType.YELLOW;
             default -> null;
         };
+
+        if(stateType==null) { //매개변수 TEMP EXCEPTION
+            System.out.println("잘못된 상태를 입력하셨습니다.");
+        }
 
 
         List<Student> students = dbManager.findByStudents(); //basic
@@ -120,9 +133,10 @@ public class StudentScoreRead {
             }
         } //특정상태 수강생들 뽑음 (studentList)
 
-        double count = 0;
-        double sum = 0;
-        int avg = 0;
+        double count = 0; //평균계산할 과목수
+        double sum = 0; //각 과목의평균을 더해줌
+        int avg = 0; //result
+
         LevelType resultLevel = LevelType.A;
         for (Student student : studentList) {
             sum = 0;
@@ -130,13 +144,13 @@ public class StudentScoreRead {
             for (Integer sub : student.getSubjectId()) {
                 boolean isRequired = dbManager.FindSubjectTypebySubjectId(sub);
                 if (isRequired) {
-                    if (LoadAvgScoreRequired(student.getStudentId(), sub) != 0) {
-                        sum += LoadAvgScoreRequired(student.getStudentId(), sub); //해당 과목 평균을 넣기
+                    if (loadAvgScoreRequired(student.getStudentId(), sub) != 0) {
+                        sum += loadAvgScoreRequired(student.getStudentId(), sub); //해당 과목 평균을 넣기
                         count++;
                     }
                 }
             }
-            avg = (int) (sum / count); //평균들의 평균을 계산
+            avg = (int) (sum / count); //각 과목당 평균들의 전체평균을 계산
             resultLevel = LevelType.checkRequiredLevelType("", avg); //평균점수를 등급화
 
             if (avg != 0) System.out.println(student.getStudentName() + "의 필수 과목 평균 등급: " + resultLevel);
@@ -147,14 +161,14 @@ public class StudentScoreRead {
 
 
 
-    /* Util */
+    /*=========================== Utils ===========================  */
 
     /**
      * @세미 수강생 과목번호 받아 score 리스트 return
      * input  : student Id , subject Id
-     * output : Score Map<회차,점수> //회차와 점수 맵
+     * output : Score Map<회차,점수> (회차와 점수 맵)
      */
-    public Map<Integer, Integer> FindScoresByStudentIdANDSubjectId(Integer studentId, Integer subjectId) {
+    public Map<Integer, Integer> findScoresByStudentIdANDSubjectId(Integer studentId, Integer subjectId) {
 
         Optional<Subject> findSubjectData = subjectParser.subjectEmptyCheckValid(subjectId);
         studentParser.studentEmptyCheckValidV2(studentId);
@@ -165,7 +179,7 @@ public class StudentScoreRead {
 
         for (Score s : score) {
             if (s.getStudentId().equals(studentId) && s.getSubjectId().equals(subjectId)) {
-                Map<Integer,Integer> temp = s.getScoreId();
+                Map<Integer, Integer> temp = s.getScoreId();
                 if (temp.size() <= 0) { //TEMP EXCEPTION
                     System.out.println("해당 과목의 점수가 없습니다");
                     break;
@@ -179,10 +193,10 @@ public class StudentScoreRead {
     /**
      * @세미 모든 회차의 평균 계산
      * input  : student Id , subject Id
-     * output : avg // 해당과목 평균
+     * output : avg (해당과목 평균)
      */
-    public double LoadAvgScoreRequired(Integer studentId, Integer subjectId) {
-        Map<Integer,Integer> score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
+    public double loadAvgScoreRequired(Integer studentId, Integer subjectId) {
+        Map<Integer, Integer> score = findScoresByStudentIdANDSubjectId(studentId, subjectId);
         if (score == null || score.isEmpty()) {
             return 0;
         }

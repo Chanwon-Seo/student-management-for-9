@@ -82,7 +82,7 @@ public class ScoreMenu {
 
                                 System.out.print("과목 고유번호 입력 : ");
                                 subjectIdInput = Integer.parseInt(sc.nextLine());
-                                new StudentScoreRead(dbManager).LoadScore(studentIdInput, subjectIdInput);
+                                new StudentScoreRead(dbManager).loadScore(studentIdInput, subjectIdInput);
                             }
                             catch(NumberFormatException e){
                                 throw new NumberFormatException();
@@ -102,7 +102,7 @@ public class ScoreMenu {
                                 int round = Integer.parseInt(sc.nextLine());
                                 System.out.print("점수 입력 : ");
                                 int score = Integer.parseInt(sc.nextLine());
-                                new StudentScoreRead(dbManager).UpdateScore(studentIdInput, subjectIdInput, round,score);
+                                new StudentScoreRead(dbManager).updateScore(studentIdInput, subjectIdInput, round,score);
                             }catch (NumberFormatException e){
                                 throw new NumberFormatException();
                             }
@@ -116,7 +116,7 @@ public class ScoreMenu {
                             studentIdInput = Integer.parseInt(sc.nextLine());
                             System.out.print("과목 고유번호 입력 : ");
                             subjectIdInput = Integer.parseInt(sc.nextLine());
-                            new StudentScoreRead(dbManager).LoadAvgScore(studentIdInput,subjectIdInput);
+                            new StudentScoreRead(dbManager).loadAvgScore(studentIdInput,subjectIdInput);
 
                             break;
 
@@ -125,7 +125,7 @@ public class ScoreMenu {
                             System.out.println("메인메뉴> 수강생 점수관리>...");
                             System.out.println("1.Green 2.Yellow 3.Red ");
                             int state = Integer.parseInt(sc.nextLine());
-                            new StudentScoreRead(dbManager).LoadStudentStateOfRequiredSubject(state);
+                            new StudentScoreRead(dbManager).loadStudentStateOfRequiredSubject(state);
                             break;
 
                         case 0:
