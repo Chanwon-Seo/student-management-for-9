@@ -64,8 +64,7 @@ public class DBManager {
     }
 
     /**
-     * @찬원
-     * FIXME 설명
+     * @찬원 FIXME 설명
      */
     public Optional<Student> findOneByStudent(Integer studentId) {
         Optional<Student> studentOptional = Optional.empty();
@@ -76,6 +75,7 @@ public class DBManager {
         }
         return studentOptional;
     }
+
     /**
      * FIXME 설명
      */
@@ -89,32 +89,28 @@ public class DBManager {
     }
 
     /**
-     * @성균
-     * //FIXME 설명
+     * @성균 //FIXME 설명
      */
     public Integer findByStudentIdNum() {
         return dbStorage.getStudentIdNum();
     }
 
     /**
-     * @성균
-     * //FIXME 설명
+     * @성균 //FIXME 설명
      */
     public void updateStudentIdNum(Integer studentIdNum) {
         dbStorage.setStudentIdNum(++studentIdNum);
     }
 
     /**
-     * @차도범
-     * 수정 메서드
+     * @차도범 수정 메서드
      */
     public void editStudent(Student student, String name, String birthDay, StudentStateType studentStateType) {
         student.editStudent(name, birthDay, studentStateType);
     }
 
     /**
-     * @차도범
-     * 수강생 아이디로 삭제
+     * @차도범 수강생 아이디로 삭제
      */
     public boolean deleteStudentById(Integer studentId) {
         List<Student> studentList = dbStorage.getStudentList();
@@ -122,8 +118,7 @@ public class DBManager {
     }
 
     /**
-     * @차도범
-     * 수강생 아이디로 삭제
+     * @차도범 수강생 아이디로 삭제
      */
     public boolean deleteScoreByStudentId(Integer studentId) {
         List<Score> scoreList = dbStorage.getScoreList();
@@ -132,13 +127,20 @@ public class DBManager {
 
 
     /**
-     * @세미
-     * subject id로 필수인지 아닌지 판별
+     * @세미 subject id로 필수인지 아닌지 판별
      */
     public boolean FindSubjectTypebySubjectId(Integer subjectId) {
         List<Subject> subjectList = dbStorage.getSubjectList();
-        Subject sub = subjectList.get(subjectId-1);
-        if(sub.getSubjectType()==SubjectType.REQUIRED) return true;
+        Subject sub = subjectList.get(subjectId - 1);
+        if (sub.getSubjectType() == SubjectType.REQUIRED) return true;
         else return false;
+    }
+
+    /**
+     * 테스트 데이터
+     */
+    public void initData() {
+        //찬원
+        //~~~
     }
 }
