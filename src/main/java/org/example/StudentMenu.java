@@ -6,8 +6,6 @@ import org.example.domain.enums.StudentStateType;
 import org.example.service.ScoreService;
 import org.example.service.StudentService;
 
-import java.util.Set;
-
 import static org.example.Menu.sc;
 
 /**
@@ -67,16 +65,17 @@ public class StudentMenu {
                                 System.out.println("0. 뒤로가기");
                                 switch (Integer.parseInt(sc.nextLine())) {
                                     case 1 -> {
-                                        studentId = inputStudentId("조회할 수강생 아이디 입력");
+                                        System.out.println("조회할 수강생 아이디 입력");
+                                        studentId = Integer.parseInt(sc.nextLine());
                                         try {
                                             studentService.getStudentDetail(studentId);
                                         } catch (Exception e) {
                                             System.out.println(e.getMessage());
                                         }
-                                        break;
                                     }
                                     case 2 -> {
-                                        studentId = inputStudentId("수정할 수강생의 아이디 입력");
+                                        System.out.println("수정할 수강생의 아이디 입력");
+                                        studentId = Integer.parseInt(sc.nextLine());
                                         Student findStudent = null;
                                         try {
                                             findStudent = studentService.studentFindById(studentId);
@@ -128,7 +127,8 @@ public class StudentMenu {
                                         studentService.studentListByStatus(studentStateType);
                                     }
                                     case 4 -> {
-                                        studentId = inputStudentId("삭제할 수강생 아이디 입력>");
+                                        System.out.println("삭제할 수강생 아이디 입력");
+                                        studentId = Integer.parseInt(sc.nextLine());
                                         studentService.deleteStudentById(studentId);
                                         scoreService.deleteScoreByStudentId(studentId);
                                     }
@@ -157,21 +157,10 @@ public class StudentMenu {
     }
 
     /**
-     * @차도범
-     * 입력받은 아이디 값을 반환
+     * @차도범 입력받은 수강생 상태에 String -> StudentStateType enum으로 변경해서 반환
      */
-    //FIXME static x
-    private static int inputStudentId(String 아이디_입력) {
-        System.out.println(아이디_입력);
-        return Integer.parseInt(sc.nextLine());
-    }
-
-    /**
-     * @차도범
-     * 입력받은 수강생 상태에 String -> StudentStateType enum으로 변경해서 반환
-     */
-    //FIXME static x
-    private static StudentStateType getStudentStateType() {
+    //FIXME static x -> 완료
+    private StudentStateType getStudentStateType() {
         System.out.print("수정할 상태(1.green, 2.red, 3.yellow)> ");
         return switch (sc.nextLine()) {
             case "1" -> StudentStateType.GREEN;
@@ -179,16 +168,5 @@ public class StudentMenu {
             case "3" -> StudentStateType.YELLOW;
             default -> null;
         };
-    }
-
-
-    //초기값
-    public void testData() {
-        Set<Integer> set = Set.of(1, 2, 3, 4, 5, 6, 7, 8, 9);
-        dbManager.findByStudents().add(new Student(1, "서찬원", "990204", set, StudentStateType.GREEN));
-        dbManager.findByStudents().add(new Student(2, "박세미", "990204", set, StudentStateType.RED));
-        dbManager.findByStudents().add(new Student(3, "박상균", "990204", set, StudentStateType.RED));
-        dbManager.findByStudents().add(new Student(4, "차도범", "990204", set, StudentStateType.YELLOW));
-        dbManager.findByStudents().add(new Student(5, "이근수", "990204", set, StudentStateType.GREEN));
     }
 }
