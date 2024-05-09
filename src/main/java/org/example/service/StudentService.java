@@ -17,10 +17,10 @@ public class StudentService {
     private final DBManager dbManager;
     private final StudentParser studentParser;
     private final SubjectParser subjectParser;
-    //FIXME 사용하고 있지 않음
-    private final ScoreParser scoreParser;
-    //FIXME 사용하고 있지 않음 (완료)
-    //FIXME 사용하고 있지 않음 (완료)
+    //FIXME 사용하고 있지 않음 [해결됨]
+    //FIXME 사용하고 있지 않음 [해결됨]
+    //FIXME 사용하고 있지 않음 [해결됨]
+
     List<Subject> sub;
     HashSet<Integer> dup = new HashSet<>();
     Set<Integer> subjectId = new HashSet<>();
@@ -43,8 +43,7 @@ public class StudentService {
      * @차도범 수강생 목록을 출력
      */
     public Student studentFindById(int id) throws NullPointerException {
-        studentParser.studentFindByIdEmptyCheckValid(id);
-        Student findStudent = dbManager.studentFindById(id);
+        Student findStudent = studentParser.studentEmptyCheckValidV2(id).get();
         System.out.println("수강생 " + findStudent.getStudentName());
         return findStudent;
     }
@@ -53,10 +52,11 @@ public class StudentService {
      * @차도범 수강생 목록을 출력
      */
     public void getStudentList() {
-        System.out.println("id / name");
+        System.out.println("[ 수강생 목록 (고유번호 / 이름) ]");
         for (Student student : dbManager.findByStudents()) {
             System.out.println(student.getStudentId() + " : " + student.getStudentName());
         }
+        System.out.printf("\n");
     }
 
     /**
@@ -64,8 +64,8 @@ public class StudentService {
      */
     public void getStudentDetail(int studentId) {
         try {
-            Student student = studentParser.studentFindByIdEmptyCheckValid(studentId);
-            System.out.println("----학생 상세-----");
+            Student student = studentParser.studentEmptyCheckValidV2(studentId).get();
+            System.out.println("##### < 학생 상세 > #####");
             System.out.println("id : " + student.getStudentId());
             System.out.println("이름 : " + student.getStudentName());
             System.out.println("생년월일 : " + student.getBirthDay());
@@ -124,7 +124,7 @@ public class StudentService {
      */
     public void deleteStudentById(int studentId) {
         try {
-            Student student = studentParser.studentFindByIdEmptyCheckValid(studentId);
+            Student student = studentParser.studentEmptyCheckValidV2(studentId).get();
             boolean b = dbManager.deleteStudentById(studentId);
             if (b) System.out.println(student.getStudentName() + "수강생을 삭제했습니다..");
             else System.out.println("수강생을 삭제하지 못햇습니다.");
@@ -151,6 +151,8 @@ public class StudentService {
 
         StudentStateType stateType = inputStatus(status);
         //FIXME 완료
+        //FIXME sub
+        System.out.println("※공통사항※ [필수]3과목,[선택]2과목이상 신청바랍니다.");
         sub.forEach(subject -> {
             String output = String.format("고유ID: %-5d 제목: %-20s \t과목: %s",
                     subject.getSubjectId(),
