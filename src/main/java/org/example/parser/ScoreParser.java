@@ -10,10 +10,10 @@ import java.util.*;
 public class ScoreParser {
     private final DBManager dbManager;
 
-    static final int SCORE_ROUND_MIN_VALUE = 1;
-    static final int SCORE_ROUND_MAX_VALUE = 10;
-    static final int SCORE_MIN_VALUE = 0;
-    static final int SCORE_MAX_VALUE = 100;
+    final int SCORE_ROUND_MIN_VALUE = 1;
+    final int SCORE_ROUND_MAX_VALUE = 10;
+    final int SCORE_MIN_VALUE = 0;
+    final int SCORE_MAX_VALUE = 100;
 
     public ScoreParser(DBManager dbManager) {
         this.dbManager = dbManager;
