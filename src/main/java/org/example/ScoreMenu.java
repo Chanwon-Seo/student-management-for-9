@@ -48,6 +48,7 @@ public class ScoreMenu {
                             } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
                             } catch (RuntimeException e) {
+                                System.out.println(e.getMessage());
                                 break;
                             }
                             break;

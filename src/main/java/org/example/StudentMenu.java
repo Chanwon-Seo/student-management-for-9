@@ -17,8 +17,6 @@ public class StudentMenu {
         this.studentService = new StudentService(dbManager);
     }
 
-
-
     public void displayStudentView() {
         int studentId;
         StudentStateType studentStateType;
