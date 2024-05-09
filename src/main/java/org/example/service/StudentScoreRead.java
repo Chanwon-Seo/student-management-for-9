@@ -31,7 +31,7 @@ public class StudentScoreRead {
     //FIXME 메서드명
     // 과목의 [회차: 등급] 전체조회 (필수 - 과목의 회차별 등급 조회)
     public void LoadScore(Integer studentId, Integer subjectId) {
-        Map<Integer,Integer> score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
+        Map<Integer, Integer> score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
 
 
         if (score == null) { //TEMPEXCEPTION
@@ -51,9 +51,9 @@ public class StudentScoreRead {
             System.out.print(score.keySet().toArray()[i] + " 회차: ");
             // 등급계산
             if (levelType == SubjectType.REQUIRED)
-                tempLevelType = LevelType.checkRequiredLevelType("", (Integer) score.values().toArray()[i]);
+                tempLevelType = LevelType.checkRequiredLevelType((Integer) score.values().toArray()[i]);
             else
-                tempLevelType = LevelType.checkElectiveLevelType("", (Integer) score.values().toArray()[i]);
+                tempLevelType = LevelType.checkElectiveLevelType((Integer) score.values().toArray()[i]);
             System.out.println(tempLevelType);
         }
     }
@@ -62,7 +62,7 @@ public class StudentScoreRead {
     // 회차 점수 수정 (필수 - 점수수정)
     public void UpdateScore(Integer studentId, Integer subjectId, Integer roundInput, Integer scoreInput) {
 
-        Map<Integer,Integer> score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
+        Map<Integer, Integer> score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
 
         if (score == null || !score.containsKey(roundInput)) { //TEMPEXCEPTION
             System.out.println("해당 과목의 회차가 존재하지 않습니다");
@@ -74,6 +74,7 @@ public class StudentScoreRead {
         score.put(roundInput, scoreInput);
         System.out.println(roundInput + " 회차 : " + scoreInput + "점 수정완료!");
     }
+
     //FIXME 메서드명
     //과목별 평균등급 조회 (추가 - 점수관리)
     public void LoadAvgScore(Integer studentId, Integer subjectId) {
@@ -133,14 +134,12 @@ public class StudentScoreRead {
                 }
             }
             avg = (int) (sum / count); //평균들의 평균을 계산
-            resultLevel = LevelType.checkRequiredLevelType("", avg); //평균점수를 등급화
+            resultLevel = LevelType.checkRequiredLevelType(avg); //평균점수를 등급화
 
             if (avg != 0) System.out.println(student.getStudentName() + "의 필수 과목 평균 등급: " + resultLevel);
         }
 
     }
-
-
 
 
     /* Util */
@@ -157,7 +156,7 @@ public class StudentScoreRead {
 
         for (Score s : score) {
             if (s.getStudentId().equals(studentId) && s.getSubjectId().equals(subjectId)) {
-                Map<Integer,Integer> temp = s.getScoreMap();
+                Map<Integer, Integer> temp = s.getScoreMap();
                 if (temp.size() <= 0) { //TEMP EXCEPTION
                     System.out.println("해당 과목의 점수가 없습니다");
                     break;
@@ -167,9 +166,10 @@ public class StudentScoreRead {
         }
         return null;
     }
+
     //FIXME 메서드명
     public double LoadAvgScoreRequired(Integer studentId, Integer subjectId) {
-        Map<Integer,Integer> score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
+        Map<Integer, Integer> score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
         if (score == null || score.isEmpty()) {
             return 0;
         }

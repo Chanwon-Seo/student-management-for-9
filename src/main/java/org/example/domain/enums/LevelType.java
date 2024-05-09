@@ -22,7 +22,7 @@ public enum LevelType {
     /**
      * 필수과목 등급 산정
      */
-    public static LevelType checkRequiredLevelType(String subjectType, Integer scoreInput) {
+    public static LevelType checkRequiredLevelType(Integer scoreInput) {
         if (scoreInput >= 95) {
             return LevelType.A;
         } else if (scoreInput >= 90) {
@@ -41,7 +41,7 @@ public enum LevelType {
     /**
      * 선택과목 등급 산정
      */
-    public static LevelType checkElectiveLevelType(String subjectType, Integer scoreInput) {
+    public static LevelType checkElectiveLevelType(Integer scoreInput) {
 
         if (scoreInput >= 90) {
             return LevelType.A;
