@@ -15,17 +15,13 @@ import static org.example.Menu.sc;
 public class ScoreMenu {
 
     private final DBManager dbManager;
-    //FIXME 불필요한 선언
-    private final StudentService studentService;
+    //FIXME 불필요한 선언 완료
     private final ScoreService scoreService;
-    //FIXME 불필요한 선언
-    private final SubjectService subjectService;
+    //FIXME 불필요한 선언 완료
 
     public ScoreMenu(DBManager dbManager) {
         this.dbManager = dbManager;
-        this.studentService = new StudentService(dbManager);
         this.scoreService = new ScoreService(dbManager);
-        this.subjectService = new SubjectService(dbManager);
     }
 
     public void displayScoreView() {
@@ -69,7 +65,7 @@ public class ScoreMenu {
                             break;
 
                         case 2: /** @세미 */
-                            try{
+                            try {
                                 System.out.println("*****수강생 점수 조회*****");
                                 System.out.println("메인메뉴> 수강생 점수관리>...");
 
@@ -79,15 +75,14 @@ public class ScoreMenu {
                                 System.out.print("과목 고유번호 입력 : ");
                                 subjectIdInput = Integer.parseInt(sc.nextLine());
                                 new StudentScoreRead(dbManager).LoadScore(studentIdInput, subjectIdInput);
-                            }
-                            catch(NumberFormatException e){
+                            } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
                             }
 
                             break;
 
                         case 3: /** @세미 */
-                            try{
+                            try {
                                 System.out.println("*****수강생 과목별 회차점수 수정*****");
                                 System.out.println("메인메뉴> 수강생 점수관리>...");
                                 System.out.print("수강생 고유번호 입력 : ");
@@ -98,8 +93,8 @@ public class ScoreMenu {
                                 int round = Integer.parseInt(sc.nextLine());
                                 System.out.print("점수 입력 : ");
                                 int score = Integer.parseInt(sc.nextLine());
-                                new StudentScoreRead(dbManager).UpdateScore(studentIdInput, subjectIdInput, round,score);
-                            }catch (NumberFormatException e){
+                                new StudentScoreRead(dbManager).UpdateScore(studentIdInput, subjectIdInput, round, score);
+                            } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
                             }
 
@@ -112,7 +107,7 @@ public class ScoreMenu {
                             studentIdInput = Integer.parseInt(sc.nextLine());
                             System.out.print("과목 고유번호 입력 : ");
                             subjectIdInput = Integer.parseInt(sc.nextLine());
-                            new StudentScoreRead(dbManager).LoadAvgScore(studentIdInput,subjectIdInput);
+                            new StudentScoreRead(dbManager).LoadAvgScore(studentIdInput, subjectIdInput);
 
                             break;
 
