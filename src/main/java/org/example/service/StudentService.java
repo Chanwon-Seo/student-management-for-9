@@ -111,6 +111,7 @@ public class StudentService {
      * 수강생 수정
      */
     public void editStudent(Student student, String name, String birthDay, StudentStateType studentStateType) {
+        //FIXME 사용자의 빈값 입력에 대한 예외가 없음 더티체킹 필요
         try {
             dbManager.editStudent(student, name, birthDay, studentStateType);
         } catch (NullPointerException e) {
@@ -141,7 +142,7 @@ public class StudentService {
         String status = inputString("현재 상태를 입력하세요.(선택) green: 좋음, yellow: 보통, red: 나쁨, nostatus: 모름\n");
 
         StudentStateType stateType = inputStatus(status);
-
+        //FIXME sub
         sub.forEach(subject -> {
             String output = String.format("고유ID: %-5d 제목: %-20s \t과목: %s",
                     subject.getSubjectId(),
