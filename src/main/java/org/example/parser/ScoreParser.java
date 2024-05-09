@@ -4,7 +4,6 @@ package org.example.parser;
 import org.example.db.DBManager;
 import org.example.domain.Score;
 
-import java.util.InputMismatchException;
 import java.util.Optional;
 
 import java.util.Map;
@@ -45,8 +44,8 @@ public class ScoreParser {
 
     /**
      * @찬원 회차 등록 여부 검증
-     * throw 등록된 회차가 없는 경우
-     * throw 동일한 회차 또는 이미 등록된 회차 등록인 경우
+     * throw 등록된 회차가 없지만 사용자로부터 입력 받은 회차가 1회차가 아닌 경우
+     * throw 이미 등록된 회차 등록인 경우
      * throw 이전 회차 미등록인 경우
      */
     public void scoreDuplicatedCheckValidv2(Integer subjectIdInput, Integer studentIdInput, Integer roundInput) {
@@ -58,14 +57,14 @@ public class ScoreParser {
             }
         }
 
-        //등록된 회차가 없는 경우
+        //등록된 회차가 없지만 사용자로부터 입력 받은 회차가 1회차가 아닌 경우
         if (findScoreData.isEmpty() && roundInput != 1) {
             throw new NullPointerException("1회차가 입력되지 않았습니다.\n");
         }
 
         //등록된 회차가 있는 경우
         if (findScoreData.isPresent()) {
-            int scoreSize = findScoreData.get().getScoreId().size();
+            int scoreSize = findScoreData.get().getScoreMap().size();
 
             //이미 등록된 회차 등록인 경우
             if (scoreSize >= roundInput) {
@@ -97,7 +96,7 @@ public class ScoreParser {
             return;
         };
 
-        Map<Integer,Integer> temp = findScoreData.getScoreId();
+        Map<Integer,Integer> temp = findScoreData.getScoreMap();
         if(temp.containsKey(roundInput)) {
             //throw new RuntimeException("해당 회차가 없습니다.");
             System.out.println("해당 회차가 없습니다.");

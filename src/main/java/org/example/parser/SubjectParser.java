@@ -18,7 +18,6 @@ public class SubjectParser {
     }
 
     /**
-     * @return
      * @찬원 과목 정보 조회
      * throw 조회된 수강생 정보가 없을 경우
      */
@@ -36,9 +35,10 @@ public class SubjectParser {
      * @세미 수강 중인 과목인지 조회
      * throw 해당 과목을 수강하지 않은 수강생일 경우
      */
+    //FIXME 메서드명 수정
     public void HavingsubjectCheck(Integer studentIdInput, Integer subjectIdInput) {
         Optional<Student> student = dbManager.findOneByStudent(studentIdInput);
-        for (Integer sub : student.get().getSubjectId()) {
+        for (Integer sub : student.get().getSubjectSet()) {
             if (sub.equals(subjectIdInput)) {
                 return;
             }
@@ -49,10 +49,8 @@ public class SubjectParser {
 
 
     /**
-     * @return
      * @성균 과목 이름 조회
      * throw 조회된 과목이 없을 경우
-     * //
      */
     public boolean subjectIsEmptyCheck(Integer subjectId) throws Exception {
         for (Subject subject : dbManager.findBySubjects()) {
@@ -64,10 +62,8 @@ public class SubjectParser {
     }
 
     /**
-     * @return
      * @성균 subjectId 중복 조회
      * throw 중복인 경우
-     * //
      */
     public boolean subjectIdDuplicationCheck(HashSet<Integer> dup, Integer subjectId) throws Exception {
         if (!dup.contains(subjectId)) {
@@ -78,10 +74,8 @@ public class SubjectParser {
 
 
     /**
-     * @return
      * @성균 필수 ,선택 과목 검사
      * throw 부족한 필수, 선택 과목
-     * //
      */
     public boolean subjectMinCheck(int rSub, int eSub) throws Exception {
 

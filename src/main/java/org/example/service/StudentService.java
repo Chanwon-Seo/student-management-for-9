@@ -5,7 +5,6 @@ import org.example.domain.Student;
 import org.example.domain.Subject;
 import org.example.domain.enums.StudentStateType;
 import org.example.domain.enums.SubjectType;
-import org.example.parser.Parser;
 import org.example.parser.ScoreParser;
 import org.example.parser.StudentParser;
 import org.example.parser.SubjectParser;
@@ -18,16 +17,16 @@ public class StudentService {
     private final DBManager dbManager;
     private final StudentParser studentParser;
     private final SubjectParser subjectParser;
+    //FIXME 사용하고 있지 않음
     private final ScoreParser scoreParser;
-
+    //FIXME 사용하고 있지 않음
     static final int MIN_REQUIRED_SUBJECTS = 3;
+    //FIXME 사용하고 있지 않음
     static final int MIN_ELECTIVE_SUBJECTS = 2;
-    //TODO
     List<Subject> sub;
     HashSet<Integer> dup = new HashSet<>();
     Set<Integer> subjectId = new HashSet<>();
     Scanner sc = new Scanner(System.in);
-    Parser parser;
     int rSub = 0;
     int eSub = 0;
 
@@ -40,8 +39,6 @@ public class StudentService {
         this.scoreParser = new ScoreParser(dbManager);
         sub = dbManager.findBySubjects();
         studentList = dbManager.findByStudents();
-        //TODO 코드 변경
-//        parser = new Parser(dbManager);
     }
 
     /**
@@ -78,7 +75,7 @@ public class StudentService {
 
             //찾은 과목리스트와 과목리스트를
             for (Subject subject : dbManager.findBySubjects()) {
-                for (Integer id : student.getSubjectId()) {
+                for (Integer id : student.getSubjectSet()) {
                     if (Objects.equals(subject.getSubjectId(), id)) {
                         System.out.println(subject.getSubjectId() + " : " +
                                 subject.getSubjectName() + " - " + subject.getSubjectType());
@@ -93,10 +90,10 @@ public class StudentService {
         }
     }
 
-    /*
+    /**
      * @차도범
      * 상태별 수강색 목록
-     * */
+     */
     public void studentListByStatus(StudentStateType studentStateType) {
         List<Student> studentList = dbManager.findByStudents();
         System.out.println("아이디 / 이름 / 상태");
@@ -109,11 +106,12 @@ public class StudentService {
         System.out.print("\n\n");
     }
 
-    /*
+    /**
      * @차도범
      * 수강생 수정
-     * */
+     */
     public void editStudent(Student student, String name, String birthDay, StudentStateType studentStateType) {
+        //FIXME 사용자의 빈값 입력에 대한 예외가 없음 더티체킹 필요
         try {
             dbManager.editStudent(student, name, birthDay, studentStateType);
         } catch (NullPointerException e) {
@@ -122,10 +120,10 @@ public class StudentService {
     }
 
 
-    /*
+    /**
      * @차도범
      * 아이디로 수강생 삭제
-     * */
+     */
     public void deleteStudentById(int studentId) {
         try {
             Student student = studentParser.studentFindByIdEmptyCheckValid(studentId);
@@ -144,7 +142,7 @@ public class StudentService {
         String status = inputString("현재 상태를 입력하세요.(선택) green: 좋음, yellow: 보통, red: 나쁨, nostatus: 모름\n");
 
         StudentStateType stateType = inputStatus(status);
-
+        //FIXME sub
         sub.forEach(subject -> {
             String output = String.format("고유ID: %-5d 제목: %-20s \t과목: %s",
                     subject.getSubjectId(),
@@ -162,7 +160,7 @@ public class StudentService {
 
         if (subjectMinCheck(rSub, eSub)) {
             System.out.println("수강자가 생성되었습니다.");
-            //TODO
+
             dbManager.updateStudentIdNum(dbManager.findByStudentIdNum());
             Student st = new Student(dbManager.findByStudentIdNum(), name, birth, subjectId, stateType);
             dbManager.saveStudent(st);
@@ -220,7 +218,6 @@ public class StudentService {
     }
 
     /**
-     * @return
      * @성균 수강생 과목 등록 검증
      * id가 검증되면 참 반환
      */
@@ -236,7 +233,6 @@ public class StudentService {
     }
 
     /**
-     * @return
      * @성균 수강생 과목 중복 검증
      * 중복이면 거짓 반환
      */
@@ -252,7 +248,6 @@ public class StudentService {
     }
 
     /**
-     * @return
      * @성균 수강생 과목 등록 검증
      * id가 검증되면 해당 subject 클래스 반환
      */
@@ -267,10 +262,9 @@ public class StudentService {
     }
 
     /**
-     * @return
      * @성균 과목 등록 검증
      */
-
+    //FIXME if문
     public boolean subjectMinCheck(int rSub, int eSub) {
         try {
             if (subjectParser.subjectMinCheck(rSub, eSub)) {

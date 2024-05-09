@@ -1,6 +1,3 @@
-
-// "메인메뉴>수강생 관리"
-
 package org.example;
 
 import org.example.db.DBManager;
@@ -8,24 +5,22 @@ import org.example.domain.Student;
 import org.example.domain.enums.StudentStateType;
 import org.example.service.ScoreService;
 import org.example.service.StudentService;
-import org.example.service.SubjectService;
 
 import java.util.Set;
 
 import static org.example.Menu.sc;
 
+/**
+ * "메인메뉴> 수강생 관리"
+ */
 public class StudentMenu {
 
     private final DBManager dbManager;
-    private final StudentService studentService;
     private final ScoreService scoreService;
-    private final SubjectService subjectService;
 
     public StudentMenu(DBManager dbManager) {
         this.dbManager = dbManager;
-        this.studentService = new StudentService(dbManager);
         this.scoreService = new ScoreService(dbManager);
-        this.subjectService = new SubjectService(dbManager);
     }
 
 
@@ -63,16 +58,13 @@ public class StudentMenu {
 
                             while (next) {
                                 studentService.getStudentList();
-                                System.out.printf("%n *****상세메뉴로 이동하려면 엔터를 눌러주세요.*****%n");
-                                sc.nextLine();
-                                System.out.println("***** 수강생 상세조회*****");
-                                System.out.println("메인메뉴> 수강생 관리>...");
-                                System.out.println("1. 상세 수강생 조회");
+                                System.out.println();
+                                System.out.println();
+                                System.out.println("1. 수강생 조회");
                                 System.out.println("2. 수강생 정보 수정");
                                 System.out.println("3. 상태별 수강생 목록");
                                 System.out.println("4. 수강생 삭제");
                                 System.out.println("0. 뒤로가기");
-                                System.out.printf("%n");
                                 switch (Integer.parseInt(sc.nextLine())) {
                                     case 1 -> {
                                         studentId = inputStudentId("조회할 수강생 아이디 입력");
@@ -95,7 +87,7 @@ public class StudentMenu {
                                             System.out.println("수정할 정보를 입력(1.이름, 2.생일, 3.상태)>");
                                             switch (Integer.parseInt(sc.nextLine())) {
                                                 case 1 -> {
-                                                    System.out.println("수정할 이름>");
+                                                    System.out.print("수정할 이름> ");
                                                     String editName = sc.nextLine();
                                                     studentService.editStudent(
                                                             findStudent,
@@ -104,7 +96,7 @@ public class StudentMenu {
                                                             findStudent.getStudentStateType());
                                                 }
                                                 case 2 -> {
-                                                    System.out.println("수정할 생일>");
+                                                    System.out.print("수정할 생일> ");
                                                     String editBrithDay = sc.nextLine();
                                                     studentService.editStudent(
                                                             findStudent,
@@ -115,7 +107,7 @@ public class StudentMenu {
                                                 case 3 -> {
                                                     //사용자가 입력받은 사용자의 상태
                                                     studentStateType = getStudentStateType();
-                                                    //만약 값이 일치한느 것이 없으면 기존 사용자의 값을 가져온다.
+                                                    //만약 값이 일치하는 것이 없으면 기존 사용자의 값을 가져온다.
                                                     if (studentStateType == null) {
                                                         studentStateType = findStudent.getStudentStateType();
                                                         System.out.println("불일치 !! 기존값으로 ");
@@ -136,7 +128,7 @@ public class StudentMenu {
                                         studentService.studentListByStatus(studentStateType);
                                     }
                                     case 4 -> {
-                                        studentId = inputStudentId("삭제할 수각생 아이디 입력>");
+                                        studentId = inputStudentId("삭제할 수강생 아이디 입력>");
                                         studentService.deleteStudentById(studentId);
                                         scoreService.deleteScoreByStudentId(studentId);
                                     }
@@ -157,7 +149,6 @@ public class StudentMenu {
                             System.out.println("다시입력바랍니다.");
                     }
                 } catch (NumberFormatException e) {
-                    //ystem.out.println("숫자외 문자를 입력하였습니다, 다시 입력바랍니다.");
                     System.out.println("something wrong~, 다시 입력바랍니다.");
                 }
             } else
@@ -165,21 +156,23 @@ public class StudentMenu {
         }
     }
 
-    /*
+    /**
      * @차도범
      * 입력받은 아이디 값을 반환
-     * */
+     */
+    //FIXME static x
     private static int inputStudentId(String 아이디_입력) {
         System.out.println(아이디_입력);
         return Integer.parseInt(sc.nextLine());
     }
 
-    /*
+    /**
      * @차도범
-     * 일력박은 수강생 샅애 String -> StudentStateType enum으로 변경해서 반환
-     * */
+     * 입력받은 수강생 상태에 String -> StudentStateType enum으로 변경해서 반환
+     */
+    //FIXME static x
     private static StudentStateType getStudentStateType() {
-        System.out.println("수정할 상태(1.green, 2.red, 3.yellow)>");
+        System.out.print("수정할 상태(1.green, 2.red, 3.yellow)> ");
         return switch (sc.nextLine()) {
             case "1" -> StudentStateType.GREEN;
             case "2" -> StudentStateType.RED;

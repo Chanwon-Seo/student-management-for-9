@@ -35,7 +35,6 @@ public class Menu {
 
                     switch (Integer.parseInt(sc.nextLine())) {
                         case 1:
-
                             System.out.println("***** 수강생 관리 *****");
                             System.out.println("메인메뉴> 수강생 관리>...");
                             studentMenu.displayStudentView();
@@ -49,7 +48,7 @@ public class Menu {
                             break;
 
 
-                        case 0: // 종료
+                        case 0:
                             System.out.println("시스템을 종료합니다.");
                             return;
 

@@ -15,9 +15,10 @@ import static org.example.Menu.sc;
 public class ScoreMenu {
 
     private final DBManager dbManager;
-
+    //FIXME 불필요한 선언
     private final StudentService studentService;
     private final ScoreService scoreService;
+    //FIXME 불필요한 선언
     private final SubjectService subjectService;
 
     public ScoreMenu(DBManager dbManager) {
@@ -56,11 +57,6 @@ public class ScoreMenu {
                                 roundInput = Integer.parseInt(sc.nextLine());
                                 System.out.print("학생 점수 입력 : ");
                                 scoreInput = Integer.parseInt(sc.nextLine());
-                                //TODO v1
-//                                findSubjectData = new Parser(dbManager).scoreCreate(subjectIdInput, studentIdInput, roundInput, scoreInput);
-//                                dbManager.saveScore(new ScoreService().scoreCreateV1(findSubjectData, studentIdInput, roundInput, scoreInput));
-//                                System.out.println("수강생의 점수를 등록하였습니다.\n");
-                                //TODO v2
 
                                 scoreService.scoreCreateV1(subjectIdInput, studentIdInput, roundInput, scoreInput);
 
@@ -72,7 +68,7 @@ public class ScoreMenu {
                             }
                             break;
 
-                        case 2: /* @세미 */
+                        case 2: /** @세미 */
                             try{
                                 System.out.println("*****수강생 점수 조회*****");
                                 System.out.println("메인메뉴> 수강생 점수관리>...");
@@ -90,7 +86,7 @@ public class ScoreMenu {
 
                             break;
 
-                        case 3: /* @세미 */
+                        case 3: /** @세미 */
                             try{
                                 System.out.println("*****수강생 과목별 회차점수 수정*****");
                                 System.out.println("메인메뉴> 수강생 점수관리>...");
