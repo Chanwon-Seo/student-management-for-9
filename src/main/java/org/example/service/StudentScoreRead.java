@@ -11,7 +11,10 @@ import org.example.parser.ScoreParser;
 import org.example.parser.StudentParser;
 import org.example.parser.SubjectParser;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 
 public class StudentScoreRead {

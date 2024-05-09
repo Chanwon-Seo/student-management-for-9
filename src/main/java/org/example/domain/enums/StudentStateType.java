@@ -19,11 +19,11 @@ public enum StudentStateType {
     /**
      * FIXME 메서드 설명
      */
-    public static StudentStateType studentStateType(String status){
+    public static StudentStateType studentStateType(String status) {
         StudentStateType stateType;
 
-        for(StudentStateType s: StudentStateType.values()){
-            if(s.getStudentTypeValue().equals(status)){
+        for (StudentStateType s : StudentStateType.values()) {
+            if (s.getStudentTypeValue().equals(status)) {
                 stateType = s;
 
                 return stateType;

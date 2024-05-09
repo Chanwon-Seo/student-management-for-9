@@ -3,9 +3,10 @@ package org.example.parser;
 
 import org.example.db.DBManager;
 import org.example.domain.Score;
-import org.example.domain.Student;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 public class ScoreParser {
     private final DBManager dbManager;
