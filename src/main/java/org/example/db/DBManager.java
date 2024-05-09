@@ -9,6 +9,7 @@ import org.example.domain.enums.SubjectType;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * DBStorage의 데이터를 CRUD하기 위한 클래스
@@ -77,18 +78,6 @@ public class DBManager {
     }
 
     /**
-     * FIXME 설명
-     */
-    public Student studentFindById(Integer id) throws NullPointerException {
-        for (Student student : dbStorage.getStudentList()) {
-            if (student.getStudentId() == id) {
-                return student;
-            }
-        }
-        throw new NullPointerException("일치하는 수강생이 없습니다.");
-    }
-
-    /**
      * @성균 //FIXME 설명
      */
     public Integer findByStudentIdNum() {
@@ -140,7 +129,12 @@ public class DBManager {
      * 테스트 데이터
      */
     public void initData() {
-        //찬원
-        //~~~
+        Set<Integer> set = Set.of(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        dbStorage.getStudentList().add(new Student(1, "서찬원", "990204", set, StudentStateType.GREEN));
+        dbStorage.getStudentList().add(new Student(2, "박세미", "990204", set, StudentStateType.RED));
+        dbStorage.getStudentList().add(new Student(3, "박상균", "990204", set, StudentStateType.RED));
+        dbStorage.getStudentList().add(new Student(4, "차도범", "990204", set, StudentStateType.YELLOW));
+        dbStorage.getStudentList().add(new Student(5, "이근수", "990204", set, StudentStateType.GREEN));
+
     }
 }

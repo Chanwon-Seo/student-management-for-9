@@ -96,9 +96,10 @@ public class ScoreService {
             boolean b = dbManager.deleteScoreByStudentId(studentId);
             if (b) System.out.println("점수를 삭제했습니다..");
             else System.out.println("점수를 삭제하지 못햇습니다.");
+            System.out.println();
         } catch (RuntimeException e) {
-//            System.out.println(e.getMessage());
-            System.out.println("~~~~~~~~");
+            System.out.println(e.getMessage());
+            System.out.println();
         }
         System.out.print("\n\n");
     }
