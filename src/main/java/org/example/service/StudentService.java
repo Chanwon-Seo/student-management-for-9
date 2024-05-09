@@ -7,6 +7,7 @@ import org.example.domain.enums.StudentStateType;
 import org.example.domain.enums.SubjectType;
 import org.example.parser.StudentParser;
 import org.example.parser.SubjectParser;
+import static org.example.Menu.sc;
 
 import java.util.*;
 
@@ -19,10 +20,6 @@ public class StudentService {
     //FIXME 사용하고 있지 않음 [해결됨]
     //FIXME 사용하고 있지 않음 [해결됨]
     //FIXME 사용하고 있지 않음 [해결됨]
-    HashSet<Integer> duplicationSubjectId = new HashSet<>();
-    Scanner sc = new Scanner(System.in);
-    private int rSub = 0;
-    private int eSub = 0;
 
     public StudentService(DBManager dbManager) {
         this.dbManager = dbManager;
@@ -150,31 +147,25 @@ public class StudentService {
             System.out.println(output);
         });
 
+        HashSet<Integer> duplicationSubjectId = new HashSet<>();
         Set<Integer> subjectId = new HashSet<>();
         Integer subId;
-        while ((subId = addSubject()) != 0) {
+        int[] subCounts = new int[2];
+        while ((subId = addSubject(subCounts, duplicationSubjectId)) != 0) {
             subjectId.add(subId);
             duplicationSubjectId.add(subId);
         }
 
 
-        if (subjectMinCheck(rSub, eSub)) {
+        if (subjectMinCheck(subCounts[0], subCounts[1])) {
             System.out.println("수강자가 생성되었습니다.");
 
             dbManager.updateStudentIdNum(dbManager.findByStudentIdNum());
             Student st = new Student(dbManager.findByStudentIdNum(), name, birth, subjectId, stateType);
             dbManager.saveStudent(st);
         }
-        rSub = 0;
-        eSub = 0;
-        duplicationSubjectId.clear();
-        System.out.println();
-    }
 
-    //String 값 입력
-    public String inputString(String m) {
-        System.out.print(m);
-        return sc.nextLine();
+        System.out.println();
     }
 
     //상태 값 가져오기
@@ -182,7 +173,7 @@ public class StudentService {
         return StudentStateType.studentStateType(status);
     }
 
-    public Integer addSubject() {
+    public Integer addSubject(int[] subCounts, HashSet<Integer> duplicationSubjectId) {
         while (true) {
             System.out.println("\n수강할 과목의 제목을 입력해주세요. (종료 exit)");
             String s = sc.nextLine();
@@ -201,11 +192,11 @@ public class StudentService {
                         Subject subject = subjectReturn(id);
 
                         if (subject != null && subject.getSubjectType().equals(SubjectType.REQUIRED)) {
-                            rSub++;
-                            System.out.println("필수: " + rSub + ", 선택: " + eSub);
+                            subCounts[0]++;
+                            System.out.println("필수: " + subCounts[0] + ", 선택: " + subCounts[1]);
                         } else {
-                            eSub++;
-                            System.out.println("필수: " + rSub + ", 선택: " + eSub);
+                            subCounts[1]++;
+                            System.out.println("필수: " + subCounts[0] + ", 선택: " + subCounts[1]);
                         }
                         return id;
                     }
