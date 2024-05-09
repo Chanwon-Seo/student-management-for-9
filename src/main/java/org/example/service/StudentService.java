@@ -17,12 +17,10 @@ public class StudentService {
     private final DBManager dbManager;
     private final StudentParser studentParser;
     private final SubjectParser subjectParser;
-    //FIXME 사용하고 있지 않음
-    private final ScoreParser scoreParser;
-    //FIXME 사용하고 있지 않음
-    static final int MIN_REQUIRED_SUBJECTS = 3;
-    //FIXME 사용하고 있지 않음
-    static final int MIN_ELECTIVE_SUBJECTS = 2;
+    //FIXME 사용하고 있지 않음 [해결됨]
+    //FIXME 사용하고 있지 않음 [해결됨]
+    //FIXME 사용하고 있지 않음 [해결됨]
+
     List<Subject> sub;
     HashSet<Integer> dup = new HashSet<>();
     Set<Integer> subjectId = new HashSet<>();
@@ -36,7 +34,6 @@ public class StudentService {
         this.dbManager = dbManager;
         this.studentParser = new StudentParser(dbManager);
         this.subjectParser = new SubjectParser(dbManager);
-        this.scoreParser = new ScoreParser(dbManager);
         sub = dbManager.findBySubjects();
         studentList = dbManager.findByStudents();
     }
@@ -54,10 +51,11 @@ public class StudentService {
      * @차도범 수강생 목록을 출력
      */
     public void getStudentList() {
-        System.out.println("id / name");
+        System.out.println("[ 수강생 목록 (고유번호 / 이름) ]");
         for (Student student : dbManager.findByStudents()) {
             System.out.println(student.getStudentId() + " : " + student.getStudentName());
         }
+        System.out.printf("\n");
     }
 
     /**
@@ -66,7 +64,7 @@ public class StudentService {
     public void getStudentDetail(int studentId) {
         try {
             Student student = studentParser.studentEmptyCheckValidV2(studentId).get();
-            System.out.println("----학생 상세-----");
+            System.out.println("##### < 학생 상세 > #####");
             System.out.println("id : " + student.getStudentId());
             System.out.println("이름 : " + student.getStudentName());
             System.out.println("생년월일 : " + student.getBirthDay());
@@ -110,9 +108,8 @@ public class StudentService {
      * 수강생 수정
      */
     public void editStudent(Student student, String name, String birthDay, StudentStateType studentStateType) {
-        //FIXME 사용자의 빈값 입력에 대한 예외가 없음 더티체킹 필요 -> 완료
+        //FIXME 사용자의 빈값 입력에 대한 예외가 없음 더티체킹 필요
         try {
-            studentParser.editStudentEmptyCheckValid(name, birthDay, studentStateType);
             dbManager.editStudent(student, name, birthDay, studentStateType);
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
@@ -126,7 +123,7 @@ public class StudentService {
      */
     public void deleteStudentById(int studentId) {
         try {
-            Student student = studentParser.studentEmptyCheckValidV2(studentId).get();
+            Student student = studentParser.studentFindByIdEmptyCheckValid(studentId);
             boolean b = dbManager.deleteStudentById(studentId);
             if (b) System.out.println(student.getStudentName() + "수강생을 삭제했습니다..");
             else System.out.println("수강생을 삭제하지 못햇습니다.");
@@ -138,11 +135,12 @@ public class StudentService {
     //수강자 등록
     public void createStudent() {
         String name = inputString("수강생 이름 입력: ");
-        String birth = inputString("수강생 생년월일 입력: ");
-        String status = inputString("현재 상태를 입력하세요.(선택) green: 좋음, yellow: 보통, red: 나쁨, nostatus: 모름\n");
+        String birth = inputString("수강생 생년월일 (6자리입력): ");
+        String status = inputString("[선택] 현재 상태를 입력하세요. (문자입력) \ngreen: 좋음, yellow: 보통, red: 나쁨, nostatus: 모름\n");
 
         StudentStateType stateType = inputStatus(status);
         //FIXME sub
+        System.out.println("※공통사항※ [필수]3과목,[선택]2과목이상 신청바랍니다.");
         sub.forEach(subject -> {
             String output = String.format("고유ID: %-5d 제목: %-20s \t과목: %s",
                     subject.getSubjectId(),

@@ -3,10 +3,9 @@ package org.example.parser;
 
 import org.example.db.DBManager;
 import org.example.domain.Score;
+import org.example.domain.Student;
 
-import java.util.Optional;
-
-import java.util.Map;
+import java.util.*;
 
 public class ScoreParser {
     private final DBManager dbManager;
@@ -49,24 +48,23 @@ public class ScoreParser {
      * throw 이전 회차 미등록인 경우
      */
     public void scoreDuplicatedCheckValidv2(Integer subjectIdInput, Integer studentIdInput, Integer roundInput) {
-        Optional<Score> findScoreData = Optional.empty();
+        List<Score> scoreList = new LinkedList<>();
         for (Score score : dbManager.findByScores()) {
             if (subjectIdInput.equals(score.getSubjectId()) && studentIdInput.equals(score.getStudentId())) {
-                findScoreData = Optional.of(score);
-                break;
+                scoreList.add(score);
             }
         }
 
         //등록된 회차가 없지만 사용자로부터 입력 받은 회차가 1회차가 아닌 경우
-        if (findScoreData.isEmpty() && roundInput != 1) {
-            throw new NullPointerException("1회차가 입력되지 않았습니다.\n");
+        if (scoreList.isEmpty() && roundInput != 1) {
+            throw new NullPointerException("1회차가 등록되지 않았습니다.\n");
         }
 
         //등록된 회차가 있는 경우
-        if (findScoreData.isPresent()) {
-            int scoreSize = findScoreData.get().getScoreMap().size();
+        if (!scoreList.isEmpty()) {
+            int scoreSize = scoreList.size();
 
-            //이미 등록된 회차 등록인 경우
+            //이미 등록된 회차인 경우
             if (scoreSize >= roundInput) {
                 throw new IllegalStateException("이미 등록된 회차입니다.\n");
             }
@@ -81,7 +79,7 @@ public class ScoreParser {
      * @세미 점수 수정시, 존재하는 회차인지
      * throw 회차가 존재하지 않을 때
      */
-    public void scoreUpdateCheckValid(Integer subjectIdInput, Integer studentIdInput, Integer roundInput){
+    public void scoreUpdateCheckValid(Integer subjectIdInput, Integer studentIdInput, Integer roundInput) {
         Score findScoreData = null;
         for (Score score : dbManager.findByScores()) {
             if (subjectIdInput.equals(score.getSubjectId()) && studentIdInput.equals(score.getStudentId())) {
@@ -90,14 +88,15 @@ public class ScoreParser {
             }
         }
 
-        if(findScoreData==null) {
+        if (findScoreData == null) {
             //throw new RuntimeException("해당 과목의 점수 정보가 없습니다");
             System.out.println("해당 과목의 점수 정보가 없습니다");
             return;
-        };
+        }
+        ;
 
-        Map<Integer,Integer> temp = findScoreData.getScoreMap();
-        if(temp.containsKey(roundInput)) {
+        Map<Integer, Integer> temp = findScoreData.getScoreMap();
+        if (temp.containsKey(roundInput)) {
             //throw new RuntimeException("해당 회차가 없습니다.");
             System.out.println("해당 회차가 없습니다.");
         }
