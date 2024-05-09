@@ -43,12 +43,12 @@ public class ScoreMenu {
                                 System.out.print("학생 점수 입력 : ");
                                 scoreInput = Integer.parseInt(sc.nextLine());
 
-                                scoreService.scoreCreateV2(subjectIdInput, studentIdInput, roundInput, scoreInput);
+                                scoreService.scoreCreateV3(subjectIdInput, studentIdInput, roundInput, scoreInput);
 
                             } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
                             } catch (RuntimeException e) {
-                                System.out.println(e.getMessage());
+                                System.out.printf("\n%s\n\n", e.getMessage());
                                 break;
                             }
                             break;

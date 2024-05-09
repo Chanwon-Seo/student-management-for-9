@@ -7,6 +7,7 @@ import org.example.domain.enums.StudentStateType;
 import org.example.domain.enums.SubjectType;
 import org.example.parser.StudentParser;
 import org.example.parser.SubjectParser;
+
 import static org.example.Menu.sc;
 
 import java.util.*;
@@ -238,13 +239,13 @@ public class StudentService {
      * id가 검증되면 해당 subject 클래스 반환
      */
     public Subject subjectReturn(Integer subjectId) {
-        Optional<Subject> subject = Optional.empty();
+        Subject subject = null;
         try {
-            subject = subjectParser.subjectEmptyCheckValid(subjectId);
+            subject = subjectParser.subjectEmptyCheckValidV1(subjectId);
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
-        return subject.get();
+        return subject;
     }
 
     /**

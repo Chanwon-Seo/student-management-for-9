@@ -33,18 +33,19 @@ public class ScoreService {
     /**
      * @찬원 수강생 점수 등록 메서드
      */
-    public void scoreCreateV2(Integer subjectIdInput, Integer studentIdInput, Integer roundInput, Integer scoreInput) {
-        Optional<Subject> findSubjectData;
+    public void scoreCreateV3(Integer subjectIdInput, Integer studentIdInput, Integer roundInput, Integer scoreInput) throws NullPointerException {
+        Subject findSubjectData = subjectParser.subjectEmptyCheckValidV1(subjectIdInput);
+
         Optional<Student> findStudentData;
         try {
-            findSubjectData = subjectParser.subjectEmptyCheckValid(subjectIdInput);
             findStudentData = studentParser.studentEmptyCheckValidV2(studentIdInput);
-            studentParser.studentAndSubjectCheckValid(findSubjectData.get().getSubjectId(), findStudentData.get());
+            studentParser.studentAndSubjectCheckValid(findSubjectData.getSubjectId(), findStudentData.get());
+
             scoreParser.scoreRoundInputOneToTenCheckValid(roundInput);
             scoreParser.scoreInputZeroToOneHundredCheckValid(scoreInput);
 
             scoreParser.scoreDuplicatedCheckValidv2(
-                    findSubjectData.get().getSubjectId(),
+                    findSubjectData.getSubjectId(),
                     findStudentData.get().getStudentId(),
                     roundInput
             );
@@ -56,13 +57,13 @@ public class ScoreService {
         Map<Integer, Integer> roundMap = new LinkedHashMap<>();
         roundMap.put(roundInput, scoreInput);
 
-        Score score = new Score(findSubjectData.get().getSubjectId(),
+        Score score = new Score(findSubjectData.getSubjectId(),
                 studentIdInput,
                 roundMap,
-                checkLevelType(findSubjectData.get().getSubjectType().getSubjectTypeValue(), scoreInput)
+                checkLevelType(findSubjectData.getSubjectType().getSubjectTypeValue(), scoreInput)
         );
         System.out.printf("%d / %d / %d회차에 %d점수 ( %s )등급이 저장 되었습니다.\n\n",
-                findSubjectData.get().getSubjectId(),
+                findSubjectData.getSubjectId(),
                 findStudentData.get().getStudentId(),
                 roundInput,
                 scoreInput,
@@ -256,7 +257,7 @@ public class ScoreService {
     public Map<Integer, Integer> findScores(Integer studentId, Integer subjectId) {
 
         try {
-            Optional<Subject> findSubjectData = subjectParser.subjectEmptyCheckValid(subjectId);
+            Subject findSubjectData = subjectParser.subjectEmptyCheckValidV1(subjectId);
             studentParser.studentEmptyCheckValidV2(studentId); //존재하는 수강생인가?
 
             scoreParser.studentScoreNullCheck(studentId, subjectId);
