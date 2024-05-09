@@ -21,7 +21,6 @@ public class StudentMenu {
     }
 
 
-    boolean next = true;
 
     public void displayStudentView() {
         int studentId;
@@ -54,7 +53,7 @@ public class StudentMenu {
                             System.out.println("메인메뉴> 수강생 관리>수강생 조회...");
 
 
-                            while (next) {
+                            while (true) {
                                 studentService.getStudentList();
                                 System.out.println();
                                 System.out.println();
@@ -165,8 +164,7 @@ public class StudentMenu {
     }
 
     /**
-     * @차도범
-     * 입력받은 수강생 상태에 String -> StudentStateType enum으로 변경해서 반환
+     * @차도범 입력받은 수강생 상태에 String -> StudentStateType enum으로 변경해서 반환
      */
     //FIXME static x -> 완료
     private StudentStateType getStudentStateType() {

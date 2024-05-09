@@ -5,7 +5,6 @@ import org.example.domain.Student;
 import org.example.domain.Subject;
 import org.example.domain.enums.StudentStateType;
 import org.example.domain.enums.SubjectType;
-import org.example.parser.ScoreParser;
 import org.example.parser.StudentParser;
 import org.example.parser.SubjectParser;
 
@@ -20,26 +19,19 @@ public class StudentService {
     //FIXME 사용하고 있지 않음 [해결됨]
     //FIXME 사용하고 있지 않음 [해결됨]
     //FIXME 사용하고 있지 않음 [해결됨]
-
-    List<Subject> sub;
-    HashSet<Integer> dup = new HashSet<>();
-    Set<Integer> subjectId = new HashSet<>();
+    HashSet<Integer> duplicationSubjectId = new HashSet<>();
     Scanner sc = new Scanner(System.in);
-    int rSub = 0;
-    int eSub = 0;
-
-    List<Student> studentList;
+    private int rSub = 0;
+    private int eSub = 0;
 
     public StudentService(DBManager dbManager) {
         this.dbManager = dbManager;
         this.studentParser = new StudentParser(dbManager);
         this.subjectParser = new SubjectParser(dbManager);
-        sub = dbManager.findBySubjects();
-        studentList = dbManager.findByStudents();
     }
 
     /**
-     * @차도범 수강생 목록을 출력
+     * @차도범 수강생 아이디로 수강생 반환
      */
     public Student studentFindById(int id) throws NullPointerException {
         Student findStudent = studentParser.studentEmptyCheckValidV2(id).get();
@@ -88,8 +80,7 @@ public class StudentService {
     }
 
     /**
-     * @차도범
-     * 상태별 수강색 목록
+     * @차도범 상태별 수강색 목록
      */
     public void studentListByStatus(StudentStateType studentStateType) {
         List<Student> studentList = dbManager.findByStudents();
@@ -104,22 +95,20 @@ public class StudentService {
     }
 
     /**
-     * @차도범
-     * 수강생 수정
+     * @차도범 수강생 수정
      */
     public void editStudent(Student student, String name, String birthDay, StudentStateType studentStateType) {
-        //FIXME 사용자의 빈값 입력에 대한 예외가 없음 더티체킹 필요
+        //FIXME 사용자의 빈값 입력에 대한 예외가 없음 더티체킹 필요 -> 완료
         try {
+            studentParser.editStudentEmptyCheckValid(name, birthDay, studentStateType);
             dbManager.editStudent(student, name, birthDay, studentStateType);
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
     }
 
-
     /**
-     * @차도범
-     * 아이디로 수강생 삭제
+     * @차도범 아이디로 수강생 삭제
      */
     public void deleteStudentById(int studentId) {
         try {
@@ -138,7 +127,7 @@ public class StudentService {
         String name = sc.nextLine();
         System.out.print("수강생 생년월일 입력: ");
         String birth = sc.nextLine();
-        System.out.print("현재 상태를 입력하세요.(번호 선택) 1.green: 좋음\n2.yellow: 보통\n3.red: 나쁨\n아무키.nostatus: 모름\n");
+        System.out.println("현재 상태를 입력하세요.(번호 선택)\n1.green: 좋음\n2.yellow: 보통\n3.red: 나쁨");
         String status = sc.nextLine();
 
         String state = switch (status) {
@@ -148,10 +137,11 @@ public class StudentService {
             default -> "nostatus";
         };
 
-        StudentStateType stateType = inputStatus(status);
+        StudentStateType stateType = inputStatus(state);
         //FIXME 완료
-        //FIXME sub
+        //FIXME 완료
         System.out.println("※공통사항※ [필수]3과목,[선택]2과목이상 신청바랍니다.");
+        List<Subject> sub = dbManager.findBySubjects();
         sub.forEach(subject -> {
             String output = String.format("고유ID: %-5d 제목: %-20s \t과목: %s",
                     subject.getSubjectId(),
@@ -160,10 +150,11 @@ public class StudentService {
             System.out.println(output);
         });
 
+        Set<Integer> subjectId = new HashSet<>();
         Integer subId;
         while ((subId = addSubject()) != 0) {
             subjectId.add(subId);
-            dup.add(subId);
+            duplicationSubjectId.add(subId);
         }
 
 
@@ -176,7 +167,7 @@ public class StudentService {
         }
         rSub = 0;
         eSub = 0;
-        dup.clear();
+        duplicationSubjectId.clear();
         System.out.println();
     }
 
@@ -204,7 +195,7 @@ public class StudentService {
                 Integer id = Integer.parseInt(s);
 
                 if (subjectIdCheck(id)) {
-                    if (subjectIdDuplicationCheck(dup, id)) {
+                    if (subjectIdDuplicationCheck(duplicationSubjectId, id)) {
                         System.out.println("과목 추가 완료.");
 
                         Subject subject = subjectReturn(id);
@@ -253,6 +244,7 @@ public class StudentService {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
+
         return false;
     }
 
@@ -284,6 +276,7 @@ public class StudentService {
         }
 
         return false;
+
     }
 
 

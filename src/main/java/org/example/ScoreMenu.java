@@ -2,30 +2,22 @@ package org.example;
 
 import org.example.db.DBManager;
 import org.example.service.ScoreService;
-import org.example.service.StudentScoreRead;
-import org.example.service.StudentService;
-import org.example.service.SubjectService;
 
 import static org.example.Menu.sc;
 
-/**
- * 메인메뉴>수강생 점수관리"
- */
-//@RequiredArgsConstructor
+//FIXME 불필요 주석삭제 [해결됨]
 public class ScoreMenu {
 
     private final DBManager dbManager;
-    //FIXME 불필요한 선언
-    private final StudentService studentService;
+    //FIXME 불필요한 선언 [해결됨]
     private final ScoreService scoreService;
-    //FIXME 불필요한 선언
-    private final SubjectService subjectService;
+    //FIXME 불필요한 선언 [해결됨]
+
 
     public ScoreMenu(DBManager dbManager) {
         this.dbManager = dbManager;
-        this.studentService = new StudentService(dbManager);
         this.scoreService = new ScoreService(dbManager);
-        this.subjectService = new SubjectService(dbManager);
+
     }
 
     public void displayScoreView() {
@@ -59,7 +51,7 @@ public class ScoreMenu {
                                 System.out.print("학생 점수 입력 : ");
                                 scoreInput = Integer.parseInt(sc.nextLine());
 
-                                scoreService.scoreCreateV1(subjectIdInput, studentIdInput, roundInput, scoreInput);
+                                scoreService.scoreCreateV2(subjectIdInput, studentIdInput, roundInput, scoreInput);
 
                             } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
@@ -69,7 +61,7 @@ public class ScoreMenu {
                             break;
 
                         case 2: /** @세미 */
-                            try{
+                            try {
                                 System.out.println("*****수강생 점수 조회*****");
                                 System.out.println("메인메뉴> 수강생 점수관리>수강생 점수 조회...");
 
@@ -78,20 +70,18 @@ public class ScoreMenu {
 
                                 System.out.print("과목 고유번호 입력 : ");
                                 subjectIdInput = Integer.parseInt(sc.nextLine());
-                                new StudentScoreRead(dbManager).loadAllScore(studentIdInput, subjectIdInput);
-                            } catch (NumberFormatException e) {
-                                throw new NumberFormatException();
-                            } catch (RuntimeException e) {
+                                scoreService.loadAllScore(studentIdInput, subjectIdInput);
+                            } catch (NullPointerException e) {
                                 System.out.println(e.getMessage());
-                                break;
+                                throw new NullPointerException();
                             }
 
                             break;
 
-                        case 3:
+                        case 3: /** @세미 */
                             try {
                                 System.out.println("*****수강생 과목별 회차점수 수정*****");
-                                System.out.println("메인메뉴> 수강생 점수관리>...");
+                                System.out.println("메인메뉴> 수강생 점수관리> 수강생 과목별 회차점수 수정...");
                                 System.out.print("수강생 고유번호 입력 : ");
                                 studentIdInput = Integer.parseInt(sc.nextLine());
                                 System.out.print("과목 고유번호 입력 : ");
@@ -100,10 +90,10 @@ public class ScoreMenu {
                                 int round = Integer.parseInt(sc.nextLine());
                                 System.out.print("점수 입력 : ");
                                 int score = Integer.parseInt(sc.nextLine());
-                                new StudentScoreRead(dbManager).updateScore(studentIdInput, subjectIdInput, round, score);
+                                scoreService.updateScore(studentIdInput, subjectIdInput, round, score);
                             } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
-                            } catch (RuntimeException e) {
+                            } catch (NullPointerException e) {
                                 System.out.println(e.getMessage());
                                 break;
                             }
@@ -113,15 +103,15 @@ public class ScoreMenu {
                         case 4:
                             try {
                                 System.out.println("*****수강생의 과목별 평균 등급을 조회*****");
-                                System.out.println("메인메뉴> 수강생 점수관리>...");
+                                System.out.println("메인메뉴> 수강생 점수관리> 수강생의 과목별 평균 등급을 조회...");
                                 System.out.print("수강생 고유번호 입력 : ");
                                 studentIdInput = Integer.parseInt(sc.nextLine());
                                 System.out.print("과목 고유번호 입력 : ");
                                 subjectIdInput = Integer.parseInt(sc.nextLine());
-                                new StudentScoreRead(dbManager).loadAvgScore(studentIdInput, subjectIdInput);
+                                scoreService.loadAvgScore(studentIdInput, subjectIdInput);
                             } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
-                            } catch (RuntimeException e) {
+                            } catch (NullPointerException e) {
                                 System.out.println(e.getMessage());
                                 break;
                             }
@@ -130,13 +120,13 @@ public class ScoreMenu {
                         case 5:
                             try {
                                 System.out.println("*****특정 상태 수강생들의 필수 과목 평균 등급을 조회*****");
-                                System.out.println("메인메뉴> 수강생 점수관리>...");
-                                System.out.println("1.Green 2.Yellow 3.Red ");
+                                System.out.println("메인메뉴> 수강생 점수관리> 특정상태 수강생들의 필수 과목 평균등급을 조회...");
+                                System.out.println("[1]Green [2]Yellow [3]Red ");
                                 int state = Integer.parseInt(sc.nextLine());
-                                new StudentScoreRead(dbManager).loadStudentStateOfRequiredSubject(state);
+                                scoreService.loadStudentStateOfRequiredSubject(state);
                             } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
-                            } catch (RuntimeException e) {
+                            } catch (NullPointerException e) {
                                 System.out.println(e.getMessage());
                                 break;
                             }
