@@ -19,10 +19,8 @@ public class StudentService {
     private final SubjectParser subjectParser;
     //FIXME 사용하고 있지 않음
     private final ScoreParser scoreParser;
-    //FIXME 사용하고 있지 않음
-    static final int MIN_REQUIRED_SUBJECTS = 3;
-    //FIXME 사용하고 있지 않음
-    static final int MIN_ELECTIVE_SUBJECTS = 2;
+    //FIXME 사용하고 있지 않음 (완료)
+    //FIXME 사용하고 있지 않음 (완료)
     List<Subject> sub;
     HashSet<Integer> dup = new HashSet<>();
     Set<Integer> subjectId = new HashSet<>();
@@ -137,12 +135,22 @@ public class StudentService {
 
     //수강자 등록
     public void createStudent() {
-        String name = inputString("수강생 이름 입력: ");
-        String birth = inputString("수강생 생년월일 입력: ");
-        String status = inputString("현재 상태를 입력하세요.(선택) green: 좋음, yellow: 보통, red: 나쁨, nostatus: 모름\n");
+        System.out.print("수강생 이름 입력: ");
+        String name = sc.nextLine();
+        System.out.print("수강생 생년월일 입력: ");
+        String birth = sc.nextLine();
+        System.out.print("현재 상태를 입력하세요.(번호 선택) 1.green: 좋음\n2.yellow: 보통\n3.red: 나쁨\n아무키.nostatus: 모름\n");
+        String status = sc.nextLine();
+
+        String state = switch (status) {
+            case "1" -> "green";
+            case "2" -> "yellow";
+            case "3" -> "red";
+            default -> "nostatus";
+        };
 
         StudentStateType stateType = inputStatus(status);
-        //FIXME sub
+        //FIXME 완료
         sub.forEach(subject -> {
             String output = String.format("고유ID: %-5d 제목: %-20s \t과목: %s",
                     subject.getSubjectId(),
@@ -226,7 +234,7 @@ public class StudentService {
             if (subjectParser.subjectIsEmptyCheck(subjectId)) {
                 return true;
             }
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
         return false;
@@ -241,7 +249,7 @@ public class StudentService {
             if (subjectParser.subjectIdDuplicationCheck(dup, subjectId)) {
                 return true;
             }
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
         return false;
@@ -264,7 +272,7 @@ public class StudentService {
     /**
      * @성균 과목 등록 검증
      */
-    //FIXME Exception대신 IllegalArgumentException을 사용해 명확성을 올림
+    //FIXME 완료(Exception대신 IllegalArgumentException을 사용해 명확성을 올림)
     public boolean subjectMinCheck(int rSub, int eSub) {
         try {
             if (subjectParser.subjectMinCheck(rSub, eSub)) {

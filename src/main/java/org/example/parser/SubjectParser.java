@@ -5,6 +5,7 @@ import org.example.domain.Student;
 import org.example.domain.Subject;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Optional;
 
 public class SubjectParser {
@@ -52,24 +53,24 @@ public class SubjectParser {
      * @성균 과목 이름 조회
      * throw 조회된 과목이 없을 경우
      */
-    public boolean subjectIsEmptyCheck(Integer subjectId) throws Exception {
+    public boolean subjectIsEmptyCheck(Integer subjectId) {
         for (Subject subject : dbManager.findBySubjects()) {
-            if (subjectId == subject.getSubjectId()) {
+            if (Objects.equals(subjectId, subject.getSubjectId())) {
                 return true;
             }
         }
-        throw new Exception("올바른 과목 ID가 아닙니다.");
+        throw new NullPointerException("올바른 과목 ID가 아닙니다.");
     }
 
     /**
      * @성균 subjectId 중복 조회
      * throw 중복인 경우
      */
-    public boolean subjectIdDuplicationCheck(HashSet<Integer> dup, Integer subjectId) throws Exception {
+    public boolean subjectIdDuplicationCheck(HashSet<Integer> dup, Integer subjectId){
         if (!dup.contains(subjectId)) {
             return true;
         }
-        throw new Exception("이미 등록된 과목입니다.");
+        throw new IllegalArgumentException("이미 등록된 과목입니다.");
     }
 
 
