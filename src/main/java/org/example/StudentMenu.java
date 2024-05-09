@@ -31,6 +31,8 @@ public class StudentMenu {
         StudentService studentService = new StudentService(dbManager);
 
         while (true) {
+            System.out.println("***** 수강생 관리 *****");
+            System.out.println("메인메뉴> 수강생 관리>...");
             System.out.println("1. 수강생 등록");
             System.out.println("2. 수강생 조회");
             System.out.println("0. 이전메뉴로 이동");
@@ -44,21 +46,21 @@ public class StudentMenu {
 
                     switch (i) {
                         case 1:
-                            System.out.println("***** 수강생 등록*****");
-                            System.out.println("메인메뉴> 수강생 관리>...");
+                            System.out.println("***** 수강생 등록 *****");
+                            System.out.println("메인메뉴> 수강생 관리>수강생 등록...");
 
                             studentService.createStudent();
 
                             break;
                         case 2:
-                            System.out.println("***** 수강생 조회*****");
-                            System.out.println("메인메뉴> 수강생 관리>...");
+                            System.out.println("***** 수강생 조회 *****");
+                            System.out.println("메인메뉴> 수강생 관리>수강생 조회...");
 
 
                             while (next) {
                                 studentService.getStudentList();
-                                System.out.println();
-                                System.out.println();
+                                System.out.println("***** 수강생 상세 관리 *****");
+                                System.out.println("메인메뉴> 수강생 관리> 수강생 상세 관리");
                                 System.out.println("1. 수강생 조회");
                                 System.out.println("2. 수강생 정보 수정");
                                 System.out.println("3. 상태별 수강생 목록");
@@ -66,7 +68,7 @@ public class StudentMenu {
                                 System.out.println("0. 뒤로가기");
                                 switch (Integer.parseInt(sc.nextLine())) {
                                     case 1 -> {
-                                        studentId = inputStudentId("조회할 수강생 아이디 입력");
+                                        studentId = inputStudentId("조회할 수강생 아이디 입력 : ");
                                         try {
                                             studentService.getStudentDetail(studentId);
                                         } catch (Exception e) {
@@ -75,7 +77,7 @@ public class StudentMenu {
                                         break;
                                     }
                                     case 2 -> {
-                                        studentId = inputStudentId("수정할 수강생의 아이디 입력");
+                                        studentId = inputStudentId("수정할 수강생의 아이디 입력 : ");
                                         Student findStudent = null;
                                         try {
                                             findStudent = studentService.studentFindById(studentId);
@@ -83,10 +85,10 @@ public class StudentMenu {
                                             System.out.println(e.getMessage());
                                         }
                                         if (findStudent != null) {
-                                            System.out.println("수정할 정보를 입력(1.이름, 2.생일, 3.상태)>");
+                                            System.out.println("수정할 정보를 입력: [1]이름 [2]생년월일 [3]상태 ");
                                             switch (Integer.parseInt(sc.nextLine())) {
                                                 case 1 -> {
-                                                    System.out.print("수정할 이름> ");
+                                                    System.out.print("수정할 이름 : ");
                                                     String editName = sc.nextLine();
                                                     studentService.editStudent(
                                                             findStudent,
@@ -95,7 +97,7 @@ public class StudentMenu {
                                                             findStudent.getStudentStateType());
                                                 }
                                                 case 2 -> {
-                                                    System.out.print("수정할 생일> ");
+                                                    System.out.print("수정할 생년월일 : ");
                                                     String editBrithDay = sc.nextLine();
                                                     studentService.editStudent(
                                                             findStudent,
@@ -109,7 +111,7 @@ public class StudentMenu {
                                                     //만약 값이 일치하는 것이 없으면 기존 사용자의 값을 가져온다.
                                                     if (studentStateType == null) {
                                                         studentStateType = findStudent.getStudentStateType();
-                                                        System.out.println("불일치 !! 기존값으로 ");
+                                                        System.out.println("#####불일치 합니다. 기존값으로 돌아갑니다.#####");
                                                         System.out.println();
                                                     }
                                                     studentService.editStudent(
@@ -118,11 +120,13 @@ public class StudentMenu {
                                                             findStudent.getBirthDay(),
                                                             studentStateType);
                                                 }
-                                                default -> System.out.println("불일치!!!");
+                                                default -> System.out.println("##### !!!불일치!!! #####");
                                             }
                                         } else System.out.println();
                                     }
                                     case 3 -> {
+                                        System.out.println("***** 수강생 상세 관리 *****");
+                                        System.out.println("메인메뉴> 수강생 관리> 수강생 상세 관리>상태별 수강생 목록");
                                         studentStateType = getStudentStateType();
                                         studentService.studentListByStatus(studentStateType);
                                     }
@@ -132,7 +136,10 @@ public class StudentMenu {
                                         scoreService.deleteScoreByStudentId(studentId);
                                     }
                                     case 0 -> {
+                                        System.out.println("이전 화면으로 돌아갑니다.");
+                                        System.out.println("메인메뉴> 이전메뉴로 이동>...");
                                         break loopA;
+
                                     }
                                 }
                             }
@@ -148,7 +155,8 @@ public class StudentMenu {
                             System.out.println("다시입력바랍니다.");
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("something wrong~, 다시 입력바랍니다.");
+                    System.out.println("something wrong!, 다시 입력바랍니다.");
+                    System.out.printf("%n");
                 }
             } else
                 System.out.println("입력이 없습니다, 다시입력바랍니다.");
@@ -171,7 +179,7 @@ public class StudentMenu {
      */
     //FIXME static x
     private static StudentStateType getStudentStateType() {
-        System.out.print("수정할 상태(1.green, 2.red, 3.yellow)> ");
+        System.out.print("[1]green [2]red [3]yellow ");
         return switch (sc.nextLine()) {
             case "1" -> StudentStateType.GREEN;
             case "2" -> StudentStateType.RED;
