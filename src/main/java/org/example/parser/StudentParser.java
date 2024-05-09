@@ -41,6 +41,10 @@ public class StudentParser {
         throw new NullPointerException("해당 학생은 수강하지 않은 과목입니다.\n");
     }
 
+    /**
+     *
+     * 수강상 상태 체크 메서드
+     */
     public void studentTypeCheckValid(StudentStateType stateType) {
         if(stateType==null)
             throw new NullPointerException("잘못된 학생 상태 입니다.\n");
@@ -48,7 +52,7 @@ public class StudentParser {
     }
 
     /**
-     * @차도범 수강생 정보 수정 메소드
+     * @차도범 수강생 수정 정보 널 체크 메소드
      */
     public void editStudentEmptyCheckValid(String name, String birthDay, StudentStateType studentStateType) {
         if (name == null || birthDay == null || studentStateType == null) {
