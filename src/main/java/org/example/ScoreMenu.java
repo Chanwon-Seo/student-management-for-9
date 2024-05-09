@@ -8,18 +8,15 @@ import org.example.service.SubjectService;
 
 import static org.example.Menu.sc;
 
-/**
- * 메인메뉴>수강생 점수관리"
- */
-//@RequiredArgsConstructor
+//FIXME 불필요 주석삭제 [해결됨]
 public class ScoreMenu {
 
     private final DBManager dbManager;
-    //FIXME 불필요한 선언
-    private final StudentService studentService;
+    //FIXME 불필요한 선언 [해결됨]
+
     private final ScoreService scoreService;
-    //FIXME 불필요한 선언
-    private final SubjectService subjectService;
+    //FIXME 불필요한 선언 [해결됨]
+
 
     public ScoreMenu(DBManager dbManager) {
         this.dbManager = dbManager;
@@ -46,7 +43,7 @@ public class ScoreMenu {
                         case 1:
                             try {
                                 System.out.println("***** 수강생 점수 등록 *****");
-                                System.out.println("메인메뉴> 수강생 점수 관리>...");
+                                System.out.println("메인메뉴> 수강생 점수 관리>수강생 점수 등록...");
 
 
                                 System.out.print("과목 고유번호 입력 : ");
@@ -71,7 +68,7 @@ public class ScoreMenu {
                         case 2: /** @세미 */
                             try{
                                 System.out.println("*****수강생 점수 조회*****");
-                                System.out.println("메인메뉴> 수강생 점수관리>...");
+                                System.out.println("메인메뉴> 수강생 점수관리>수강생 점수 조회...");
 
                                 System.out.print("수강생 고유번호 입력 : ");
                                 studentIdInput = Integer.parseInt(sc.nextLine());
@@ -89,7 +86,7 @@ public class ScoreMenu {
                         case 3: /** @세미 */
                             try{
                                 System.out.println("*****수강생 과목별 회차점수 수정*****");
-                                System.out.println("메인메뉴> 수강생 점수관리>...");
+                                System.out.println("메인메뉴> 수강생 점수관리> 수강생 과목별 회차점수 수정...");
                                 System.out.print("수강생 고유번호 입력 : ");
                                 studentIdInput = Integer.parseInt(sc.nextLine());
                                 System.out.print("과목 고유번호 입력 : ");
@@ -107,7 +104,7 @@ public class ScoreMenu {
 
                         case 4:
                             System.out.println("*****수강생의 과목별 평균 등급을 조회*****");
-                            System.out.println("메인메뉴> 수강생 점수관리>...");
+                            System.out.println("메인메뉴> 수강생 점수관리> 수강생의 과목별 평균 등급을 조회...");
                             System.out.print("수강생 고유번호 입력 : ");
                             studentIdInput = Integer.parseInt(sc.nextLine());
                             System.out.print("과목 고유번호 입력 : ");
@@ -118,7 +115,7 @@ public class ScoreMenu {
 
                         case 5:
                             System.out.println("*****특정 상태 수강생들의 필수 과목 평균 등급을 조회*****");
-                            System.out.println("메인메뉴> 수강생 점수관리>...");
+                            System.out.println("메인메뉴> 수강생 점수관리> 특정상태 수강생들의 필수 과목 평균등급을 조회...");
                             System.out.println("1.Green 2.Yellow 3.Red ");
                             int state = Integer.parseInt(sc.nextLine());
                             new StudentScoreRead(dbManager).LoadStudentStateOfRequiredSubject(state);
