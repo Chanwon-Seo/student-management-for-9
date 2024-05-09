@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static org.example.Menu.sc;
+
 public class ScoreService {
     private final DBManager dbManager;
     private final StudentParser studentParser;
@@ -32,27 +34,29 @@ public class ScoreService {
 
     /**
      * @찬원 수강생 점수 등록 메서드
+     * throw 등록된 과목이 없는 경우
+     * throw 수강생 정보가 없는 경우
+     * throw 회차가 범위에 맞지 않는 경우 =>
      */
-    public void scoreCreateV3(Integer subjectIdInput, Integer studentIdInput, Integer roundInput, Integer scoreInput) throws NullPointerException {
+    public void scoreCreateV3(Integer subjectIdInput, Integer studentIdInput, Integer roundInput, Integer scoreInput) throws NullPointerException, IllegalArgumentException {
         Subject findSubjectData = subjectParser.subjectEmptyCheckValidV1(subjectIdInput);
+        Student findStudentData = studentParser.studentEmptyCheckValidV3(studentIdInput);
+        studentParser.studentAndSubjectCheckValid(findSubjectData.getSubjectId(), findStudentData);
 
-        Optional<Student> findStudentData;
-        try {
-            findStudentData = studentParser.studentEmptyCheckValidV2(studentIdInput);
-            studentParser.studentAndSubjectCheckValid(findSubjectData.getSubjectId(), findStudentData.get());
-
-            scoreParser.scoreRoundInputOneToTenCheckValid(roundInput);
-            scoreParser.scoreInputZeroToOneHundredCheckValid(scoreInput);
-
-            scoreParser.scoreDuplicatedCheckValidv2(
-                    findSubjectData.getSubjectId(),
-                    findStudentData.get().getStudentId(),
-                    roundInput
-            );
-        } catch (NullPointerException | IllegalArgumentException | IllegalStateException e) {
-            throw new RuntimeException(e.getMessage());
+        //회차 범위 검증
+        Optional<Integer> validatedRoundInput = validateInput("회차", roundInput);
+        if (validatedRoundInput.isEmpty()) {
+            return;
         }
+        roundInput = validatedRoundInput.get();
+        //점수 범위 검증
+        Optional<Integer> validatedScoreInput = validateInput("점수", scoreInput);
+        if (validatedScoreInput.isEmpty()) {
+            return;
+        }
+        scoreInput = validatedScoreInput.get();
 
+        scoreParser.scoreDuplicatedCheckValidV2(findSubjectData.getSubjectId(), findStudentData.getStudentId(), roundInput);
 
         Map<Integer, Integer> roundMap = new LinkedHashMap<>();
         roundMap.put(roundInput, scoreInput);
@@ -64,14 +68,39 @@ public class ScoreService {
         );
         System.out.printf("%d / %d / %d회차에 %d점수 ( %s )등급이 저장 되었습니다.\n\n",
                 findSubjectData.getSubjectId(),
-                findStudentData.get().getStudentId(),
+                findStudentData.getStudentId(),
                 roundInput,
                 scoreInput,
                 score.getLevelType()
         );
 
-        dbManager.saveScore(score);
+        scoreParser.save(score);
     }
+
+    // 입력 유효성 검사
+    private Optional<Integer> validateInput(String inputName, Integer inputValue) {
+        int flagIndex = 0;
+
+        while (flagIndex <= 3) {
+            try {
+                if (inputName.equals("회차")) {
+                    scoreParser.scoreRoundInputOneToTenCheckValid(inputValue);
+                } else if (inputName.equals("점수")) {
+                    scoreParser.scoreInputZeroToOneHundredCheckValid(inputValue);
+                }
+                return Optional.of(inputValue);
+            } catch (IllegalArgumentException e) {
+                System.out.println(inputName + " 입력이 잘못되었습니다. 다시 입력해주세요.");
+                System.out.println(e.getMessage());
+                inputValue = Integer.parseInt(sc.nextLine());
+                flagIndex++;
+            }
+        }
+
+        System.out.println(inputName + " 입력을 3번 모두 잘못 입력하셨습니다. 이전 메뉴로 이동합니다.");
+        return Optional.empty();
+    }
+
 
     /**
      * @찬원 필수 또는 선택에 따른 등급 산정
@@ -258,7 +287,7 @@ public class ScoreService {
 
         try {
             Subject findSubjectData = subjectParser.subjectEmptyCheckValidV1(subjectId);
-            studentParser.studentEmptyCheckValidV2(studentId); //존재하는 수강생인가?
+            studentParser.studentEmptyCheckValidV3(studentId); //존재하는 수강생인가?
 
             scoreParser.studentScoreNullCheck(studentId, subjectId);
 

@@ -4,8 +4,6 @@ import org.example.db.DBManager;
 import org.example.domain.Student;
 import org.example.domain.enums.StudentStateType;
 
-import java.util.Optional;
-
 
 public class StudentParser {
     private final DBManager dbManager;
@@ -18,14 +16,9 @@ public class StudentParser {
      * @찬원 수강생 정보 조회
      * throw 조회된 수강생 정보가 없을 경우
      */
-    public Optional<Student> studentEmptyCheckValidV2(Integer studentIdInput) {
-        Optional<Student> findStudentData = dbManager.findOneByStudent(studentIdInput);
-
-        if (findStudentData.isPresent()) {
-            return findStudentData;
-        }
-
-        throw new NullPointerException("조회된 수강생 정보가 없습니다.\n");
+    public Student studentEmptyCheckValidV3(Integer studentIdInput) {
+        return dbManager.findOneByStudent(studentIdInput)
+                .orElseThrow(() -> new NullPointerException("조회된 수강생 정보가 없습니다."));
     }
 
     /**
@@ -42,11 +35,10 @@ public class StudentParser {
     }
 
     /**
-     *
      * 수강상 상태 체크 메서드
      */
     public void studentTypeCheckValid(StudentStateType stateType) {
-        if(stateType==null)
+        if (stateType == null)
             throw new NullPointerException("잘못된 학생 상태 입니다.\n");
 
     }

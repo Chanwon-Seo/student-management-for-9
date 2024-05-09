@@ -29,7 +29,7 @@ public class StudentService {
      * @차도범 수강생 아이디로 수강생 반환
      */
     public Student studentFindById(int id) throws NullPointerException {
-        Student findStudent = studentParser.studentEmptyCheckValidV2(id).get();
+        Student findStudent = studentParser.studentEmptyCheckValidV3(id);
         System.out.println("수강생 " + findStudent.getStudentName());
         return findStudent;
     }
@@ -50,7 +50,7 @@ public class StudentService {
      */
     public void getStudentDetail(int studentId) {
         try {
-            Student student = studentParser.studentEmptyCheckValidV2(studentId).get();
+            Student student = studentParser.studentEmptyCheckValidV3(studentId);
             System.out.println("##### < 학생 상세 > #####");
             System.out.println("id : " + student.getStudentId());
             System.out.println("이름 : " + student.getStudentName());
@@ -106,7 +106,7 @@ public class StudentService {
      */
     public void deleteStudentById(int studentId) {
         try {
-            Student student = studentParser.studentEmptyCheckValidV2(studentId).get();
+            Student student = studentParser.studentEmptyCheckValidV3(studentId);
             boolean b = dbManager.deleteStudentById(studentId);
             if (b) System.out.println(student.getStudentName() + "수강생을 삭제했습니다..");
             else System.out.println("수강생을 삭제하지 못햇습니다.");
