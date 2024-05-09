@@ -77,7 +77,7 @@ public class ScoreMenu {
 
                                 System.out.print("과목 고유번호 입력 : ");
                                 subjectIdInput = Integer.parseInt(sc.nextLine());
-                                new StudentScoreRead(dbManager).loadScore(studentIdInput, subjectIdInput);
+                                new StudentScoreRead(dbManager).loadAllScore(studentIdInput, subjectIdInput);
                             } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
                             } catch (RuntimeException e) {
