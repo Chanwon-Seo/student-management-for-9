@@ -28,7 +28,9 @@ public class StudentScoreRead {
         this.scoreParser = new ScoreParser(dbManager);
     }
 
-    // 과목의 [회차: 등급] 전체조회 (필수 - 과목의 회차별 등급 조회)
+    /**
+     * @세미 과목의 [회차: 등급] 전체조회 (필수 - 과목의 회차별 등급 조회)
+     */
     public void LoadScore(Integer studentId, Integer subjectId) {
         Map<Integer,Integer> score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
 
@@ -56,7 +58,9 @@ public class StudentScoreRead {
         }
     }
 
-    // 회차 점수 수정 (필수 - 점수수정)
+    /**
+     * @세미 회차 점수 수정 (필수 - 점수수정)
+     */
     public void UpdateScore(Integer studentId, Integer subjectId, Integer roundInput, Integer scoreInput) {
 
         Map<Integer,Integer> score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
@@ -72,7 +76,9 @@ public class StudentScoreRead {
         System.out.println(roundInput + " 회차 : " + scoreInput + "점 수정완료!");
     }
 
-    //과목별 평균등급 조회 (추가 - 점수관리)
+    /**
+     * @세미 과목별 평균등급 조회 (추가 - 점수관리)
+     */
     public void LoadAvgScore(Integer studentId, Integer subjectId) {
         Map<Integer, Integer> score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
         if (score == null) { //TEMP EXCEPTION
@@ -93,7 +99,9 @@ public class StudentScoreRead {
     }
 
 
-    //특정상태 수강생들의 필수 과목 평균 등급 (추가 - 점수관리)
+    /**
+     * @세미 특정상태 수강생들의 필수 과목 평균 등급 (추가 - 점수관리)
+     */
     public void LoadStudentStateOfRequiredSubject(int state) {
 
         StudentStateType stateType = switch (state) {
@@ -141,7 +149,11 @@ public class StudentScoreRead {
 
     /* Util */
 
-    // 수강생 과목번호 받아 score 리스트 return
+    /**
+     * @세미 수강생 과목번호 받아 score 리스트 return
+     * input  : student Id , subject Id
+     * output : Score Map<회차,점수> //회차와 점수 맵
+     */
     public Map<Integer, Integer> FindScoresByStudentIdANDSubjectId(Integer studentId, Integer subjectId) {
 
         Optional<Subject> findSubjectData = subjectParser.subjectEmptyCheckValid(subjectId);
@@ -164,6 +176,11 @@ public class StudentScoreRead {
         return null;
     }
 
+    /**
+     * @세미 모든 회차의 평균 계산
+     * input  : student Id , subject Id
+     * output : avg // 해당과목 평균
+     */
     public double LoadAvgScoreRequired(Integer studentId, Integer subjectId) {
         Map<Integer,Integer> score = FindScoresByStudentIdANDSubjectId(studentId, subjectId);
         if (score == null || score.isEmpty()) {
