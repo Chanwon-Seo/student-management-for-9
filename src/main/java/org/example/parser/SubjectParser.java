@@ -36,15 +36,16 @@ public class SubjectParser {
      * throw 해당 과목을 수강하지 않은 수강생일 경우
      */
     //FIXME 메서드명 수정
-    public void HavingsubjectCheck(Integer studentIdInput, Integer subjectIdInput) {
+    public boolean studentHavethisSubject(Integer studentIdInput, Integer subjectIdInput) {
         Optional<Student> student = dbManager.findOneByStudent(studentIdInput);
         for (Integer sub : student.get().getSubjectSet()) {
             if (sub.equals(subjectIdInput)) {
-                return;
+                return true;
             }
         }
         //throw new RuntimeException("수강하는 과목이 아닙니다.");
         System.out.println("수강하는 과목이 아닙니다.");
+        return false;
     }
 
 
