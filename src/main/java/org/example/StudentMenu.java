@@ -160,6 +160,7 @@ public class StudentMenu {
      * @차도범
      * 입력받은 아이디 값을 반환
      */
+    //FIXME static x
     private static int inputStudentId(String 아이디_입력) {
         System.out.println(아이디_입력);
         return Integer.parseInt(sc.nextLine());
@@ -169,6 +170,7 @@ public class StudentMenu {
      * @차도범
      * 입력받은 수강생 상태에 String -> StudentStateType enum으로 변경해서 반환
      */
+    //FIXME static x
     private static StudentStateType getStudentStateType() {
         System.out.print("수정할 상태(1.green, 2.red, 3.yellow)> ");
         return switch (sc.nextLine()) {
