@@ -34,7 +34,6 @@ public class StudentService {
         this.dbManager = dbManager;
         this.studentParser = new StudentParser(dbManager);
         this.subjectParser = new SubjectParser(dbManager);
-        this.scoreParser = new ScoreParser(dbManager);
         sub = dbManager.findBySubjects();
         studentList = dbManager.findByStudents();
     }
