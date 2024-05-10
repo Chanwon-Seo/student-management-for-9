@@ -11,11 +11,7 @@ import org.example.parser.ScoreParser;
 import org.example.parser.StudentParser;
 import org.example.parser.SubjectParser;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static org.example.view.Menu.sc;
 
@@ -66,6 +62,7 @@ public class ScoreService {
                 roundMap,
                 checkLevelType(findSubjectData.getSubjectType().getSubjectTypeValue(), scoreInput)
         );
+
         System.out.printf("%d / %d / %d회차에 %d점수 ( %s )등급이 저장 되었습니다.\n\n",
                 findSubjectData.getSubjectId(),
                 findStudentData.getStudentId(),
