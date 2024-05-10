@@ -51,7 +51,7 @@ public class StudentMenu {
                                 studentService.getStudentList();
                                 System.out.println();
                                 System.out.println();
-                                System.out.println("1. 수강생 조회");
+                                System.out.println("1. 수강생 상세 조회");
                                 System.out.println("2. 수강생 정보 수정");
                                 System.out.println("3. 상태별 수강생 목록");
                                 System.out.println("4. 수강생 삭제");

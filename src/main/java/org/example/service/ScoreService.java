@@ -11,11 +11,7 @@ import org.example.parser.ScoreParser;
 import org.example.parser.StudentParser;
 import org.example.parser.SubjectParser;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static org.example.view.Menu.sc;
 
@@ -236,6 +232,15 @@ public class ScoreService {
 
     }
 
+    public void loadAvgScoreAll(Integer studentID){
+        Set<Integer> subjectList = dbManager.findOneByStudent(studentID).get().getSubjectSet();
+        for (Integer sub : subjectList){
+            loadAvgScore(studentID,sub);
+        }
+    }
+
+
+
     /**
      * @세미 과목별 평균등급 조회 (추가 - 점수관리)
      * print ex: "JAVA과목의 평균은 B 입니다."
@@ -244,8 +249,8 @@ public class ScoreService {
         try {
             Map<Integer, Integer> score = findScores(studentId, subjectId);
 
-            if (score == null) throw new NullPointerException("점수가 없습니다.\n");
-            scoreParser.studentScoreNullCheck(studentId, subjectId); //이중체크
+            if (score == null) return;
+            //scoreParser.studentScoreNullCheck(studentId, subjectId); //이중체크
 
             double sum = 0;
             double avg = 0;
@@ -259,6 +264,27 @@ public class ScoreService {
             System.out.println(e.getMessage());
         }
     }
+
+    //V1
+//    public void loadAvgScore(Integer studentId, Integer subjectId) {
+//        try {
+//            Map<Integer, Integer> score = findScores(studentId, subjectId);
+//
+//            if (score == null) throw new NullPointerException("점수가 없습니다.\n");
+//            scoreParser.studentScoreNullCheck(studentId, subjectId); //이중체크
+//
+//            double sum = 0;
+//            double avg = 0;
+//            for (int i = 0; i < score.size(); i++) {
+//                sum += score.get(i + 1);
+//            }
+//            avg = sum / score.size();
+//            Optional<Subject> subject = dbManager.findOneBySubject(subjectId);
+//            System.out.println("- " + subject.get().getSubjectName() + "과목의 평균은 " + avg + "입니다.\n");
+//        } catch (NullPointerException e) {
+//            System.out.println(e.getMessage());
+//        }
+//    }
 
     /**
      * @세미 특정상태 수강생들의 필수 과목 평균 등급 (추가 - 점수관리)

@@ -99,9 +99,9 @@ public class ScoreMenu {
                                 System.out.println("메인메뉴> 수강생 점수관리> 수강생의 과목별 평균 등급을 조회...");
                                 System.out.print("수강생 고유번호 입력 : ");
                                 studentIdInput = Integer.parseInt(sc.nextLine());
-                                System.out.print("과목 고유번호 입력 : ");
-                                subjectIdInput = Integer.parseInt(sc.nextLine());
-                                scoreService.loadAvgScore(studentIdInput, subjectIdInput);
+//                                System.out.print("과목 고유번호 입력 : ");
+//                                subjectIdInput = Integer.parseInt(sc.nextLine());
+                                scoreService.loadAvgScoreAll(studentIdInput);
                             } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
                             } catch (NullPointerException e) {

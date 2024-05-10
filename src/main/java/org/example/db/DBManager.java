@@ -4,6 +4,7 @@ package org.example.db;
 import org.example.domain.Score;
 import org.example.domain.Student;
 import org.example.domain.Subject;
+import org.example.domain.enums.LevelType;
 import org.example.domain.enums.StudentStateType;
 import org.example.domain.enums.SubjectType;
 import org.example.service.ScoreService;
@@ -112,7 +113,7 @@ public class DBManager {
      */
     public boolean deleteScoreByStudentId(Integer studentId) {
         List<Score> scoreList = dbStorage.getScoreList();
-        return scoreList.removeIf(score -> score.getStudentId() == studentId);
+        return scoreList.removeIf(score -> score.getStudentId().equals(studentId));
     }
 
 
@@ -132,11 +133,28 @@ public class DBManager {
     public void initData() {
         //찬원
         Set<Integer> set = Set.of(1, 2, 3, 4, 5, 6, 7, 8, 9);
-        dbStorage.getStudentList().add(new Student(2024001, "서찬원", "990204", set, StudentStateType.GREEN));
-        dbStorage.getStudentList().add(new Student(2024002, "박세미", "990204", set, StudentStateType.RED));
-        dbStorage.getStudentList().add(new Student(2024003, "박성균", "990204", set, StudentStateType.RED));
-        dbStorage.getStudentList().add(new Student(2024004, "차도범", "990204", set, StudentStateType.YELLOW));
-        dbStorage.getStudentList().add(new Student(2024005, "이근수", "990204", set, StudentStateType.GREEN));
+        Set<Integer> set1 = Set.of(1, 2, 3, 6, 7, 8);
+        updateStudentIdNum(dbStorage.getStudentIdNum());
+        saveStudent(new Student(dbStorage.getStudentIdNum(), "박세미", "990204", set1, StudentStateType.RED));
+
+        updateStudentIdNum(dbStorage.getStudentIdNum());
+        saveStudent(new Student(dbStorage.getStudentIdNum(), "박성균", "990204", set, StudentStateType.RED));
+
+        updateStudentIdNum(dbStorage.getStudentIdNum());
+        saveStudent(new Student(dbStorage.getStudentIdNum(), "차도범", "990204", set, StudentStateType.YELLOW));
+
+        updateStudentIdNum(dbStorage.getStudentIdNum());
+        saveStudent(new Student(dbStorage.getStudentIdNum(), "이근수", "990204", set, StudentStateType.GREEN));
+
+        updateStudentIdNum(dbStorage.getStudentIdNum());
+        saveStudent(new Student(dbStorage.getStudentIdNum(), "서찬원", "990204", set, StudentStateType.GREEN));
+
+        HashMap<Integer, Integer> objectObjectHashMap = new LinkedHashMap<>();
+        objectObjectHashMap.put(1, 100);
+        objectObjectHashMap.put(2, 80);
+        saveScore(new Score(1, 2024005, objectObjectHashMap, LevelType.checkElectiveLevelType(100)));
+
+//        saveStudent(new Student(2024001, "서찬원", "990204", set, StudentStateType.GREEN));
 
 //        ScoreService scoreService = new ScoreService(this);
 //        scoreService.scoreCreateV3(1, 1, 1, 96);
