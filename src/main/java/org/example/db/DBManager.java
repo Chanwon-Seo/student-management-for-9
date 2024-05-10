@@ -8,10 +8,7 @@ import org.example.domain.enums.StudentStateType;
 import org.example.domain.enums.SubjectType;
 import org.example.service.ScoreService;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * DBStorage의 데이터를 CRUD하기 위한 클래스
@@ -107,7 +104,7 @@ public class DBManager {
      */
     public boolean deleteStudentById(Integer studentId) {
         List<Student> studentList = dbStorage.getStudentList();
-        return studentList.removeIf(student -> studentId == student.getStudentId());
+        return studentList.removeIf(student -> Objects.equals(studentId, student.getStudentId()));
     }
 
     /**
@@ -135,33 +132,33 @@ public class DBManager {
     public void initData() {
         //찬원
         Set<Integer> set = Set.of(1, 2, 3, 4, 5, 6, 7, 8, 9);
-        dbStorage.getStudentList().add(new Student(1, "서찬원", "990204", set, StudentStateType.GREEN));
-        dbStorage.getStudentList().add(new Student(2, "박세미", "990204", set, StudentStateType.RED));
-        dbStorage.getStudentList().add(new Student(3, "박성균", "990204", set, StudentStateType.RED));
-        dbStorage.getStudentList().add(new Student(4, "차도범", "990204", set, StudentStateType.YELLOW));
-        dbStorage.getStudentList().add(new Student(5, "이근수", "990204", set, StudentStateType.GREEN));
+        dbStorage.getStudentList().add(new Student(2024001, "서찬원", "990204", set, StudentStateType.GREEN));
+        dbStorage.getStudentList().add(new Student(2024002, "박세미", "990204", set, StudentStateType.RED));
+        dbStorage.getStudentList().add(new Student(2024003, "박성균", "990204", set, StudentStateType.RED));
+        dbStorage.getStudentList().add(new Student(2024004, "차도범", "990204", set, StudentStateType.YELLOW));
+        dbStorage.getStudentList().add(new Student(2024005, "이근수", "990204", set, StudentStateType.GREEN));
 
-
-        ScoreService scoreService = new ScoreService(this);
-        scoreService.scoreCreateV3(1, 1, 1, 96);
-        scoreService.scoreCreateV3(1, 1, 2, 77);
-        scoreService.scoreCreateV3(1, 1, 3, 85);
-        scoreService.scoreCreateV3(2, 1, 1, 55);
-        scoreService.scoreCreateV3(2, 1, 2, 77);
-        scoreService.scoreCreateV3(3, 1, 1, 35);
-
-        scoreService.scoreCreateV3(1, 2, 1, 50);
-        scoreService.scoreCreateV3(1, 2, 2, 68);
-        scoreService.scoreCreateV3(2, 2, 1, 99);
-
-        scoreService.scoreCreateV3(5, 4, 1, 55);
-        scoreService.scoreCreateV3(3, 4, 1, 35);
-        scoreService.scoreCreateV3(9, 4, 1, 77);
-        scoreService.scoreCreateV3(9, 4, 2, 45);
-
-        scoreService.scoreCreateV3(1, 5, 1, 50);
-        scoreService.scoreCreateV3(1, 5, 2, 90);
-        scoreService.scoreCreateV3(1, 5, 3, 20);
-        scoreService.scoreCreateV3(2, 5, 1, 80);
+//
+//        ScoreService scoreService = new ScoreService(this);
+//        scoreService.scoreCreateV3(1, 1, 1, 96);
+//        scoreService.scoreCreateV3(1, 1, 2, 77);
+//        scoreService.scoreCreateV3(1, 1, 3, 85);
+//        scoreService.scoreCreateV3(2, 1, 1, 55);
+//        scoreService.scoreCreateV3(2, 1, 2, 77);
+//        scoreService.scoreCreateV3(3, 1, 1, 35);
+//
+//        scoreService.scoreCreateV3(1, 2, 1, 50);
+//        scoreService.scoreCreateV3(1, 2, 2, 68);
+//        scoreService.scoreCreateV3(2, 2, 1, 99);
+//
+//        scoreService.scoreCreateV3(5, 4, 1, 55);
+//        scoreService.scoreCreateV3(3, 4, 1, 35);
+//        scoreService.scoreCreateV3(9, 4, 1, 77);
+//        scoreService.scoreCreateV3(9, 4, 2, 45);
+//
+//        scoreService.scoreCreateV3(1, 5, 1, 50);
+//        scoreService.scoreCreateV3(1, 5, 2, 90);
+//        scoreService.scoreCreateV3(1, 5, 3, 20);
+//        scoreService.scoreCreateV3(2, 5, 1, 80);
     }
 }

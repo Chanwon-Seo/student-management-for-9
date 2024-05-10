@@ -170,7 +170,7 @@ public class StudentService {
 
     public Integer addSubject(int[] subCounts, HashSet<Integer> duplicationSubjectId) {
         while (true) {
-            System.out.println("\n수강할 과목의 제목을 입력해주세요. (종료 exit)");
+            System.out.println("\n수강할 과목의 고유번호을 입력해주세요. (종료 exit)");
             String s = sc.nextLine();
 
             if ("exit".equals(s)) {

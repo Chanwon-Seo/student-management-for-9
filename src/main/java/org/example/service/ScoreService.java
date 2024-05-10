@@ -192,7 +192,7 @@ public class ScoreService {
         //수강생 empty 확인
         Student findStudentData = studentParser.studentEmptyCheckValidV3(studentId);
         //과목 empty 확인
-        subjectParser.subjectEmptyCheckValidV1(subjectId);
+        Subject subject = subjectParser.subjectEmptyCheckValidV1(subjectId);
         //수강하고 있는 과목인지 확인
         studentParser.studentAndSubjectCheckValid(subjectId, findStudentData);
         //해당 과목에 점수가 있는지 확인
@@ -206,7 +206,10 @@ public class ScoreService {
             if (!score.getScoreMap().keySet().isEmpty() && score.getSubjectId().equals(subjectId) && score.getStudentId().equals(studentId)) {
                 for (Map.Entry<Integer, Integer> entry : score.getScoreMap().entrySet()) {
                     Integer key = entry.getKey();
-                    System.out.printf("[ %d : %s ]\n", key, score.getLevelType().getLevelTypeValue());
+                    if (subject.getSubjectType().equals(SubjectType.REQUIRED)) {
+                        System.out.printf("[ %d : %s ]\n", key, LevelType.checkRequiredLevelType(entry.getValue()));
+                    } else
+                        System.out.printf("[ %d : %s ]\n", key, LevelType.checkElectiveLevelType(entry.getValue()));
                 }
             }
         }
