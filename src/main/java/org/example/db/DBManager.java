@@ -138,7 +138,6 @@ public class DBManager {
         dbStorage.getStudentList().add(new Student(2024004, "차도범", "990204", set, StudentStateType.YELLOW));
         dbStorage.getStudentList().add(new Student(2024005, "이근수", "990204", set, StudentStateType.GREEN));
 
-//
 //        ScoreService scoreService = new ScoreService(this);
 //        scoreService.scoreCreateV3(1, 1, 1, 96);
 //        scoreService.scoreCreateV3(1, 1, 2, 77);
