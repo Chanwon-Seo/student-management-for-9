@@ -64,7 +64,7 @@ public class DBManager {
     }
 
     /**
-     * @찬원 FIXME 설명 완료
+     * @찬원
      * 특정 학생 고유번호를 통해 수강생인지 판별
      * 수강생이 아닌 경우 = Optional<Student> NULL
      * 수강생인 경우 = Optional<Student> NOT NUll
@@ -80,7 +80,7 @@ public class DBManager {
     }
 
     /**
-     * @성균 //FIXME 설명
+     * @성균
      * 수강생 고유번호 가져오기
      */
     public Integer findByStudentIdNum() {
@@ -88,7 +88,7 @@ public class DBManager {
     }
 
     /**
-     * @성균 //FIXME 설명
+     * @성균
      * 수강생이 추가된 후 수강생 고유번호 증가
      */
     public void updateStudentIdNum(Integer studentIdNum) {
@@ -119,7 +119,6 @@ public class DBManager {
     }
 
 
-    //FIXME 메서드명수정 완료
     /**
      * @세미 subject id로 필수인지 아닌지 판별
      */

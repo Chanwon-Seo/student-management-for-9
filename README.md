@@ -1,5 +1,11 @@
 # student-management-for-9
 
+## Class diagram
+<img src="./readmeimg/class_diagram.png">
+
+## Wireframe 
+<img src="./readmeimg/wireframe.png">
+
 ## 필수
 
 - [x] menu - 근수

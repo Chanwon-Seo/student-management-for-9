@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static org.example.view.Menu.sc;
+
 public class ScoreService {
     private final DBManager dbManager;
     private final StudentParser studentParser;
@@ -32,46 +34,73 @@ public class ScoreService {
 
     /**
      * @찬원 수강생 점수 등록 메서드
+     * throw 등록된 과목이 없는 경우
+     * throw 수강생 정보가 없는 경우
+     * throw 회차가 범위에 맞지 않는 경우 =>
      */
-    public void scoreCreateV2(Integer subjectIdInput, Integer studentIdInput, Integer roundInput, Integer scoreInput) {
-        //FIXME 불필요 코드 완료
-        Optional<Subject> findSubjectData;
-        Optional<Student> findStudentData;
-        try {
-            findSubjectData = subjectParser.subjectEmptyCheckValid(subjectIdInput);
-            findStudentData = studentParser.studentEmptyCheckValidV2(studentIdInput);
-            studentParser.studentAndSubjectCheckValid(findSubjectData.get().getSubjectId(), findStudentData.get());
-            scoreParser.scoreRoundInputOneToTenCheckValid(roundInput);
-            scoreParser.scoreInputZeroToOneHundredCheckValid(scoreInput);
+    public void scoreCreateV3(Integer subjectIdInput, Integer studentIdInput, Integer roundInput, Integer scoreInput) throws NullPointerException, IllegalArgumentException {
+        Subject findSubjectData = subjectParser.subjectEmptyCheckValidV1(subjectIdInput);
+        Student findStudentData = studentParser.studentEmptyCheckValidV3(studentIdInput);
+        studentParser.studentAndSubjectCheckValid(findSubjectData.getSubjectId(), findStudentData);
 
-            scoreParser.scoreDuplicatedCheckValidv2(
-                    findSubjectData.get().getSubjectId(),
-                    findStudentData.get().getStudentId(),
-                    roundInput
-            );
-        } catch (NullPointerException | IllegalArgumentException | IllegalStateException e) {
-            throw new RuntimeException(e.getMessage());
+        //회차 범위 검증
+        Optional<Integer> validatedRoundInput = validateInput("회차", roundInput);
+        if (validatedRoundInput.isEmpty()) {
+            return;
         }
+        roundInput = validatedRoundInput.get();
+        //점수 범위 검증
+        Optional<Integer> validatedScoreInput = validateInput("점수", scoreInput);
+        if (validatedScoreInput.isEmpty()) {
+            return;
+        }
+        scoreInput = validatedScoreInput.get();
 
+        scoreParser.scoreDuplicatedCheckValidV2(findSubjectData.getSubjectId(), findStudentData.getStudentId(), roundInput);
 
         Map<Integer, Integer> roundMap = new LinkedHashMap<>();
         roundMap.put(roundInput, scoreInput);
 
-        Score score = new Score(findSubjectData.get().getSubjectId(),
+        Score score = new Score(findSubjectData.getSubjectId(),
                 studentIdInput,
                 roundMap,
-                checkLevelType(findSubjectData.get().getSubjectType().getSubjectTypeValue(), scoreInput)
+                checkLevelType(findSubjectData.getSubjectType().getSubjectTypeValue(), scoreInput)
         );
         System.out.printf("%d / %d / %d회차에 %d점수 ( %s )등급이 저장 되었습니다.\n\n",
-                findSubjectData.get().getSubjectId(),
-                findStudentData.get().getStudentId(),
+                findSubjectData.getSubjectId(),
+                findStudentData.getStudentId(),
                 roundInput,
                 scoreInput,
                 score.getLevelType()
         );
 
-        dbManager.saveScore(score);
+        scoreParser.save(score);
     }
+
+    // 입력 유효성 검사
+    private Optional<Integer> validateInput(String inputName, Integer inputValue) {
+        int flagIndex = 0;
+
+        while (flagIndex <= 3) {
+            try {
+                if (inputName.equals("회차")) {
+                    scoreParser.scoreRoundInputOneToTenCheckValid(inputValue);
+                } else if (inputName.equals("점수")) {
+                    scoreParser.scoreInputZeroToOneHundredCheckValid(inputValue);
+                }
+                return Optional.of(inputValue);
+            } catch (IllegalArgumentException e) {
+                System.out.println(inputName + " 입력이 잘못되었습니다. 다시 입력해주세요.");
+                System.out.println(e.getMessage());
+                inputValue = Integer.parseInt(sc.nextLine());
+                flagIndex++;
+            }
+        }
+
+        System.out.println(inputName + " 입력을 3번 모두 잘못 입력하셨습니다. 이전 메뉴로 이동합니다.");
+        return Optional.empty();
+    }
+
 
     /**
      * @찬원 필수 또는 선택에 따른 등급 산정
@@ -102,8 +131,6 @@ public class ScoreService {
         System.out.print("\n\n");
     }
 
-    //FIXME 메서드명 완료
-
     /**
      * @세미 과목의 [회차: 등급] 전체조회 (필수 - 과목의 회차별 등급 조회)
      * print ex:
@@ -114,7 +141,6 @@ public class ScoreService {
     public void loadAllScore(Integer studentId, Integer subjectId) {
 
         try {
-            // FIXME-Exception : 수강생>과목 가지고 있지 않을때 =>완료
             studentParser.studentAndSubjectCheckValid(subjectId, dbManager.findByStudents().get(studentId));
             scoreParser.studentScoreNullCheck(studentId, subjectId);
 
@@ -125,7 +151,6 @@ public class ScoreService {
 
             //등급계산
             SubjectType levelType = dbManager.findOneBySubject(subjectId).get().getSubjectType();
-            //FIXME 초기화 =>완료
             LevelType tempLevelType;
 
             for (int i = 0; i < score.size(); i++) {
@@ -143,8 +168,6 @@ public class ScoreService {
         }
     }
 
-    //FIXME 메서드명 완료
-
     /**
      * @세미 회차 점수 수정 (필수 - 점수수정)
      * print ex: "2회차 : 78점 수정완료!"
@@ -155,7 +178,6 @@ public class ScoreService {
             Map<Integer, Integer> score = findScores(studentId, subjectId);
 
             if (score == null) throw new NullPointerException("점수가 없습니다.\n");
-            // FIXME-Exception : 수강생>과목>점수 수정할 회차가 등록되어있지 않음 =>완료
             scoreParser.scoreUpdateCheckValid(subjectId, studentId, roundInput); //등록 된 회차인가?
             scoreParser.scoreInputZeroToOneHundredCheckValid(scoreInput); //점수 범위측정
 
@@ -167,8 +189,6 @@ public class ScoreService {
 
     }
 
-    //FIXME 메서드명 =>완료
-
     /**
      * @세미 과목별 평균등급 조회 (추가 - 점수관리)
      * print ex: "JAVA과목의 평균은 B 입니다."
@@ -177,7 +197,6 @@ public class ScoreService {
         try {
             Map<Integer, Integer> score = findScores(studentId, subjectId);
 
-            // FIXME-Exception : 수강생>과목>점수 가 없음 =>완료
             if (score == null) throw new NullPointerException("점수가 없습니다.\n");
             scoreParser.studentScoreNullCheck(studentId, subjectId); //이중체크
 
@@ -193,8 +212,6 @@ public class ScoreService {
             System.out.println(e.getMessage());
         }
     }
-
-    //FIXME 메서드명 =>완료
 
     /**
      * @세미 특정상태 수강생들의 필수 과목 평균 등급 (추가 - 점수관리)
@@ -213,7 +230,6 @@ public class ScoreService {
                 default -> null;
             };
 
-            // FIXME-Exception : 상태 1,2,3 외의 값이 입력됨 =>완료
             studentParser.studentTypeCheckValid(stateType);
 
             List<Student> students = dbManager.findByStudents(); //basic
@@ -228,7 +244,6 @@ public class ScoreService {
             double count = 0;
             double sum = 0;
             int avg = 0;
-            //FIXME 초기화 =>완료
             LevelType resultLevel;
             for (Student student : studentList) {
                 sum = 0;
@@ -262,7 +277,6 @@ public class ScoreService {
 
     /*=========================== Utils ===========================  */
 
-    //FIXME 메서드명 완료
 
     /**
      * @세미 수강생 과목번호 받아 score 리스트 return
@@ -272,11 +286,9 @@ public class ScoreService {
     public Map<Integer, Integer> findScores(Integer studentId, Integer subjectId) {
 
         try {
-            // FIXME-Exception : 수강생 없음 =>완료
-            Optional<Subject> findSubjectData = subjectParser.subjectEmptyCheckValid(subjectId);
-            studentParser.studentEmptyCheckValidV2(studentId); //존재하는 수강생인가?
+            Subject findSubjectData = subjectParser.subjectEmptyCheckValidV1(subjectId);
+            studentParser.studentEmptyCheckValidV3(studentId); //존재하는 수강생인가?
 
-            // FIXME-Exception : 수강생>과목>점수가 없음 =>완료
             scoreParser.studentScoreNullCheck(studentId, subjectId);
 
             List<Score> score = dbManager.findByScores();
@@ -284,7 +296,6 @@ public class ScoreService {
             for (Score s : score) {
                 if (s.getStudentId().equals(studentId) && s.getSubjectId().equals(subjectId)) {
                     Map<Integer, Integer> temp = s.getScoreMap();
-                    // FIXME-Exception : 수강생>과목>점수 없음
                     if (temp.size() <= 0) {
                         System.out.println("해당 과목의 점수가 없습니다.\n\n");
                         break;
@@ -298,8 +309,6 @@ public class ScoreService {
         return null;
     }
 
-    //FIXME 메서드명 완료
-
     /**
      * @세미 한 과목 모든 회차의 평균 계산해서 return
      * input  : student Id , subject Id
@@ -309,7 +318,6 @@ public class ScoreService {
         try {
             Map<Integer, Integer> score = findScores(studentId, subjectId);
 
-            // FIXME-Exception : 수강생>과목>점수가 없음 =>완료
             if (score == null) return 0;
             //scoreParser.studentScoreNullCheck(studentId,subjectId);
 

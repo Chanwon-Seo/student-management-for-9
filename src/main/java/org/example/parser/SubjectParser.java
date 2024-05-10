@@ -22,17 +22,11 @@ public class SubjectParser {
      * @찬원 과목 정보 조회
      * throw 조회된 수강생 정보가 없을 경우
      */
-    public Optional<Subject> subjectEmptyCheckValid(Integer subjectIdInput) {
-        Optional<Subject> findBySubjectData = dbManager.findOneBySubject(subjectIdInput);
-
-        if (findBySubjectData.isPresent()) {
-            return findBySubjectData;
-        }
-
-        throw new NullPointerException("등록된 과목이 아닙니다.\n");
+    public Subject subjectEmptyCheckValidV1(Integer subjectIdInput) {
+        return dbManager.findOneBySubject(subjectIdInput)
+                .orElseThrow(() -> new NullPointerException("등록된 과목이 아닙니다."));
     }
 
-    //FIXME 메서드명 수정 완료
     /**
      * @세미 수강 중인 과목인지 조회
      * throw 해당 과목을 수강하지 않은 수강생일 경우
@@ -65,7 +59,7 @@ public class SubjectParser {
      * @성균 subjectId 중복 조회
      * throw 중복인 경우
      */
-    public boolean subjectIdDuplicationCheck(HashSet<Integer> dup, Integer subjectId){
+    public boolean subjectIdDuplicationCheck(HashSet<Integer> dup, Integer subjectId) {
         if (!dup.contains(subjectId)) {
             return true;
         }
@@ -77,7 +71,7 @@ public class SubjectParser {
      * @성균 필수 ,선택 과목 검사
      * throw 부족한 필수, 선택 과목
      */
-    public boolean subjectMinCheck(int rSub, int eSub){
+    public boolean subjectMinCheck(int rSub, int eSub) {
 
         if (rSub >= MIN_REQUIRED_SUBJECTS && eSub >= MIN_ELECTIVE_SUBJECTS) {
             return true;

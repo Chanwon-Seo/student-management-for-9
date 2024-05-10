@@ -1,4 +1,4 @@
-package org.example;
+package org.example.view;
 
 import org.example.db.DBManager;
 import org.example.domain.Student;
@@ -6,26 +6,20 @@ import org.example.domain.enums.StudentStateType;
 import org.example.service.ScoreService;
 import org.example.service.StudentService;
 
-import static org.example.Menu.sc;
-
-//FIXME 불필요 주석 삭제 [해결됨]
+import static org.example.view.Menu.sc;
 
 public class StudentMenu {
-
-    private final DBManager dbManager;
     private final ScoreService scoreService;
+    private final StudentService studentService;
 
     public StudentMenu(DBManager dbManager) {
-        this.dbManager = dbManager;
         this.scoreService = new ScoreService(dbManager);
+        this.studentService = new StudentService(dbManager);
     }
-
-
 
     public void displayStudentView() {
         int studentId;
         StudentStateType studentStateType;
-        StudentService studentService = new StudentService(dbManager);
 
         while (true) {
             System.out.println("***** 수강생 관리 *****");
@@ -166,7 +160,6 @@ public class StudentMenu {
     /**
      * @차도범 입력받은 수강생 상태에 String -> StudentStateType enum으로 변경해서 반환
      */
-    //FIXME static x -> 완료
     private StudentStateType getStudentStateType() {
         System.out.print("[1]green [2]red [3]yellow ");
         return switch (sc.nextLine()) {

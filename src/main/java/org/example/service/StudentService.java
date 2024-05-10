@@ -7,7 +7,8 @@ import org.example.domain.enums.StudentStateType;
 import org.example.domain.enums.SubjectType;
 import org.example.parser.StudentParser;
 import org.example.parser.SubjectParser;
-import static org.example.Menu.sc;
+
+import static org.example.view.Menu.sc;
 
 import java.util.*;
 
@@ -17,9 +18,6 @@ public class StudentService {
     private final DBManager dbManager;
     private final StudentParser studentParser;
     private final SubjectParser subjectParser;
-    //FIXME 사용하고 있지 않음 [해결됨]
-    //FIXME 사용하고 있지 않음 [해결됨]
-    //FIXME 사용하고 있지 않음 [해결됨]
 
     public StudentService(DBManager dbManager) {
         this.dbManager = dbManager;
@@ -31,7 +29,7 @@ public class StudentService {
      * @차도범 수강생 아이디로 수강생 반환
      */
     public Student studentFindById(int id) throws NullPointerException {
-        Student findStudent = studentParser.studentEmptyCheckValidV2(id).get();
+        Student findStudent = studentParser.studentEmptyCheckValidV3(id);
         System.out.println("수강생 " + findStudent.getStudentName());
         return findStudent;
     }
@@ -52,7 +50,7 @@ public class StudentService {
      */
     public void getStudentDetail(int studentId) {
         try {
-            Student student = studentParser.studentEmptyCheckValidV2(studentId).get();
+            Student student = studentParser.studentEmptyCheckValidV3(studentId);
             System.out.println("##### < 학생 상세 > #####");
             System.out.println("id : " + student.getStudentId());
             System.out.println("이름 : " + student.getStudentName());
@@ -95,7 +93,6 @@ public class StudentService {
      * @차도범 수강생 수정
      */
     public void editStudent(Student student, String name, String birthDay, StudentStateType studentStateType) {
-        //FIXME 사용자의 빈값 입력에 대한 예외가 없음 더티체킹 필요 -> 완료
         try {
             studentParser.editStudentEmptyCheckValid(name, birthDay, studentStateType);
             dbManager.editStudent(student, name, birthDay, studentStateType);
@@ -109,7 +106,7 @@ public class StudentService {
      */
     public void deleteStudentById(int studentId) {
         try {
-            Student student = studentParser.studentEmptyCheckValidV2(studentId).get();
+            Student student = studentParser.studentEmptyCheckValidV3(studentId);
             boolean b = dbManager.deleteStudentById(studentId);
             if (b) System.out.println(student.getStudentName() + "수강생을 삭제했습니다..");
             else System.out.println("수강생을 삭제하지 못햇습니다.");
@@ -135,8 +132,6 @@ public class StudentService {
         };
 
         StudentStateType stateType = inputStatus(state);
-        //FIXME 완료
-        //FIXME 완료
         System.out.println("※공통사항※ [필수]3과목,[선택]2과목이상 신청바랍니다.");
         List<Subject> sub = dbManager.findBySubjects();
         sub.forEach(subject -> {
@@ -244,19 +239,18 @@ public class StudentService {
      * id가 검증되면 해당 subject 클래스 반환
      */
     public Subject subjectReturn(Integer subjectId) {
-        Optional<Subject> subject = Optional.empty();
+        Subject subject = null;
         try {
-            subject = subjectParser.subjectEmptyCheckValid(subjectId);
+            subject = subjectParser.subjectEmptyCheckValidV1(subjectId);
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
-        return subject.get();
+        return subject;
     }
 
     /**
      * @성균 과목 등록 검증
      */
-    //FIXME 완료(Exception대신 IllegalArgumentException을 사용해 명확성을 올림)
     public boolean subjectMinCheck(int rSub, int eSub) {
         try {
             if (subjectParser.subjectMinCheck(rSub, eSub)) {

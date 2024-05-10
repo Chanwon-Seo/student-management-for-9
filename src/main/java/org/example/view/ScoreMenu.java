@@ -1,23 +1,15 @@
-package org.example;
+package org.example.view;
 
 import org.example.db.DBManager;
 import org.example.service.ScoreService;
 
-import static org.example.Menu.sc;
+import static org.example.view.Menu.sc;
 
-//FIXME 불필요 주석삭제 [해결됨]
 public class ScoreMenu {
-
-    private final DBManager dbManager;
-    //FIXME 불필요한 선언 [해결됨]
     private final ScoreService scoreService;
-    //FIXME 불필요한 선언 [해결됨]
-
 
     public ScoreMenu(DBManager dbManager) {
-        this.dbManager = dbManager;
         this.scoreService = new ScoreService(dbManager);
-
     }
 
     public void displayScoreView() {
@@ -51,11 +43,12 @@ public class ScoreMenu {
                                 System.out.print("학생 점수 입력 : ");
                                 scoreInput = Integer.parseInt(sc.nextLine());
 
-                                scoreService.scoreCreateV2(subjectIdInput, studentIdInput, roundInput, scoreInput);
+                                scoreService.scoreCreateV3(subjectIdInput, studentIdInput, roundInput, scoreInput);
 
                             } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
                             } catch (RuntimeException e) {
+                                System.out.printf("\n%s\n\n", e.getMessage());
                                 break;
                             }
                             break;
@@ -144,11 +137,10 @@ public class ScoreMenu {
                     }
                 } catch (NumberFormatException e) {
                     System.out.println("something wrong!, 다시 입력바랍니다.");
-                    System.out.printf("\n");
-
-
+                    System.out.println();
                 }
             }
         }
     }
+
 }
