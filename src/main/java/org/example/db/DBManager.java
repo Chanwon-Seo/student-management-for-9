@@ -67,8 +67,7 @@ public class DBManager {
     }
 
     /**
-     * @찬원
-     * 특정 학생 고유번호를 통해 수강생인지 판별
+     * @찬원 특정 학생 고유번호를 통해 수강생인지 판별
      * 수강생이 아닌 경우 = Optional<Student> NULL
      * 수강생인 경우 = Optional<Student> NOT NUll
      */
@@ -83,16 +82,14 @@ public class DBManager {
     }
 
     /**
-     * @성균
-     * 수강생 고유번호 가져오기
+     * @성균 수강생 고유번호 가져오기
      */
     public Integer findByStudentIdNum() {
         return dbStorage.getStudentIdNum();
     }
 
     /**
-     * @성균
-     * 수강생이 추가된 후 수강생 고유번호 증가
+     * @성균 수강생이 추가된 후 수강생 고유번호 증가
      */
     public void updateStudentIdNum(Integer studentIdNum) {
         dbStorage.setStudentIdNum(++studentIdNum);
@@ -146,25 +143,25 @@ public class DBManager {
 
 
         ScoreService scoreService = new ScoreService(this);
-        scoreService.scoreCreateV3(1,1,1,96);
-        scoreService.scoreCreateV3(1,1,2,77);
-        scoreService.scoreCreateV3(1,1,3,85);
-        scoreService.scoreCreateV3(2,1,1,55);
-        scoreService.scoreCreateV3(2,1,2,77);
-        scoreService.scoreCreateV3(3,1,1,35);
+        scoreService.scoreCreateV3(1, 1, 1, 96);
+        scoreService.scoreCreateV3(1, 1, 2, 77);
+        scoreService.scoreCreateV3(1, 1, 3, 85);
+        scoreService.scoreCreateV3(2, 1, 1, 55);
+        scoreService.scoreCreateV3(2, 1, 2, 77);
+        scoreService.scoreCreateV3(3, 1, 1, 35);
 
-        scoreService.scoreCreateV3(1,2,1,50);
-        scoreService.scoreCreateV3(1,2,2,68);
-        scoreService.scoreCreateV3(2,2,1,99);
+        scoreService.scoreCreateV3(1, 2, 1, 50);
+        scoreService.scoreCreateV3(1, 2, 2, 68);
+        scoreService.scoreCreateV3(2, 2, 1, 99);
 
-        scoreService.scoreCreateV3(5,4,1,55);
-        scoreService.scoreCreateV3(3,4,1,35);
-        scoreService.scoreCreateV3(9,4,1,77);
-        scoreService.scoreCreateV3(9,4,2,45);
+        scoreService.scoreCreateV3(5, 4, 1, 55);
+        scoreService.scoreCreateV3(3, 4, 1, 35);
+        scoreService.scoreCreateV3(9, 4, 1, 77);
+        scoreService.scoreCreateV3(9, 4, 2, 45);
 
-        scoreService.scoreCreateV3(1,5,1,50);
-        scoreService.scoreCreateV3(1,5,2,90);
-        scoreService.scoreCreateV3(1,5,3,20);
-        scoreService.scoreCreateV3(2,5,1,80);
+        scoreService.scoreCreateV3(1, 5, 1, 50);
+        scoreService.scoreCreateV3(1, 5, 2, 90);
+        scoreService.scoreCreateV3(1, 5, 3, 20);
+        scoreService.scoreCreateV3(2, 5, 1, 80);
     }
 }

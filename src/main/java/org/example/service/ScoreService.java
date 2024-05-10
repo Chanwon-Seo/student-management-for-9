@@ -58,23 +58,36 @@ public class ScoreService {
 
         scoreParser.scoreDuplicatedCheckValidV2(findSubjectData.getSubjectId(), findStudentData.getStudentId(), roundInput);
 
-        Map<Integer, Integer> roundMap = new LinkedHashMap<>();
-        roundMap.put(roundInput, scoreInput);
+        List<Score> findScoreData = new LinkedList<>();
+        for (Score score : dbManager.findByScores()) {
+            if (subjectIdInput.equals(score.getSubjectId()) && studentIdInput.equals(score.getStudentId())) {
+                findScoreData.add(score);
+            }
+        }
 
-        Score score = new Score(findSubjectData.getSubjectId(),
-                studentIdInput,
-                roundMap,
-                checkLevelType(findSubjectData.getSubjectType().getSubjectTypeValue(), scoreInput)
-        );
+
+        if (findScoreData.isEmpty()) {
+            Map<Integer, Integer> roundMap = new LinkedHashMap<>();
+            roundMap.put(roundInput, scoreInput);
+
+            Score score = new Score(findSubjectData.getSubjectId(),
+                    studentIdInput,
+                    roundMap,
+                    checkLevelType(findSubjectData.getSubjectType().getSubjectTypeValue(), scoreInput)
+            );
+            findScoreData.add(score);
+            scoreParser.save(findScoreData.get(0));
+        } else {
+            Score score = findScoreData.get(0);
+            score.getScoreMap().put(roundInput, scoreInput);
+        }
         System.out.printf("%d / %d / %d회차에 %d점수 ( %s )등급이 저장 되었습니다.\n\n",
                 findSubjectData.getSubjectId(),
                 findStudentData.getStudentId(),
                 roundInput,
                 scoreInput,
-                score.getLevelType()
+                findScoreData.get(0).getLevelType()
         );
-
-        scoreParser.save(score);
     }
 
     // 입력 유효성 검사

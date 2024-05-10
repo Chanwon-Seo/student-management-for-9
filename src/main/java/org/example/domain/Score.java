@@ -15,6 +15,9 @@ public class Score {
 
     private LevelType levelType; //점수 레벨
 
+    public Score() {
+    }
+
     public Score(Integer subjectId, Integer studentId, Map<Integer, Integer> scoreMap, LevelType levelType) {
         this.subjectId = subjectId;
         this.studentId = studentId;
