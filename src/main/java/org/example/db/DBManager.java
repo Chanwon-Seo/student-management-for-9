@@ -142,26 +142,26 @@ public class DBManager {
         dbStorage.getStudentList().add(new Student(5, "이근수", "990204", set, StudentStateType.GREEN));
 
 
-        ScoreService scoreService = new ScoreService(this);
-        scoreService.scoreCreateV3(1, 1, 1, 96);
-        scoreService.scoreCreateV3(1, 1, 2, 77);
-        scoreService.scoreCreateV3(1, 1, 3, 85);
-        scoreService.scoreCreateV3(2, 1, 1, 55);
-        scoreService.scoreCreateV3(2, 1, 2, 77);
-        scoreService.scoreCreateV3(3, 1, 1, 35);
-
-        scoreService.scoreCreateV3(1, 2, 1, 50);
-        scoreService.scoreCreateV3(1, 2, 2, 68);
-        scoreService.scoreCreateV3(2, 2, 1, 99);
-
-        scoreService.scoreCreateV3(5, 4, 1, 55);
-        scoreService.scoreCreateV3(3, 4, 1, 35);
-        scoreService.scoreCreateV3(9, 4, 1, 77);
-        scoreService.scoreCreateV3(9, 4, 2, 45);
-
-        scoreService.scoreCreateV3(1, 5, 1, 50);
-        scoreService.scoreCreateV3(1, 5, 2, 90);
-        scoreService.scoreCreateV3(1, 5, 3, 20);
-        scoreService.scoreCreateV3(2, 5, 1, 80);
+//        ScoreService scoreService = new ScoreService(this);
+//        scoreService.scoreCreateV3(1, 1, 1, 96);
+//        scoreService.scoreCreateV3(1, 1, 2, 77);
+//        scoreService.scoreCreateV3(1, 1, 3, 85);
+//        scoreService.scoreCreateV3(2, 1, 1, 55);
+//        scoreService.scoreCreateV3(2, 1, 2, 77);
+//        scoreService.scoreCreateV3(3, 1, 1, 35);
+//
+//        scoreService.scoreCreateV3(1, 2, 1, 50);
+//        scoreService.scoreCreateV3(1, 2, 2, 68);
+//        scoreService.scoreCreateV3(2, 2, 1, 99);
+//
+//        scoreService.scoreCreateV3(5, 4, 1, 55);
+//        scoreService.scoreCreateV3(3, 4, 1, 35);
+//        scoreService.scoreCreateV3(9, 4, 1, 77);
+//        scoreService.scoreCreateV3(9, 4, 2, 45);
+//
+//        scoreService.scoreCreateV3(1, 5, 1, 50);
+//        scoreService.scoreCreateV3(1, 5, 2, 90);
+//        scoreService.scoreCreateV3(1, 5, 3, 20);
+//        scoreService.scoreCreateV3(2, 5, 1, 80);
     }
 }
