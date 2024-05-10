@@ -138,7 +138,7 @@ public class ScoreService {
      * "2회차 A"
      * "3회차 N"
      */
-    public void loadAllScore(Integer studentId, Integer subjectId) {
+    /*public void loadAllScore(Integer studentId, Integer subjectId) {
 
         try {
             studentParser.studentAndSubjectCheckValid(subjectId, dbManager.findByStudents().get(studentId));
@@ -165,6 +165,37 @@ public class ScoreService {
 
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
+        }
+    }*/
+
+    /**
+     * @세미 과목의 [회차: 등급] 전체조회 (필수 - 과목의 회차별 등급 조회)
+     * print ex:
+     * "1회차 D"
+     * "2회차 A"
+     * "3회차 N"
+     */
+    public void loadAllScore(Integer studentId, Integer subjectId) throws NullPointerException {
+        //수강생 empty 확인
+        Student findStudentData = studentParser.studentEmptyCheckValidV3(studentId);
+        //과목 empty 확인
+        subjectParser.subjectEmptyCheckValidV1(subjectId);
+        //수강하고 있는 과목인지 확인
+        studentParser.studentAndSubjectCheckValid(subjectId, findStudentData);
+        //해당 과목에 점수가 있는지 확인
+        List<Score> findAllScoreData = scoreParser.findAllScore();
+        if (findAllScoreData.isEmpty()) {
+            throw new NullPointerException("해당 과목에 등록된 점수가 없습니다.");
+        }
+        //예외가 없는 경우
+        System.out.println("[회차 : 등급].");
+        for (Score score : findAllScoreData) {
+            if (!score.getScoreMap().keySet().isEmpty() && score.getSubjectId().equals(subjectId) && score.getStudentId().equals(studentId)) {
+                for (Map.Entry<Integer, Integer> entry : score.getScoreMap().entrySet()) {
+                    Integer key = entry.getKey();
+                    System.out.printf("[ %d : %s ]\n", key, score.getLevelType().getLevelTypeValue());
+                }
+            }
         }
     }
 

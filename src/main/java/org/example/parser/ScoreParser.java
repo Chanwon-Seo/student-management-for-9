@@ -121,4 +121,8 @@ public class ScoreParser {
             dbManager.saveScore(score);
         }
     }
+
+    public List<Score> findAllScore() {
+       return dbManager.findByScores();
+    }
 }
