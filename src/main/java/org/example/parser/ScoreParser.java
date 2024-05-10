@@ -10,10 +10,10 @@ import java.util.*;
 public class ScoreParser {
     private final DBManager dbManager;
 
-    static final int SCORE_ROUND_MIN_VALUE = 1;
-    static final int SCORE_ROUND_MAX_VALUE = 10;
-    static final int SCORE_MIN_VALUE = 0;
-    static final int SCORE_MAX_VALUE = 100;
+    final int SCORE_ROUND_MIN_VALUE = 1;
+    final int SCORE_ROUND_MAX_VALUE = 10;
+    final int SCORE_MIN_VALUE = 0;
+    final int SCORE_MAX_VALUE = 100;
 
     public ScoreParser(DBManager dbManager) {
         this.dbManager = dbManager;
@@ -27,7 +27,7 @@ public class ScoreParser {
         if (SCORE_ROUND_MIN_VALUE <= roundInput && roundInput <= SCORE_ROUND_MAX_VALUE) {
             return;
         }
-        throw new IllegalArgumentException("회차 범위는 " + SCORE_ROUND_MIN_VALUE + " ~ " + SCORE_ROUND_MAX_VALUE + " 까지 입니다.\n");
+        throw new IllegalArgumentException("회차 범위는 " + SCORE_ROUND_MIN_VALUE + " ~ " + SCORE_ROUND_MAX_VALUE + " 까지 입니다.");
     }
 
     /**
@@ -38,7 +38,7 @@ public class ScoreParser {
         if (SCORE_MIN_VALUE <= roundInput && roundInput <= SCORE_MAX_VALUE) {
             return;
         }
-        throw new IllegalArgumentException("점수 범위는 " + SCORE_MIN_VALUE + " ~ " + SCORE_MAX_VALUE + " 까지 입니다.\n");
+        throw new IllegalArgumentException("점수 범위는 " + SCORE_MIN_VALUE + " ~ " + SCORE_MAX_VALUE + " 까지 입니다.");
     }
 
     /**
@@ -47,7 +47,7 @@ public class ScoreParser {
      * throw 이미 등록된 회차 등록인 경우
      * throw 이전 회차 미등록인 경우
      */
-    public void scoreDuplicatedCheckValidv2(Integer subjectIdInput, Integer studentIdInput, Integer roundInput) {
+    public void scoreDuplicatedCheckValidV2(Integer subjectIdInput, Integer studentIdInput, Integer roundInput) {
         List<Score> scoreList = new LinkedList<>();
         for (Score score : dbManager.findByScores()) {
             if (subjectIdInput.equals(score.getSubjectId()) && studentIdInput.equals(score.getStudentId())) {
@@ -57,7 +57,7 @@ public class ScoreParser {
 
         //등록된 회차가 없지만 사용자로부터 입력 받은 회차가 1회차가 아닌 경우
         if (scoreList.isEmpty() && roundInput != 1) {
-            throw new NullPointerException("1회차가 입력되지 않았습니다.\n");
+            throw new IllegalArgumentException("등록된 점수가 없습니다. 1회차부터 입력해주세요");
         }
 
         //등록된 회차가 있는 경우
@@ -66,11 +66,11 @@ public class ScoreParser {
 
             //이미 등록된 회차 등록인 경우
             if (scoreSize >= roundInput) {
-                throw new IllegalStateException("이미 등록된 회차입니다.\n");
+                throw new IllegalArgumentException("이미 등록된 회차입니다.");
             }
             //이전 회차 미등록인 경우
             if (scoreSize != roundInput - 1) {
-                throw new IllegalArgumentException("이전 회차에서 미등록한 회차가 있습니다.\n");
+                throw new IllegalArgumentException("이전 회차에서 미등록한 회차가 있습니다.");
             }
         }
     }
@@ -116,4 +116,9 @@ public class ScoreParser {
     }
 
 
+    public void save(Score score) {
+        if (score != null) {
+            dbManager.saveScore(score);
+        }
+    }
 }

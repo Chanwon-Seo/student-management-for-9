@@ -1,9 +1,9 @@
-package org.example;
+package org.example.view;
 
 import org.example.db.DBManager;
 import org.example.service.ScoreService;
 
-import static org.example.Menu.sc;
+import static org.example.view.Menu.sc;
 
 public class ScoreMenu {
     private final ScoreService scoreService;
@@ -43,12 +43,12 @@ public class ScoreMenu {
                                 System.out.print("학생 점수 입력 : ");
                                 scoreInput = Integer.parseInt(sc.nextLine());
 
-                                scoreService.scoreCreateV2(subjectIdInput, studentIdInput, roundInput, scoreInput);
+                                scoreService.scoreCreateV3(subjectIdInput, studentIdInput, roundInput, scoreInput);
 
                             } catch (NumberFormatException e) {
                                 throw new NumberFormatException();
                             } catch (RuntimeException e) {
-                                System.out.println(e.getMessage());
+                                System.out.printf("\n%s\n\n", e.getMessage());
                                 break;
                             }
                             break;
@@ -138,10 +138,9 @@ public class ScoreMenu {
                 } catch (NumberFormatException e) {
                     System.out.println("something wrong!, 다시 입력바랍니다.");
                     System.out.println();
-
-
                 }
             }
         }
     }
+
 }
